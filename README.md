@@ -1,6 +1,6 @@
 # Services
 
-Maven \br
+Maven
 Spring
 Hibernate
 MySQL
