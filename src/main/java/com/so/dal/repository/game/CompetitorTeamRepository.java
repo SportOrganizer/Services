@@ -5,6 +5,7 @@
  */
 package com.so.dal.repository.game;
 
+import com.so.dal.model.game.CompetitorTeam;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +14,6 @@ import org.springframework.stereotype.Repository;
  * @author peter
  */
 @Repository
-public interface CompetitorTeamRepository extends JpaRepository<CompetitorTeamRepository, Integer>{
+public interface CompetitorTeamRepository extends JpaRepository<CompetitorTeam, Integer>{
     
 }
