@@ -40,9 +40,9 @@ public class Game  implements java.io.Serializable {
      private String name;
      private Date startTime;
      private Date realStart;
-     private boolean overtime;
-     private boolean finished;
-     private boolean contumated;
+     private Boolean overtime;
+     private Boolean finished;
+     private Boolean contumated;
      private Set<GameShots> gameShotses = new HashSet<GameShots>(0);
      private Set<GameActivity> gameActivities = new HashSet<GameActivity>(0);
      private Set<GamePlayer> gamePlayers = new HashSet<GamePlayer>(0);
@@ -51,7 +51,7 @@ public class Game  implements java.io.Serializable {
     }
 
 	
-    public Game(CompetitorTeam competitorTeamByIdAwayTeam, CompetitorTeam competitorTeamByIdHomeTeam, SeasonTournamentGroup seasonTournamentGroup, SeasonTournamentLocation seasonTournamentLocation, SeasonTournamentRound seasonTournamentRound, String name, Date startTime, Date realStart, boolean overtime, boolean finished, boolean contumated) {
+    public Game(CompetitorTeam competitorTeamByIdAwayTeam, CompetitorTeam competitorTeamByIdHomeTeam, SeasonTournamentGroup seasonTournamentGroup, SeasonTournamentLocation seasonTournamentLocation, SeasonTournamentRound seasonTournamentRound, String name, Date startTime, Date realStart, Boolean overtime, Boolean finished, Boolean contumated) {
         this.competitorTeamByIdAwayTeam = competitorTeamByIdAwayTeam;
         this.competitorTeamByIdHomeTeam = competitorTeamByIdHomeTeam;
         this.seasonTournamentGroup = seasonTournamentGroup;
@@ -64,7 +64,7 @@ public class Game  implements java.io.Serializable {
         this.finished = finished;
         this.contumated = contumated;
     }
-    public Game(CompetitorTeam competitorTeamByIdAwayTeam, CompetitorTeam competitorTeamByIdHomeTeam, SeasonTournamentGroup seasonTournamentGroup, SeasonTournamentLocation seasonTournamentLocation, SeasonTournamentRound seasonTournamentRound, String name, Date startTime, Date realStart, boolean overtime, boolean finished, boolean contumated, Set<GameShots> gameShotses, Set<GameActivity> gameActivities, Set<GamePlayer> gamePlayers) {
+    public Game(CompetitorTeam competitorTeamByIdAwayTeam, CompetitorTeam competitorTeamByIdHomeTeam, SeasonTournamentGroup seasonTournamentGroup, SeasonTournamentLocation seasonTournamentLocation, SeasonTournamentRound seasonTournamentRound, String name, Date startTime, Date realStart, Boolean overtime, Boolean finished, Boolean contumated, Set<GameShots> gameShotses, Set<GameActivity> gameActivities, Set<GamePlayer> gamePlayers) {
        this.competitorTeamByIdAwayTeam = competitorTeamByIdAwayTeam;
        this.competitorTeamByIdHomeTeam = competitorTeamByIdHomeTeam;
        this.seasonTournamentGroup = seasonTournamentGroup;
@@ -175,31 +175,31 @@ public class Game  implements java.io.Serializable {
 
     
     @Column(name="overtime", nullable=false)
-    public boolean isOvertime() {
+    public Boolean isOvertime() {
         return this.overtime;
     }
     
-    public void setOvertime(boolean overtime) {
+    public void setOvertime(Boolean overtime) {
         this.overtime = overtime;
     }
 
     
     @Column(name="finished", nullable=false)
-    public boolean isFinished() {
+    public Boolean isFinished() {
         return this.finished;
     }
     
-    public void setFinished(boolean finished) {
+    public void setFinished(Boolean finished) {
         this.finished = finished;
     }
 
     
     @Column(name="contumated", nullable=false)
-    public boolean isContumated() {
+    public Boolean isContumated() {
         return this.contumated;
     }
     
-    public void setContumated(boolean contumated) {
+    public void setContumated(Boolean contumated) {
         this.contumated = contumated;
     }
 

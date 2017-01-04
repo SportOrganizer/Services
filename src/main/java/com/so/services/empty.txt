@@ -1,4 +1,0 @@
-/**
- * Created by janpolacek on 12/28/16.
- */
-package com.so.services;

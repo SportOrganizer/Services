@@ -32,10 +32,10 @@ public class RegistrationPlayer  implements java.io.Serializable {
      private Date birthDate;
      private String mail;
      private String phone;
-     private boolean isStudent;
-     private boolean sex;
-     private boolean isVerified;
-     private boolean isProfessional;
+     private Boolean isStudent;
+     private Boolean sex;
+     private Boolean isVerified;
+     private Boolean isProfessional;
      private String note;
      private int number;
 
@@ -43,7 +43,7 @@ public class RegistrationPlayer  implements java.io.Serializable {
     }
 
 	
-    public RegistrationPlayer(RegistrationTeam registrationTeam, String name, String surname, boolean isStudent, boolean sex, boolean isVerified, boolean isProfessional, String note, int number) {
+    public RegistrationPlayer(RegistrationTeam registrationTeam, String name, String surname, Boolean isStudent, Boolean sex, Boolean isVerified, Boolean isProfessional, String note, int number) {
         this.registrationTeam = registrationTeam;
         this.name = name;
         this.surname = surname;
@@ -54,7 +54,7 @@ public class RegistrationPlayer  implements java.io.Serializable {
         this.note = note;
         this.number = number;
     }
-    public RegistrationPlayer(RegistrationTeam registrationTeam, String name, String surname, Date birthDate, String mail, String phone, boolean isStudent, boolean sex, boolean isVerified, boolean isProfessional, String note, int number) {
+    public RegistrationPlayer(RegistrationTeam registrationTeam, String name, String surname, Date birthDate, String mail, String phone, Boolean isStudent, Boolean sex, Boolean isVerified, Boolean isProfessional, String note, int number) {
        this.registrationTeam = registrationTeam;
        this.name = name;
        this.surname = surname;
@@ -143,41 +143,41 @@ public class RegistrationPlayer  implements java.io.Serializable {
 
     
     @Column(name="isStudent", nullable=false)
-    public boolean isIsStudent() {
+    public Boolean isIsStudent() {
         return this.isStudent;
     }
     
-    public void setIsStudent(boolean isStudent) {
+    public void setIsStudent(Boolean isStudent) {
         this.isStudent = isStudent;
     }
 
     
     @Column(name="sex", nullable=false)
-    public boolean isSex() {
+    public Boolean isSex() {
         return this.sex;
     }
     
-    public void setSex(boolean sex) {
+    public void setSex(Boolean sex) {
         this.sex = sex;
     }
 
     
     @Column(name="isVerified", nullable=false)
-    public boolean isIsVerified() {
+    public Boolean isIsVerified() {
         return this.isVerified;
     }
     
-    public void setIsVerified(boolean isVerified) {
+    public void setIsVerified(Boolean isVerified) {
         this.isVerified = isVerified;
     }
 
     
     @Column(name="isProfessional", nullable=false)
-    public boolean isIsProfessional() {
+    public Boolean isIsProfessional() {
         return this.isProfessional;
     }
     
-    public void setIsProfessional(boolean isProfessional) {
+    public void setIsProfessional(Boolean isProfessional) {
         this.isProfessional = isProfessional;
     }
 
