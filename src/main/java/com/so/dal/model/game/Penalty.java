@@ -26,20 +26,20 @@ public class Penalty  implements java.io.Serializable {
 
      private Integer id;
      private String name;
-     private boolean isPlayerDown;
-     private boolean isPlayerOut;
+     private Boolean isPlayerDown;
+     private Boolean isPlayerOut;
      private Set<SeasonTournamentPenalty> seasonTournamentPenalties = new HashSet<SeasonTournamentPenalty>(0);
 
     public Penalty() {
     }
 
 	
-    public Penalty(String name, boolean isPlayerDown, boolean isPlayerOut) {
+    public Penalty(String name, Boolean isPlayerDown, Boolean isPlayerOut) {
         this.name = name;
         this.isPlayerDown = isPlayerDown;
         this.isPlayerOut = isPlayerOut;
     }
-    public Penalty(String name, boolean isPlayerDown, boolean isPlayerOut, Set<SeasonTournamentPenalty> seasonTournamentPenalties) {
+    public Penalty(String name, Boolean isPlayerDown, Boolean isPlayerOut, Set<SeasonTournamentPenalty> seasonTournamentPenalties) {
        this.name = name;
        this.isPlayerDown = isPlayerDown;
        this.isPlayerOut = isPlayerOut;
@@ -70,21 +70,21 @@ public class Penalty  implements java.io.Serializable {
 
     
     @Column(name="isPlayerDown", nullable=false)
-    public boolean isIsPlayerDown() {
+    public Boolean isIsPlayerDown() {
         return this.isPlayerDown;
     }
     
-    public void setIsPlayerDown(boolean isPlayerDown) {
+    public void setIsPlayerDown(Boolean isPlayerDown) {
         this.isPlayerDown = isPlayerDown;
     }
 
     
     @Column(name="isPlayerOut", nullable=false)
-    public boolean isIsPlayerOut() {
+    public Boolean isIsPlayerOut() {
         return this.isPlayerOut;
     }
     
-    public void setIsPlayerOut(boolean isPlayerOut) {
+    public void setIsPlayerOut(Boolean isPlayerOut) {
         this.isPlayerOut = isPlayerOut;
     }
 

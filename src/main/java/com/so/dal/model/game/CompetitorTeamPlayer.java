@@ -33,21 +33,21 @@ public class CompetitorTeamPlayer  implements java.io.Serializable {
      private Person person;
      private Resource resource;
      private int number;
-     private boolean isCapitan;
+     private Boolean isCapitan;
      private Set<GamePlayer> gamePlayers = new HashSet<GamePlayer>(0);
 
     public CompetitorTeamPlayer() {
     }
 
 	
-    public CompetitorTeamPlayer(CompetitorTeam competitorTeam, Person person, Resource resource, int number, boolean isCapitan) {
+    public CompetitorTeamPlayer(CompetitorTeam competitorTeam, Person person, Resource resource, int number, Boolean isCapitan) {
         this.competitorTeam = competitorTeam;
         this.person = person;
         this.resource = resource;
         this.number = number;
         this.isCapitan = isCapitan;
     }
-    public CompetitorTeamPlayer(CompetitorTeam competitorTeam, Person person, Resource resource, int number, boolean isCapitan, Set<GamePlayer> gamePlayers) {
+    public CompetitorTeamPlayer(CompetitorTeam competitorTeam, Person person, Resource resource, int number, Boolean isCapitan, Set<GamePlayer> gamePlayers) {
        this.competitorTeam = competitorTeam;
        this.person = person;
        this.resource = resource;
@@ -110,11 +110,11 @@ public class CompetitorTeamPlayer  implements java.io.Serializable {
 
     
     @Column(name="isCapitan", nullable=false)
-    public boolean isIsCapitan() {
+    public Boolean isIsCapitan() {
         return this.isCapitan;
     }
     
-    public void setIsCapitan(boolean isCapitan) {
+    public void setIsCapitan(Boolean isCapitan) {
         this.isCapitan = isCapitan;
     }
 

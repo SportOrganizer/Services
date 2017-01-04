@@ -33,21 +33,21 @@ public class Person  implements java.io.Serializable {
      private Date birthDate;
      private String mail;
      private String phone;
-     private boolean isStudent;
-     private boolean sex;
+     private Boolean isStudent;
+     private Boolean sex;
      private Set<CompetitorTeamPlayer> competitorTeamPlayers = new HashSet<CompetitorTeamPlayer>(0);
 
     public Person() {
     }
 
 	
-    public Person(String name, String surname, boolean isStudent, boolean sex) {
+    public Person(String name, String surname, Boolean isStudent, Boolean sex) {
         this.name = name;
         this.surname = surname;
         this.isStudent = isStudent;
         this.sex = sex;
     }
-    public Person(String name, String surname, Date birthDate, String mail, String phone, boolean isStudent, boolean sex, Set<CompetitorTeamPlayer> competitorTeamPlayers) {
+    public Person(String name, String surname, Date birthDate, String mail, String phone, Boolean isStudent, Boolean sex, Set<CompetitorTeamPlayer> competitorTeamPlayers) {
        this.name = name;
        this.surname = surname;
        this.birthDate = birthDate;
@@ -122,21 +122,21 @@ public class Person  implements java.io.Serializable {
 
     
     @Column(name="isStudent", nullable=false)
-    public boolean isIsStudent() {
+    public Boolean isIsStudent() {
         return this.isStudent;
     }
     
-    public void setIsStudent(boolean isStudent) {
+    public void setIsStudent(Boolean isStudent) {
         this.isStudent = isStudent;
     }
 
     
     @Column(name="sex", nullable=false)
-    public boolean isSex() {
+    public Boolean isSex() {
         return this.sex;
     }
     
-    public void setSex(boolean sex) {
+    public void setSex(Boolean sex) {
         this.sex = sex;
     }
 
