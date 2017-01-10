@@ -16,6 +16,7 @@ public class TeamController {
         return "Get teams";
     }
 
+    //com
     @GetMapping("/{teamId}")
     public String getForDay(@PathVariable  String teamId) {
         return "Get team" +  teamId;
