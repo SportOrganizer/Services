@@ -5,15 +5,16 @@
  */
 package com.so.dal.repository;
 
-import com.so.dal.model.Team;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import com.so.dal.repository.customDto.PathsToLogos;
+import java.util.List;
 
 /**
  *
  * @author peter
  */
-@Repository
-public interface TeamRepository extends JpaRepository<Team, Integer>, TeamRepositoryCustom {
+public interface TeamRepositoryCustom {
+    public List<PathsToLogos> getPathsToLogos();
+    public List<PathsToLogos> getPathsToLogos2();
+
     
 }
