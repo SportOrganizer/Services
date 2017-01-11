@@ -14,6 +14,6 @@ import org.springframework.stereotype.Repository;
  * @author peter
  */
 @Repository
-public interface TeamRepository extends JpaRepository<Team, Integer> {
+public interface TeamRepository extends JpaRepository<Team, Integer>, TeamRepositoryCustom {
     
 }
