@@ -1,15 +1,4 @@
 # Services
 
-Maven
+Combination of Maven, Spring, Hibernate, with REST Services, and WAR deployment.
 
-Spring
-
-Hibernate
-
-MySQL
-
-REST
-
-->war
-
-->NO SpringBoot
