@@ -9,11 +9,12 @@ import com.so.dal.model.season.Season;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-/**
- *
- * @author peter
- */
+import java.util.List;
+import java.util.stream.Stream;
+
+
 @Repository
 public interface SeasonRepository extends JpaRepository<Season, Integer>{
-    
+    public List<Season> findByNameContaining(String name);
+    public Season findByName(String name);
 }
