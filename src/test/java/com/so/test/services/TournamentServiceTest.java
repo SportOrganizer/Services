@@ -7,6 +7,8 @@ import com.so.services.season.SeasonService;
 import com.so.test.init.TestParent;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import static org.mockito.Mockito.*;
+
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
@@ -19,7 +21,7 @@ public class TournamentServiceTest extends TestParent {
     TournamentService service;
 
     @Test
-    public void createSeasonTest(){
+    public void createTournamentnTest(){
         Boolean b=  service.createTournament("Test");
         assertTrue(b);
     }
