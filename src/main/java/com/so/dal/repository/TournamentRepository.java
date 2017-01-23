@@ -9,11 +9,14 @@ import com.so.dal.model.Tournament;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  *
  * @author peter
  */
 @Repository
 public interface TournamentRepository extends JpaRepository<Tournament, Integer>{
-    
+    public List<Tournament> findByNameContaining(String name);
+    public Tournament findByName(String name);
 }
