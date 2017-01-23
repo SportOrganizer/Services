@@ -2,7 +2,14 @@ package com.so.controller;
 
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.so.controller.dto.SeasonDTO;
+import com.so.dal.model.Person;
 import com.so.dal.model.season.Season;
+import com.so.dal.repository.PersonRepository;
+import com.so.services.PersonService;
 import com.so.services.season.SeasonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,16 +31,26 @@ public class SeasonController {
 
     @RequestMapping(path = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getSeasons(@RequestParam(value = "q",required = false) String query ){
-        List<Season> seasonsList;
+        List<Season> seasons;
+        List<SeasonDTO> seasonDTOS = new LinkedList<SeasonDTO>();
+        JsonObject jo = new JsonObject();
+        Gson gson = new Gson();
 
         if(query != null){
-            seasonsList = seasonService.findByNameContaining(query);
+            seasons = seasonService.findByNameContaining(query);
+            jo.addProperty("query",query);
+
         }else{
-            seasonsList = seasonService.findAll();
+            seasons = seasonService.findAll();
         }
 
-        return createSeasonListJSON(seasonsList);
+        for(Season s: seasons){
+            seasonDTOS.add(new SeasonDTO(s));
+        }
 
+        jo.addProperty("length",seasonDTOS.size());
+        jo.add("results",gson.toJsonTree(seasonDTOS));
+        return jo.toString();
     }
 
     @RequestMapping(path = "/", method = RequestMethod.POST)
@@ -48,23 +65,6 @@ public class SeasonController {
         }
 
     }
-
-
-
-    private String createSeasonListJSON(List<Season> seasonsList){
-        final List<String> seasonNames = new LinkedList<String>();
-        for(Season season : seasonsList){
-            seasonNames.add(season.getName());
-        }
-
-        Gson gson = new Gson();
-        return gson.toJson(seasonNames);
-    }
-
-
-
-
-
 
 
 }

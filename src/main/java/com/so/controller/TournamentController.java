@@ -2,6 +2,9 @@ package com.so.controller;
 
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.so.controller.dto.TournamentDTO;
 import com.so.dal.model.Tournament;
 import com.so.services.TournamentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +27,28 @@ public class TournamentController {
 
     @RequestMapping(path = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getTournaments(@RequestParam(value = "q",required = false) String query ){
-        List<Tournament> tournamentList;
+        List<Tournament> tournaments;
+        List<TournamentDTO> tournamentDTOS = new LinkedList<TournamentDTO>();
+        JsonObject jo = new JsonObject();
+        Gson gson = new Gson();
+
 
         if(query != null){
-            tournamentList = tournamentService.findByNameContaining(query);
+            tournaments = tournamentService.findByNameContaining(query);
+            jo.addProperty("query",query);
+
         }else{
-            tournamentList = tournamentService.findAll();
+            tournaments = tournamentService.findAll();
         }
 
-        return createTournamentListJSON(tournamentList);
+        for(Tournament t: tournaments){
+            tournamentDTOS.add(new TournamentDTO(t));
+        }
+
+        jo.addProperty("length",tournamentDTOS.size());
+        jo.add("results",gson.toJsonTree(tournamentDTOS));
+
+        return jo.toString();
 
     }
 
@@ -48,23 +64,4 @@ public class TournamentController {
         }
 
     }
-
-
-
-    private String createTournamentListJSON(List<Tournament> TournamentsList){
-        final List<String> TournamentNames = new LinkedList<String>();
-        for(Tournament Tournament : TournamentsList){
-            TournamentNames.add(Tournament.getName());
-        }
-
-        Gson gson = new Gson();
-        return gson.toJson(TournamentNames);
-    }
-
-
-
-
-
-
-
 }
