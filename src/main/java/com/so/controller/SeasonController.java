@@ -2,11 +2,7 @@ package com.so.controller;
 
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.so.dal.model.Person;
 import com.so.dal.model.season.Season;
-import com.so.dal.repository.PersonRepository;
-import com.so.services.PersonService;
 import com.so.services.season.SeasonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +20,6 @@ import java.util.List;
 public class SeasonController {
     @Autowired
     SeasonService seasonService;
-
 
 
     @RequestMapping(path = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -53,8 +48,6 @@ public class SeasonController {
         }
 
     }
-
-
 
 
 
