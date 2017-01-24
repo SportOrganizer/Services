@@ -1,11 +1,6 @@
 package com.so.controller.dto;
 
-import com.so.dal.model.Resource;
-import com.so.dal.model.Tournament;
-import com.so.dal.model.season.Season;
 import com.so.dal.model.season.SeasonTournament;
-
-import java.io.Serializable;
 
 /**
  * Created by janpolacek on 1/23/17.
@@ -21,6 +16,13 @@ public class SeasonTournamentDTO{
         this.seasonId = st.getSeason().getId();
         this.tournamentId = st.getTournament().getId();
         this.name = st.getName();
+    }
+
+    public SeasonTournamentDTO ( Integer seasonId, Integer tournamentId, String name) {
+
+        this.seasonId = seasonId;
+        this.tournamentId = tournamentId;
+        this.name = name;
     }
 
     public Integer getId() {

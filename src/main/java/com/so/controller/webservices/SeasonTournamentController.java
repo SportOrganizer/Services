@@ -4,6 +4,7 @@ package com.so.controller.webservices;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.so.controller.dto.SeasonTournamentDTO;
+import com.so.controller.dto.TournamentDTO;
 import com.so.dal.model.season.SeasonTournament;
 import com.so.services.season.SeasonTournamentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,34 @@ public class SeasonTournamentController {
         jo.add("results",gson.toJsonTree(SeasonTournamentDTOS));
 
         return jo.toString();
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String getSeasonTournament(@PathVariable(value="id") Integer id ){
+
+        SeasonTournament seasonTournament;
+        SeasonTournamentDTO seasonTournamentDTO;
+        Gson gson = new Gson();
+
+        seasonTournament = seasonTournamentService.findById(id);
+        seasonTournamentDTO = new SeasonTournamentDTO(seasonTournament);
+
+        return gson.toJson(seasonTournamentDTO);
+    }
+
+    @RequestMapping(path = "/", method = RequestMethod.POST)
+    public ResponseEntity createSeasonTournament(@RequestBody SeasonTournamentDTO st ){
+
+
+
+//        Boolean status = tournamentService.createTournament(t.getName());
+//        if(status){
+//            return new ResponseEntity(HttpStatus.OK);
+//        }else{
+//            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+//        }
+
+            return new ResponseEntity(HttpStatus.OK);
     }
 
 }
