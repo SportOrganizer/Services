@@ -66,16 +66,16 @@ public class SeasonTournamentController {
     @RequestMapping(path = "/", method = RequestMethod.POST)
     public ResponseEntity createSeasonTournament(@RequestBody SeasonTournamentDTO st ){
 
+        if (st == null){
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
 
-
-//        Boolean status = tournamentService.createTournament(t.getName());
-//        if(status){
-//            return new ResponseEntity(HttpStatus.OK);
-//        }else{
-//            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-//        }
-
+        Boolean status = seasonTournamentService.createSeasonTournament(st.getSeasonId(), st.getTournamentId(), st.getName());
+        if(status){
             return new ResponseEntity(HttpStatus.OK);
+        }else{
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

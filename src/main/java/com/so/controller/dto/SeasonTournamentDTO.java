@@ -2,16 +2,17 @@ package com.so.controller.dto;
 
 import com.so.dal.model.season.SeasonTournament;
 
-/**
- * Created by janpolacek on 1/23/17.
- */
 public class SeasonTournamentDTO{
+
     private Integer id;
     private Integer seasonId;
     private Integer tournamentId;
     private String name;
 
-    public SeasonTournamentDTO ( SeasonTournament st) {
+    public SeasonTournamentDTO() {
+    }
+
+    public SeasonTournamentDTO (SeasonTournament st) {
         this.id = st.getId();
         this.seasonId = st.getSeason().getId();
         this.tournamentId = st.getTournament().getId();
@@ -19,9 +20,14 @@ public class SeasonTournamentDTO{
     }
 
     public SeasonTournamentDTO ( Integer seasonId, Integer tournamentId, String name) {
-
         this.seasonId = seasonId;
         this.tournamentId = tournamentId;
+        this.name = name;
+    }
+
+    public SeasonTournamentDTO ( String seasonId, String tournamentId, String name) {
+        this.seasonId = Integer.parseInt(seasonId);
+        this.tournamentId = Integer.parseInt(tournamentId);
         this.name = name;
     }
 
