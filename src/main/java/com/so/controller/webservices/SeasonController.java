@@ -2,14 +2,9 @@ package com.so.controller.webservices;
 
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.so.controller.dto.SeasonDTO;
-import com.so.dal.model.Person;
 import com.so.dal.model.season.Season;
-import com.so.dal.repository.PersonRepository;
-import com.so.services.PersonService;
 import com.so.services.season.SeasonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,6 +47,20 @@ public class SeasonController {
         jo.add("results",gson.toJsonTree(seasonDTOS));
         return jo.toString();
     }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String getSeason(@PathVariable(value="id") Integer id ){
+
+        Season season;
+        SeasonDTO seasonDTO;
+        Gson gson = new Gson();
+
+        season = seasonService.findById(id);
+        seasonDTO = new SeasonDTO(season);
+
+        return gson.toJson(seasonDTO);
+    }
+
 
     @RequestMapping(path = "/", method = RequestMethod.POST)
     public ResponseEntity createSeason(@RequestBody Season season ){
