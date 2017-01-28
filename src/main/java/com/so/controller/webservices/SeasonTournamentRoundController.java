@@ -4,8 +4,11 @@ package com.so.controller.webservices;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.so.controller.dto.SeasonTournamentDTO;
+import com.so.controller.dto.SeasonTournamentRoundDTO;
 import com.so.controller.dto.TournamentDTO;
 import com.so.dal.model.season.SeasonTournament;
+import com.so.dal.model.season.SeasonTournamentRound;
+import com.so.services.season.SeasonTournamentRoundService;
 import com.so.services.season.SeasonTournamentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,33 +22,33 @@ import java.util.List;
 
 @RestController
 
-@RequestMapping("/seasontournament")
-public class SeasonTournamentController {
+@RequestMapping("/seasontournamentround")
+public class SeasonTournamentRoundController {
     @Autowired
-    SeasonTournamentService seasonTournamentService;
+    SeasonTournamentRoundService seasonTournamentRoundService;
 
 
     @RequestMapping(path = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getSeasonTournaments(@RequestParam(value = "q",required = false) String query ){
-        List<SeasonTournament> seasonTournaments;
-        List<SeasonTournamentDTO> seasonTournamentDTOS = new LinkedList<SeasonTournamentDTO>();
+        List<SeasonTournamentRound> seasonTournamentRounds;
+        List<SeasonTournamentRoundDTO> seasonTournamentRoundDTOS = new LinkedList<SeasonTournamentRoundDTO>();
         JsonObject jo = new JsonObject();
         Gson gson = new Gson();
 
         if(query != null){
-            seasonTournaments = seasonTournamentService.findByNameContaining(query);
+            seasonTournamentRounds = seasonTournamentRoundService.findByNameContaining(query);
             jo.addProperty("query",query);
 
         }else{
-            seasonTournaments = seasonTournamentService.findAll();
+            seasonTournamentRounds = seasonTournamentRoundService.findAll();
         }
 
-        for(SeasonTournament st: seasonTournaments){
-            seasonTournamentDTOS.add(new SeasonTournamentDTO(st));
+        for(SeasonTournamentRound st: seasonTournamentRounds){
+            seasonTournamentRoundDTOS.add(new SeasonTournamentRoundDTO(st));
         }
 
-        jo.addProperty("length",seasonTournamentDTOS.size());
-        jo.add("results",gson.toJsonTree(seasonTournamentDTOS));
+        jo.addProperty("length",seasonTournamentRoundDTOS.size());
+        jo.add("results",gson.toJsonTree(seasonTournamentRoundDTOS));
 
         return jo.toString();
     }
@@ -53,29 +56,25 @@ public class SeasonTournamentController {
     @RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getSeasonTournament(@PathVariable(value="id") Integer id ){
 
-        SeasonTournament seasonTournament;
-        SeasonTournamentDTO seasonTournamentDTO;
+        SeasonTournamentRound seasonTournamentRound;
+        SeasonTournamentRoundDTO seasonTournamentRoundDTO;
         Gson gson = new Gson();
 
-        seasonTournament = seasonTournamentService.findById(id);
-        seasonTournamentDTO = new SeasonTournamentDTO(seasonTournament);
+        seasonTournamentRound = seasonTournamentRoundService.findById(id);
+        seasonTournamentRoundDTO = new SeasonTournamentRoundDTO(seasonTournamentRound);
 
-        return gson.toJson(seasonTournamentDTO);
+        return gson.toJson(seasonTournamentRoundDTO);
     }
 
-//    {
-//        "seasonId": 1,
-//            "tournamentId": 1,
-//            "name": "Tests2"
-//    }
+
     @RequestMapping(path = "/", method = RequestMethod.POST)
-    public ResponseEntity createSeasonTournament(@RequestBody SeasonTournamentDTO st ){
+    public ResponseEntity createSeasonTournament(@RequestBody SeasonTournamentRoundDTO st ){
 
         if (st == null){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
-        Boolean status = seasonTournamentService.createSeasonTournament(st.getSeasonId(), st.getTournamentId(), st.getName());
+        Boolean status = seasonTournamentRoundService.createSeasonTournamentRound(st.getSeasonTournamentId(), st.getName());
         if(status){
             return new ResponseEntity(HttpStatus.OK);
         }else{
