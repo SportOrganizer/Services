@@ -1,9 +1,9 @@
-package com.so.controller.webservices;
+package com.so.controller.webservices.season;
 
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.so.controller.dto.SeasonDTO;
+import com.so.controller.dto.season.SeasonDTO;
 import com.so.dal.model.season.Season;
 import com.so.services.season.SeasonService;
 import org.springframework.beans.factory.annotation.Autowired;

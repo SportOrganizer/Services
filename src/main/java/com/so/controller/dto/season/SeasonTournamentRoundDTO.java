@@ -1,4 +1,4 @@
-package com.so.controller.dto;
+package com.so.controller.dto.season;
 
 import com.so.dal.model.season.SeasonTournament;
 import com.so.dal.model.season.SeasonTournamentRound;
