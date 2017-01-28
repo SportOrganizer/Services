@@ -63,6 +63,11 @@ public class SeasonTournamentController {
         return gson.toJson(seasonTournamentDTO);
     }
 
+//    {
+//        "seasonId": 1,
+//            "tournamentId": 1,
+//            "name": "Tests2"
+//    }
     @RequestMapping(path = "/", method = RequestMethod.POST)
     public ResponseEntity createSeasonTournament(@RequestBody SeasonTournamentDTO st ){
 
@@ -77,5 +82,6 @@ public class SeasonTournamentController {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }
+
 
 }
