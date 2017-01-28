@@ -1,15 +1,11 @@
-package com.so.controller.webservices;
+package com.so.controller.webservices.season;
 
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.so.controller.dto.SeasonTournamentDTO;
-import com.so.controller.dto.SeasonTournamentRoundDTO;
-import com.so.controller.dto.TournamentDTO;
-import com.so.dal.model.season.SeasonTournament;
+import com.so.controller.dto.season.SeasonTournamentRoundDTO;
 import com.so.dal.model.season.SeasonTournamentRound;
 import com.so.services.season.SeasonTournamentRoundService;
-import com.so.services.season.SeasonTournamentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
