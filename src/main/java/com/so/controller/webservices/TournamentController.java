@@ -2,7 +2,6 @@ package com.so.controller.webservices;
 
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.so.controller.dto.TournamentDTO;
 import com.so.dal.model.Tournament;
@@ -49,14 +48,26 @@ public class TournamentController {
         jo.add("results",gson.toJsonTree(tournamentDTOS));
 
         return jo.toString();
+    }
 
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String getTournament(@PathVariable(value="id") Integer id ){
+
+        Tournament tournament;
+        TournamentDTO tournamentDTO;
+        Gson gson = new Gson();
+
+        tournament = tournamentService.findById(id);
+        tournamentDTO = new TournamentDTO(tournament);
+
+        return gson.toJson(tournamentDTO);
     }
 
     @RequestMapping(path = "/", method = RequestMethod.POST)
-    public ResponseEntity createTournament(@RequestBody Tournament Tournament ){
+    public ResponseEntity createTournament(@RequestBody Tournament t ){
 
 
-        Boolean status = tournamentService.createTournament(Tournament.getName());
+        Boolean status = tournamentService.createTournament(t.getName());
         if(status){
             return new ResponseEntity(HttpStatus.OK);
         }else{
