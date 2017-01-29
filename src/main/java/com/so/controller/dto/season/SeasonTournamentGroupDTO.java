@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.so.controller.dto;
+package com.so.controller.dto.season;
 
 import com.so.dal.model.season.SeasonTournament;
 import com.so.dal.model.season.SeasonTournamentGroup;
@@ -32,7 +32,7 @@ public class SeasonTournamentGroupDTO {
      
     public SeasonTournamentGroupDTO(SeasonTournamentGroup stg){
         this.id = stg.getId();
-        this.seasonTournamentId = stg.getId();
+        this.seasonTournamentId = stg.getSeasonTournament().getId();
         this.name = stg.getName();
     }
 

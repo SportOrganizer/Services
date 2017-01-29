@@ -7,7 +7,7 @@ package com.so.controller.webservices;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.so.controller.dto.SeasonTournamentGroupDTO;
+import com.so.controller.dto.season.SeasonTournamentGroupDTO;
 import com.so.dal.model.season.SeasonTournamentGroup;
 import com.so.services.season.SeasonTournamentGroupService;
 import java.util.LinkedList;
