@@ -65,7 +65,7 @@ public class SeasonTournamentGroupService {
     
     @Transactional
     public Boolean createSeasonTournamentGroup(Integer seasonTournamentId, String name){
-        LOG.info("createSeasonTournament({},{})", seasonTournamentId, name);
+        LOG.info("createSeasonTournamentGroup({},{})", seasonTournamentId, name);
         
         SeasonTournament seasonTournament;
         SeasonTournamentGroup seasonTournamentGroup;
