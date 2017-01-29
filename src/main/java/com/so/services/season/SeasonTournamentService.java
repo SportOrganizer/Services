@@ -105,7 +105,6 @@ public class SeasonTournamentService {
             return false;
         }
 
-
         seasonTournament = new SeasonTournament(season, tournament, name);
         seasonTournament  = seasonTournamentRepo.saveAndFlush(seasonTournament);
 
