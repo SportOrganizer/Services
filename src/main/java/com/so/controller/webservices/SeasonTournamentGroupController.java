@@ -7,7 +7,6 @@ package com.so.controller.webservices;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.so.controller.dto.SeasonTournamentDTO;
 import com.so.controller.dto.SeasonTournamentGroupDTO;
 import com.so.dal.model.season.SeasonTournamentGroup;
 import com.so.services.season.SeasonTournamentGroupService;
