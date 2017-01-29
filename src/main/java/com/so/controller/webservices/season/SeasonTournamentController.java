@@ -1,10 +1,9 @@
-package com.so.controller.webservices;
+package com.so.controller.webservices.season;
 
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.so.controller.dto.SeasonTournamentDTO;
-import com.so.controller.dto.TournamentDTO;
+import com.so.controller.dto.season.SeasonTournamentDTO;
 import com.so.dal.model.season.SeasonTournament;
 import com.so.services.season.SeasonTournamentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ public class SeasonTournamentController {
     @RequestMapping(path = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getSeasonTournaments(@RequestParam(value = "q",required = false) String query ){
         List<SeasonTournament> seasonTournaments;
-        List<SeasonTournamentDTO> SeasonTournamentDTOS = new LinkedList<SeasonTournamentDTO>();
+        List<SeasonTournamentDTO> seasonTournamentDTOS = new LinkedList<SeasonTournamentDTO>();
         JsonObject jo = new JsonObject();
         Gson gson = new Gson();
 
@@ -41,11 +40,11 @@ public class SeasonTournamentController {
         }
 
         for(SeasonTournament st: seasonTournaments){
-            SeasonTournamentDTOS.add(new SeasonTournamentDTO(st));
+            seasonTournamentDTOS.add(new SeasonTournamentDTO(st));
         }
 
-        jo.addProperty("length",SeasonTournamentDTOS.size());
-        jo.add("results",gson.toJsonTree(SeasonTournamentDTOS));
+        jo.addProperty("length",seasonTournamentDTOS.size());
+        jo.add("results",gson.toJsonTree(seasonTournamentDTOS));
 
         return jo.toString();
     }

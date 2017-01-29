@@ -5,15 +5,15 @@
  */
 package com.so.dal.repository.season;
 
+import com.so.dal.model.season.SeasonTournamentPenalty;
 import com.so.dal.model.season.SeasonTournamentPeriod;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-/**
- *
- * @author peter
- */
+import java.util.List;
+
 @Repository
 public interface SeasonTournamentPeriodRepository  extends JpaRepository<SeasonTournamentPeriod, Integer>{
-    
+    public List<SeasonTournamentPeriod> findByNameContaining(String name);
+    public SeasonTournamentPeriod findByName(String name);
 }
