@@ -7,10 +7,9 @@ package com.so.controller.webservices;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-
-import com.so.controller.dto.season.SeasonTournamentGroupDTO;
-import com.so.dal.model.season.SeasonTournamentGroup;
-import com.so.services.season.SeasonTournamentGroupService;
+import com.so.controller.dto.season.SeasonTournamentLocationDTO;
+import com.so.dal.model.season.SeasonTournamentLocation;
+import com.so.services.season.SeasonTournamentLocationService;
 import java.util.LinkedList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,48 +29,44 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 
-@RequestMapping("/seasontournamentgroup")
-public class SeasonTournamentGroupController {
+@RequestMapping("/seasontournamentlocation")
+public class SeasonTournamentLocationController {
     @Autowired
-    SeasonTournamentGroupService seasonTournamentGroupService;
+    SeasonTournamentLocationService seasonTournamentLocationService;
     
     @RequestMapping(path = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String getSeasonTournamentGroups(@RequestParam(value = "q", required = false) String query){
-        List<SeasonTournamentGroup> seasonTournamentGroups;
-        List<SeasonTournamentGroupDTO> seasonTournamentGroupsDTOS = new LinkedList<SeasonTournamentGroupDTO>();
+    public String getSeasonTournamentLocations(@RequestParam(value = "q", required = false) String query){
+        List<SeasonTournamentLocation> seasonTournamentLocations;
+        List<SeasonTournamentLocationDTO> seasonTournamentLocationDTOS = new LinkedList<SeasonTournamentLocationDTO>();
         JsonObject jo = new JsonObject();
         Gson gson = new Gson();
         
         if(query != null){
-            seasonTournamentGroups = seasonTournamentGroupService.findByNameContaining(query);
+            seasonTournamentLocations = seasonTournamentLocationService.findByNameContaining(query);
             jo.addProperty("query", query);
         }else{
-            seasonTournamentGroups = seasonTournamentGroupService.findAll();
+            seasonTournamentLocations = seasonTournamentLocationService.findAll();
         }
         
-        for(SeasonTournamentGroup stg: seasonTournamentGroups){
-            seasonTournamentGroupsDTOS.add(new SeasonTournamentGroupDTO(stg));
+        for(SeasonTournamentLocation stl: seasonTournamentLocations){
+            seasonTournamentLocationDTOS.add(new SeasonTournamentLocationDTO(stl));
         }
         
-        jo.addProperty("length", seasonTournamentGroups.size());
-        jo.add("result", gson.toJsonTree(seasonTournamentGroupsDTOS));
+        jo.addProperty("length", seasonTournamentLocationDTOS.size());
+        jo.add("result", gson.toJsonTree(seasonTournamentLocationDTOS));
          
-        /*
-        ulozenie dalo ok
-        skontrolovat databazu ci je tam zaznam
-        pada mi to ked chcem selektovat vsetko
-        */
+        
         return jo.toString();
     }
     
     @RequestMapping(path = "/", method = RequestMethod.POST)
-    public ResponseEntity createSeasonTournamentGroup(@RequestBody SeasonTournamentGroupDTO stg ){
+    public ResponseEntity createSeasonTournamentLocation(@RequestBody SeasonTournamentLocationDTO stl ){
 
-        if (stg == null){
+        if (stl == null){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
-        Boolean status = seasonTournamentGroupService.createSeasonTournamentGroup(stg.getSeasonTournamentId(), stg.getName());
+        Boolean status = seasonTournamentLocationService.createSeasonTournamentLocation(stl.getSeasonTournamentId(), stl.getName());
         if(status){
             return new ResponseEntity(HttpStatus.OK);
         }else{
@@ -82,13 +77,13 @@ public class SeasonTournamentGroupController {
     @RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getSeasonTournamentGrup(@PathVariable(value="id") Integer id ){
 
-        SeasonTournamentGroup seasonTournamentGroup;
-        SeasonTournamentGroupDTO seasonTournamentGroupDTO;
+        SeasonTournamentLocation seasonTournamentLocation;
+        SeasonTournamentLocationDTO seasonTournamentLocationDTO;
         Gson gson = new Gson();
         
-        seasonTournamentGroup = seasonTournamentGroupService.findById(id);
-        seasonTournamentGroupDTO = new SeasonTournamentGroupDTO(seasonTournamentGroup);
+        seasonTournamentLocation = seasonTournamentLocationService.findById(id);
+        seasonTournamentLocationDTO = new SeasonTournamentLocationDTO(seasonTournamentLocation);
 
-        return gson.toJson(seasonTournamentGroupDTO);
+        return gson.toJson(seasonTournamentLocationDTO);
     }
 }
