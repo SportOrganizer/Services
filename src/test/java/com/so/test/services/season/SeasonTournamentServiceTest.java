@@ -1,6 +1,8 @@
 package com.so.test.services.season;
 
 import com.so.test.init.TestParent;
+import static junit.framework.TestCase.assertTrue;
+import org.junit.Test;
 
 
 /**
@@ -8,4 +10,10 @@ import com.so.test.init.TestParent;
  */
 
 public class SeasonTournamentServiceTest extends TestParent {
+    
+    @Test
+    public void createSeasonTest(){
+        
+        assertTrue(true);
+    }
 }
