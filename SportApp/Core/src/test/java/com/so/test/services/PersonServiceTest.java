@@ -5,8 +5,8 @@
  */
 package com.so.test.services;
 
-import com.so.dal.model.Person;
-import com.so.services.PersonService;
+import com.so.dal.core.model.Person;
+import com.so.core.services.PersonService;
 import com.so.test.init.TestParent;
 import static junit.framework.Assert.assertTrue;
 import org.junit.Test;

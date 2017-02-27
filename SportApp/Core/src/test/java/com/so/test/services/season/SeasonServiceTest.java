@@ -1,7 +1,7 @@
 package com.so.test.services.season;
 
-import com.so.dal.model.season.Season;
-import com.so.services.season.SeasonService;
+import com.so.dal.core.model.season.Season;
+import com.so.core.services.season.SeasonService;
 import com.so.test.init.TestParent;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

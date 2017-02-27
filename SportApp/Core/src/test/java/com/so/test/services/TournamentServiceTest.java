@@ -1,9 +1,7 @@
 package com.so.test.services;
 
-import com.so.dal.model.Tournament;
-import com.so.dal.model.season.Season;
-import com.so.services.TournamentService;
-import com.so.services.season.SeasonService;
+import com.so.dal.core.model.Tournament;
+import com.so.core.services.TournamentService;
 import com.so.test.init.TestParent;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
