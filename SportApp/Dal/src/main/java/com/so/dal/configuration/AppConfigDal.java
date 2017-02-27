@@ -12,12 +12,14 @@ import org.hibernate.ejb.HibernatePersistence;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
@@ -28,7 +30,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement /// zapnutie tranzakcii
 @ComponentScan("com.so.dal") //// root package aby sme nemuseli vsetky beany tuto definovat ale staci v triedach a tato anotacia zabezpeci aby ich inicializovalo
 @PropertySource("classpath:application.properties") //// kde sa nachadza property file.. vychadzame z main/resources
-@EnableJpaRepositories("com.so.dal") // zapnutie funkcionality JpaRepository... parameter package kde su repositories
+//@EnableJpaRepositories({"com.so.dal.repository",
+//"com.so.dal.repository.core","com.so.dal.repository.floorball",
+//"com.so.dal.repository.core.game","com.so.dal.repository.core.registration","com.so.dal.repository.core.season"}) // zapnutie funkcionality JpaRepository... parameter package kde su repositories
+@EnableJpaRepositories(basePackages = {"com.so.dal"}, includeFilters = {@ ComponentScan.Filter (type = FilterType.ANNOTATION, value = Repository.class)})
+//@EnableJpaRepositories(includeFilters = {@ ComponentScan.Filter (type = FilterType.ANNOTATION, value = Repository.class)})
 public class AppConfigDal {
 
     /////potrebne parametre -> su zadefinovane v resources/application.properties

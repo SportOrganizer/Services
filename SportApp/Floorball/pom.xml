@@ -96,7 +96,7 @@
     </dependencies>
 
     <build>
-        <finalName>core</finalName>
+        <finalName>floorball</finalName>
         <pluginManagement>
 
             <plugins>

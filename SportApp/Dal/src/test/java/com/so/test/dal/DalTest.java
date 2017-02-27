@@ -14,7 +14,7 @@ import com.so.dal.core.repository.customDto.PathsToLogos;
 import com.so.dal.floorball.repository.game.SportFlorbalGameShotsRepository;
 import java.util.List;
 import javax.transaction.Transactional;
-import static org.junit.Assert.assertTrue;
+import static junit.framework.Assert.assertTrue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -13,7 +13,8 @@ import com.so.dal.core.repository.customDto.PathsToLogos;
 import com.so.dal.floorball.repository.game.SportFlorbalGameShotsRepository;
 import com.so.test.init.TestParent;
 import java.util.List;
-import static org.junit.Assert.assertTrue;
+import static junit.framework.Assert.assertTrue;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

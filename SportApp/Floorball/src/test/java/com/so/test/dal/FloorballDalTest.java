@@ -6,10 +6,16 @@
 package com.so.test.dal;
 
 import com.so.dal.configuration.AppConfigDal;
+import com.so.dal.core.model.Resource;
+import com.so.dal.core.model.Team;
+import com.so.dal.core.repository.ResourceRepository;
+import com.so.dal.core.repository.TeamRepository;
+import com.so.dal.core.repository.customDto.PathsToLogos;
 import com.so.dal.floorball.repository.game.SportFlorbalGameShotsRepository;
-import com.so.floorball.configuration.FloorballAppConfig;
+import com.so.floorball.configuration.AppConfigFloorball;
+import java.util.List;
 import javax.transaction.Transactional;
-import static org.junit.Assert.assertTrue;
+import static junit.framework.Assert.assertTrue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,17 +29,40 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
  */
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes ={AppConfigDal.class,FloorballAppConfig.class} , loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes = {AppConfigDal.class, AppConfigFloorball.class}, loader = AnnotationConfigContextLoader.class)
 public class FloorballDalTest {
-    
+
     @Autowired
     private SportFlorbalGameShotsRepository florbalRepo;
-    
-      @Test
-   public void mojTest(){
-       
-       int size = florbalRepo.findAll().size();
 
-     assertTrue(size==0);
+    @Autowired
+    TeamRepository teamRepo;
+
+    @Autowired
+    ResourceRepository resourceRepo;
+
+    @Test
+    public void mojTest() {
+
+        int size = florbalRepo.findAll().size();
+
+        assertTrue(size == 0);
     }
+
+    @Test
+    public void getPathsToLogsTest() {
+        Resource r1 = resourceRepo.saveAndFlush(new Resource("cesta1"));
+        Resource r2 = resourceRepo.saveAndFlush(new Resource("cesta2"));
+        Resource r3 = resourceRepo.saveAndFlush(new Resource("cesta3"));
+        Resource r4 = resourceRepo.saveAndFlush(new Resource("cesta4"));
+
+        teamRepo.saveAndFlush(new Team(r1, "prvy tim", "pt", "r"));
+        teamRepo.saveAndFlush(new Team(r2, "druhy tim", "dt", "r"));
+        teamRepo.saveAndFlush(new Team(r3, "treti tim", "tt", "r"));
+        teamRepo.saveAndFlush(new Team(r4, "stvrty tim", "st", "r"));
+
+        List<PathsToLogos> l1 = teamRepo.getPathsToLogos();
+        assertTrue(l1.get(0).getPath().equals(r1.getPath()));
+    }
+
 }
