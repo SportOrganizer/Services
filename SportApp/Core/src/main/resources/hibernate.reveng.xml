@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-catalog="sport_app_dev"/>
+  <table-filter match-name="tournament"/>
+  <table-filter match-name="competitorTeamPlayer"/>
+  <table-filter match-name="sportFlorbalGameActivityType"/>
+  <table-filter match-name="seasonTournamentSettings"/>
+  <table-filter match-name="seasonTournamentPenaltySettings"/>
+  <table-filter match-name="penalty"/>
+  <table-filter match-name="sportFlorbalGameShots"/>
+  <table-filter match-name="registrationPlayer"/>
+  <table-filter match-name="sportFlorbalGameActivity"/>
+  <table-filter match-name="seasonTournamentPeriod"/>
+  <table-filter match-name="sportFlorbalGoalType"/>
+  <table-filter match-name="seasonTournamentLocation"/>
+  <table-filter match-name="seasonTournament"/>
+  <table-filter match-name="sportFlorbalGame"/>
+  <table-filter match-name="person"/>
+  <table-filter match-name="competitorTeam"/>
+  <table-filter match-name="registrationTeam"/>
+  <table-filter match-name="resource"/>
+  <table-filter match-name="team"/>
+  <table-filter match-name="gamePlayer"/>
+  <table-filter match-name="season"/>
+  <table-filter match-name="seasonTournamentRound"/>
+  <table-filter match-name="seasonTournamentGroup"/>
+</hibernate-reverse-engineering>

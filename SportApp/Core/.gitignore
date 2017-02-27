@@ -1,0 +1,5 @@
+target/
+.idea/
+.DS_Store
+/Services.iml
+logs/
