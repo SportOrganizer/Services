@@ -37,8 +37,8 @@ public class CompetitorTeam  implements java.io.Serializable {
      private Set<SportFlorbalGameActivity> sportFlorbalGameActivities = new HashSet<SportFlorbalGameActivity>(0);
      private Set<SportFlorbalGameShots> sportFlorbalGameShotses = new HashSet<SportFlorbalGameShots>(0);
      private Set<CompetitorTeamPlayer> competitorTeamPlayers = new HashSet<CompetitorTeamPlayer>(0);
-     private Set<SportFlorbalGame> sportFlorbalGamesForIdAwayTeam = new HashSet<SportFlorbalGame>(0);
-     private Set<SportFlorbalGame> sportFlorbalGamesForIdHomeTeam = new HashSet<SportFlorbalGame>(0);
+     private Set<Game> gamesForIdAwayTeam = new HashSet<Game>(0);
+     private Set<Game> gamesForIdHomeTeam = new HashSet<Game>(0);
 
     public CompetitorTeam() {
     }
@@ -49,15 +49,15 @@ public class CompetitorTeam  implements java.io.Serializable {
         this.seasonTournamentGroup = seasonTournamentGroup;
         this.team = team;
     }
-    public CompetitorTeam(Resource resource, SeasonTournamentGroup seasonTournamentGroup, Team team, Set<SportFlorbalGameActivity> sportFlorbalGameActivities, Set<SportFlorbalGameShots> sportFlorbalGameShotses, Set<CompetitorTeamPlayer> competitorTeamPlayers, Set<SportFlorbalGame> sportFlorbalGamesForIdAwayTeam, Set<SportFlorbalGame> sportFlorbalGamesForIdHomeTeam) {
+    public CompetitorTeam(Resource resource, SeasonTournamentGroup seasonTournamentGroup, Team team, Set<SportFlorbalGameActivity> sportFlorbalGameActivities, Set<SportFlorbalGameShots> sportFlorbalGameShotses, Set<CompetitorTeamPlayer> competitorTeamPlayers, Set<Game> gamesForIdAwayTeam, Set<Game> gamesForIdHomeTeam) {
        this.resource = resource;
        this.seasonTournamentGroup = seasonTournamentGroup;
        this.team = team;
        this.sportFlorbalGameActivities = sportFlorbalGameActivities;
        this.sportFlorbalGameShotses = sportFlorbalGameShotses;
        this.competitorTeamPlayers = competitorTeamPlayers;
-       this.sportFlorbalGamesForIdAwayTeam = sportFlorbalGamesForIdAwayTeam;
-       this.sportFlorbalGamesForIdHomeTeam = sportFlorbalGamesForIdHomeTeam;
+       this.gamesForIdAwayTeam = gamesForIdAwayTeam;
+       this.gamesForIdHomeTeam = gamesForIdHomeTeam;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -130,21 +130,21 @@ public class CompetitorTeam  implements java.io.Serializable {
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="competitorTeamByIdAwayTeam")
-    public Set<SportFlorbalGame> getSportFlorbalGamesForIdAwayTeam() {
-        return this.sportFlorbalGamesForIdAwayTeam;
+    public Set<Game> getGamesForIdAwayTeam() {
+        return this.gamesForIdAwayTeam;
     }
     
-    public void setSportFlorbalGamesForIdAwayTeam(Set<SportFlorbalGame> sportFlorbalGamesForIdAwayTeam) {
-        this.sportFlorbalGamesForIdAwayTeam = sportFlorbalGamesForIdAwayTeam;
+    public void setGamesForIdAwayTeam(Set<Game> gamesForIdAwayTeam) {
+        this.gamesForIdAwayTeam = gamesForIdAwayTeam;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="competitorTeamByIdHomeTeam")
-    public Set<SportFlorbalGame> getSportFlorbalGamesForIdHomeTeam() {
-        return this.sportFlorbalGamesForIdHomeTeam;
+    public Set<Game> getGamesForIdHomeTeam() {
+        return this.gamesForIdHomeTeam;
     }
     
-    public void setSportFlorbalGamesForIdHomeTeam(Set<SportFlorbalGame> sportFlorbalGamesForIdHomeTeam) {
-        this.sportFlorbalGamesForIdHomeTeam = sportFlorbalGamesForIdHomeTeam;
+    public void setGamesForIdHomeTeam(Set<Game> gamesForIdHomeTeam) {
+        this.gamesForIdHomeTeam = gamesForIdHomeTeam;
     }
 
 

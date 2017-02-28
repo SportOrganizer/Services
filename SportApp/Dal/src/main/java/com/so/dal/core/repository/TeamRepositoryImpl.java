@@ -7,8 +7,8 @@ package com.so.dal.core.repository;
 
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.types.Projections;
-import com.so.dal.model.core.QResource;
-import com.so.dal.model.core.QTeam;
+import com.so.dal.core.model.QResource;
+import com.so.dal.core.model.QTeam;
 import com.so.dal.core.repository.customDto.PathsToLogos;
 import java.util.ArrayList;
 import java.util.List;

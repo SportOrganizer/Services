@@ -2,7 +2,7 @@ package com.so.dal.floorball.model.game;
 // Generated 27.2.2017 18:41:18 by Hibernate Tools 4.3.1
 
 
-import com.so.dal.core.model.game.SportFlorbalGame;
+import com.so.dal.core.model.game.Game;
 import com.so.dal.core.model.season.SeasonTournamentPeriod;
 import com.so.dal.core.model.game.CompetitorTeam;
 import com.so.dal.core.model.game.GamePlayer;
@@ -38,7 +38,7 @@ public class SportFlorbalGameActivity  implements java.io.Serializable {
      private GamePlayer gamePlayerByIdPenaltyPlayer;
      private SeasonTournamentPenaltySettings seasonTournamentPenaltySettings;
      private SeasonTournamentPeriod seasonTournamentPeriod;
-     private SportFlorbalGame sportFlorbalGame;
+     private Game game;
      private SportFlorbalGameActivityType sportFlorbalGameActivityType;
      private SportFlorbalGoalType sportFlorbalGoalType;
      private Date gameTime;
@@ -51,15 +51,15 @@ public class SportFlorbalGameActivity  implements java.io.Serializable {
     }
 
 	
-    public SportFlorbalGameActivity(CompetitorTeam competitorTeam, SeasonTournamentPeriod seasonTournamentPeriod, SportFlorbalGame sportFlorbalGame, Date gameTime, Date realTime, Date penaltySeconds) {
+    public SportFlorbalGameActivity(CompetitorTeam competitorTeam, SeasonTournamentPeriod seasonTournamentPeriod, Game game, Date gameTime, Date realTime, Date penaltySeconds) {
         this.competitorTeam = competitorTeam;
         this.seasonTournamentPeriod = seasonTournamentPeriod;
-        this.sportFlorbalGame = sportFlorbalGame;
+        this.game = game;
         this.gameTime = gameTime;
         this.realTime = realTime;
         this.penaltySeconds = penaltySeconds;
     }
-    public SportFlorbalGameActivity(CompetitorTeam competitorTeam, GamePlayer gamePlayerByIdAssistPlayer, GamePlayer gamePlayerByIdGoalPlayer, GamePlayer gamePlayerByIdAssist2player, GamePlayer gamePlayerByIdPenaltyPlayer, SeasonTournamentPenaltySettings seasonTournamentPenaltySettings, SeasonTournamentPeriod seasonTournamentPeriod, SportFlorbalGame sportFlorbalGame, SportFlorbalGameActivityType sportFlorbalGameActivityType, SportFlorbalGoalType sportFlorbalGoalType, Date gameTime, Date realTime, Integer newScoreHome, Integer newScoreAway, Date penaltySeconds) {
+    public SportFlorbalGameActivity(CompetitorTeam competitorTeam, GamePlayer gamePlayerByIdAssistPlayer, GamePlayer gamePlayerByIdGoalPlayer, GamePlayer gamePlayerByIdAssist2player, GamePlayer gamePlayerByIdPenaltyPlayer, SeasonTournamentPenaltySettings seasonTournamentPenaltySettings, SeasonTournamentPeriod seasonTournamentPeriod, Game game, SportFlorbalGameActivityType sportFlorbalGameActivityType, SportFlorbalGoalType sportFlorbalGoalType, Date gameTime, Date realTime, Integer newScoreHome, Integer newScoreAway, Date penaltySeconds) {
        this.competitorTeam = competitorTeam;
        this.gamePlayerByIdAssistPlayer = gamePlayerByIdAssistPlayer;
        this.gamePlayerByIdGoalPlayer = gamePlayerByIdGoalPlayer;
@@ -67,7 +67,7 @@ public class SportFlorbalGameActivity  implements java.io.Serializable {
        this.gamePlayerByIdPenaltyPlayer = gamePlayerByIdPenaltyPlayer;
        this.seasonTournamentPenaltySettings = seasonTournamentPenaltySettings;
        this.seasonTournamentPeriod = seasonTournamentPeriod;
-       this.sportFlorbalGame = sportFlorbalGame;
+       this.game = game;
        this.sportFlorbalGameActivityType = sportFlorbalGameActivityType;
        this.sportFlorbalGoalType = sportFlorbalGoalType;
        this.gameTime = gameTime;
@@ -161,12 +161,12 @@ public class SportFlorbalGameActivity  implements java.io.Serializable {
 
 @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="idGame", nullable=false)
-    public SportFlorbalGame getSportFlorbalGame() {
-        return this.sportFlorbalGame;
+    public Game getGame() {
+        return this.game;
     }
     
-    public void setSportFlorbalGame(SportFlorbalGame sportFlorbalGame) {
-        this.sportFlorbalGame = sportFlorbalGame;
+    public void setGame(Game game) {
+        this.game = game;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)

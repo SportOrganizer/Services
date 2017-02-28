@@ -2,7 +2,7 @@ package com.so.dal.core.model.season;
 // Generated 27.2.2017 18:41:18 by Hibernate Tools 4.3.1
 
 
-import com.so.dal.core.model.game.SportFlorbalGame;
+import com.so.dal.core.model.game.Game;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -29,7 +29,7 @@ public class SeasonTournamentLocation  implements java.io.Serializable {
      private Integer id;
      private SeasonTournament seasonTournament;
      private String name;
-     private Set<SportFlorbalGame> sportFlorbalGames = new HashSet<SportFlorbalGame>(0);
+     private Set<Game> games = new HashSet<Game>(0);
 
     public SeasonTournamentLocation() {
     }
@@ -39,10 +39,10 @@ public class SeasonTournamentLocation  implements java.io.Serializable {
         this.seasonTournament = seasonTournament;
         this.name = name;
     }
-    public SeasonTournamentLocation(SeasonTournament seasonTournament, String name, Set<SportFlorbalGame> sportFlorbalGames) {
+    public SeasonTournamentLocation(SeasonTournament seasonTournament, String name, Set<Game> games) {
        this.seasonTournament = seasonTournament;
        this.name = name;
-       this.sportFlorbalGames = sportFlorbalGames;
+       this.games = games;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -78,12 +78,12 @@ public class SeasonTournamentLocation  implements java.io.Serializable {
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="seasonTournamentLocation")
-    public Set<SportFlorbalGame> getSportFlorbalGames() {
-        return this.sportFlorbalGames;
+    public Set<Game> getSportFlorbalGames() {
+        return this.games;
     }
     
-    public void setSportFlorbalGames(Set<SportFlorbalGame> sportFlorbalGames) {
-        this.sportFlorbalGames = sportFlorbalGames;
+    public void setSportFlorbalGames(Set<Game> games) {
+        this.games = games;
     }
 
 

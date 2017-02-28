@@ -28,7 +28,7 @@ public class GamePlayer  implements java.io.Serializable {
 
      private Integer id;
      private CompetitorTeamPlayer competitorTeamPlayer;
-     private SportFlorbalGame sportFlorbalGame;
+     private Game game;
      private Set<SportFlorbalGameActivity> sportFlorbalGameActivitiesForIdAssistPlayer = new HashSet<SportFlorbalGameActivity>(0);
      private Set<SportFlorbalGameActivity> sportFlorbalGameActivitiesForIdGoalPlayer = new HashSet<SportFlorbalGameActivity>(0);
      private Set<SportFlorbalGameActivity> sportFlorbalGameActivitiesForIdAssist2player = new HashSet<SportFlorbalGameActivity>(0);
@@ -38,13 +38,13 @@ public class GamePlayer  implements java.io.Serializable {
     }
 
 	
-    public GamePlayer(CompetitorTeamPlayer competitorTeamPlayer, SportFlorbalGame sportFlorbalGame) {
+    public GamePlayer(CompetitorTeamPlayer competitorTeamPlayer, Game game) {
         this.competitorTeamPlayer = competitorTeamPlayer;
-        this.sportFlorbalGame = sportFlorbalGame;
+        this.game = game;
     }
-    public GamePlayer(CompetitorTeamPlayer competitorTeamPlayer, SportFlorbalGame sportFlorbalGame, Set<SportFlorbalGameActivity> sportFlorbalGameActivitiesForIdAssistPlayer, Set<SportFlorbalGameActivity> sportFlorbalGameActivitiesForIdGoalPlayer, Set<SportFlorbalGameActivity> sportFlorbalGameActivitiesForIdAssist2player, Set<SportFlorbalGameActivity> sportFlorbalGameActivitiesForIdPenaltyPlayer) {
+    public GamePlayer(CompetitorTeamPlayer competitorTeamPlayer, Game game, Set<SportFlorbalGameActivity> sportFlorbalGameActivitiesForIdAssistPlayer, Set<SportFlorbalGameActivity> sportFlorbalGameActivitiesForIdGoalPlayer, Set<SportFlorbalGameActivity> sportFlorbalGameActivitiesForIdAssist2player, Set<SportFlorbalGameActivity> sportFlorbalGameActivitiesForIdPenaltyPlayer) {
        this.competitorTeamPlayer = competitorTeamPlayer;
-       this.sportFlorbalGame = sportFlorbalGame;
+       this.game = game;
        this.sportFlorbalGameActivitiesForIdAssistPlayer = sportFlorbalGameActivitiesForIdAssistPlayer;
        this.sportFlorbalGameActivitiesForIdGoalPlayer = sportFlorbalGameActivitiesForIdGoalPlayer;
        this.sportFlorbalGameActivitiesForIdAssist2player = sportFlorbalGameActivitiesForIdAssist2player;
@@ -75,12 +75,12 @@ public class GamePlayer  implements java.io.Serializable {
 
 @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="idGame", nullable=false)
-    public SportFlorbalGame getSportFlorbalGame() {
-        return this.sportFlorbalGame;
+    public Game getGame() {
+        return this.game;
     }
     
-    public void setSportFlorbalGame(SportFlorbalGame sportFlorbalGame) {
-        this.sportFlorbalGame = sportFlorbalGame;
+    public void setGame(Game game) {
+        this.game = game;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="gamePlayerByIdAssistPlayer")

@@ -3,7 +3,7 @@ package com.so.dal.core.model.season;
 
 
 import com.so.dal.core.model.game.CompetitorTeam;
-import com.so.dal.core.model.game.SportFlorbalGame;
+import com.so.dal.core.model.game.Game;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -30,7 +30,7 @@ public class SeasonTournamentGroup  implements java.io.Serializable {
      private Integer id;
      private SeasonTournament seasonTournament;
      private String name;
-     private Set<SportFlorbalGame> sportFlorbalGames = new HashSet<SportFlorbalGame>(0);
+     private Set<Game> games = new HashSet<Game>(0);
      private Set<CompetitorTeam> competitorTeams = new HashSet<CompetitorTeam>(0);
 
     public SeasonTournamentGroup() {
@@ -41,10 +41,10 @@ public class SeasonTournamentGroup  implements java.io.Serializable {
         this.seasonTournament = seasonTournament;
         this.name = name;
     }
-    public SeasonTournamentGroup(SeasonTournament seasonTournament, String name, Set<SportFlorbalGame> sportFlorbalGames, Set<CompetitorTeam> competitorTeams) {
+    public SeasonTournamentGroup(SeasonTournament seasonTournament, String name, Set<Game> games, Set<CompetitorTeam> competitorTeams) {
        this.seasonTournament = seasonTournament;
        this.name = name;
-       this.sportFlorbalGames = sportFlorbalGames;
+       this.games = games;
        this.competitorTeams = competitorTeams;
     }
    
@@ -81,12 +81,12 @@ public class SeasonTournamentGroup  implements java.io.Serializable {
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="seasonTournamentGroup")
-    public Set<SportFlorbalGame> getSportFlorbalGames() {
-        return this.sportFlorbalGames;
+    public Set<Game> getGames() {
+        return this.games;
     }
     
-    public void setSportFlorbalGames(Set<SportFlorbalGame> sportFlorbalGames) {
-        this.sportFlorbalGames = sportFlorbalGames;
+    public void setGames(Set<Game> games) {
+        this.games = games;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="seasonTournamentGroup")

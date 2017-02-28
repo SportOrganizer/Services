@@ -2,7 +2,7 @@ package com.so.dal.floorball.model.game;
 // Generated 27.2.2017 18:41:18 by Hibernate Tools 4.3.1
 
 
-import com.so.dal.core.model.game.SportFlorbalGame;
+import com.so.dal.core.model.game.Game;
 import com.so.dal.core.model.season.SeasonTournamentPeriod;
 import com.so.dal.core.model.game.CompetitorTeam;
 import javax.persistence.Column;
@@ -28,16 +28,16 @@ public class SportFlorbalGameShots  implements java.io.Serializable {
      private Integer id;
      private CompetitorTeam competitorTeam;
      private SeasonTournamentPeriod seasonTournamentPeriod;
-     private SportFlorbalGame sportFlorbalGame;
+     private Game game;
      private int count;
 
     public SportFlorbalGameShots() {
     }
 
-    public SportFlorbalGameShots(CompetitorTeam competitorTeam, SeasonTournamentPeriod seasonTournamentPeriod, SportFlorbalGame sportFlorbalGame, int count) {
+    public SportFlorbalGameShots(CompetitorTeam competitorTeam, SeasonTournamentPeriod seasonTournamentPeriod, Game game, int count) {
        this.competitorTeam = competitorTeam;
        this.seasonTournamentPeriod = seasonTournamentPeriod;
-       this.sportFlorbalGame = sportFlorbalGame;
+       this.game = game;
        this.count = count;
     }
    
@@ -75,12 +75,12 @@ public class SportFlorbalGameShots  implements java.io.Serializable {
 
 @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="idGame", nullable=false)
-    public SportFlorbalGame getSportFlorbalGame() {
-        return this.sportFlorbalGame;
+    public Game getGame() {
+        return this.game;
     }
     
-    public void setSportFlorbalGame(SportFlorbalGame sportFlorbalGame) {
-        this.sportFlorbalGame = sportFlorbalGame;
+    public void setGame(Game sportFlorbalGame) {
+        this.game = game;
     }
 
     
