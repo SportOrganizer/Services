@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://miranda.upc.uniba.sk:3306/sport_app_dev?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.username">sport_app_dev</property>
+    <property name="hibernate.connection.password">I19H3X8jpcqH9WDT</property>
+    <mapping resource="com/so/dal/floorball/model/Resource.hbm.xml"/>
+    <mapping resource="com/so/dal/floorball/model/CompetitorTeamPlayer.hbm.xml"/>
+    <mapping resource="com/so/dal/floorball/model/Season.hbm.xml"/>
+    <mapping resource="com/so/dal/floorball/model/Person.hbm.xml"/>
+    <mapping resource="com/so/dal/floorball/model/CompetitorTeam.hbm.xml"/>
+    <mapping resource="com/so/dal/floorball/model/RegistrationPlayer.hbm.xml"/>
+    <mapping resource="com/so/dal/floorball/model/GamePlayer.hbm.xml"/>
+    <mapping resource="com/so/dal/floorball/model/SportFlorbalGameShots.hbm.xml"/>
+    <mapping resource="com/so/dal/floorball/model/SeasonTournamentSettings.hbm.xml"/>
+    <mapping resource="com/so/dal/floorball/model/SeasonTournament.hbm.xml"/>
+    <mapping resource="com/so/dal/floorball/model/SportFlorbalGame.hbm.xml"/>
+    <mapping resource="com/so/dal/floorball/model/Tournament.hbm.xml"/>
+    <mapping resource="com/so/dal/floorball/model/SportFlorbalGameActivity.hbm.xml"/>
+    <mapping resource="com/so/dal/floorball/model/RegistrationTeam.hbm.xml"/>
+    <mapping resource="com/so/dal/floorball/model/SeasonTournamentGroup.hbm.xml"/>
+    <mapping resource="com/so/dal/floorball/model/SeasonTournamentRound.hbm.xml"/>
+    <mapping resource="com/so/dal/floorball/model/Team.hbm.xml"/>
+    <mapping resource="com/so/dal/floorball/model/SeasonTournamentPeriod.hbm.xml"/>
+    <mapping resource="com/so/dal/floorball/model/SeasonTournamentLocation.hbm.xml"/>
+    <mapping resource="com/so/dal/floorball/model/SeasonTournamentPenaltySettings.hbm.xml"/>
+    <mapping resource="com/so/dal/floorball/model/SportFlorbalGameActivityType.hbm.xml"/>
+    <mapping resource="com/so/dal/floorball/model/SportFlorbalGoalType.hbm.xml"/>
+    <mapping resource="com/so/dal/floorball/model/Penalty.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>

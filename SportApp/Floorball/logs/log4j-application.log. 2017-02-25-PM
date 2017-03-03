@@ -1,0 +1,617 @@
+Logging Provider: org.jboss.logging.Log4jLoggerProvider
+HHH015016: Encountered a deprecated javax.persistence.spi.PersistenceProvider [org.hibernate.ejb.HibernatePersistence]; use [org.hibernate.jpa.HibernatePersistenceProvider] instead.
+PersistenceUnitInfo [
+	name: default
+	persistence provider classname: null
+	classloader: sun.misc.Launcher$AppClassLoader@75b84c92
+	excludeUnlistedClasses: true
+	JTA datasource: null
+	Non JTA datasource: org.springframework.jdbc.datasource.DriverManagerDataSource@686449f9
+	Transaction type: RESOURCE_LOCAL
+	PU root URL: file:/C:/Users/peter/Documents/Timak_master/SportApp/Floorball/target/test-classes/
+	Shared Cache Mode: UNSPECIFIED
+	Validation Mode: AUTO
+	Jar files URLs []
+	Managed classes names [
+		com.so.floorball.dal.model.game.SportFlorbalGameActivity
+		com.so.floorball.dal.model.game.SportFlorbalGameActivityType
+		com.so.floorball.dal.model.game.SportFlorbalGameShots
+		com.so.floorball.dal.model.game.SportFlorbalGoalType]
+	Mapping files names []
+	Properties []
+Adding Integrator [org.hibernate.cfg.beanvalidation.BeanValidationIntegrator].
+Adding Integrator [org.hibernate.secure.spi.JaccIntegrator].
+Adding Integrator [org.hibernate.cache.internal.CollectionCacheInvalidator].
+Adding Integrator [org.hibernate.jpa.event.spi.JpaIntegrator].
+Registering named strategy selector [org.hibernate.dialect.Dialect] : [MySQL5] -> [org.hibernate.dialect.MySQL5Dialect] (replacing [org.hibernate.dialect.MySQL5Dialect])
+Registering named strategy selector [org.hibernate.dialect.Dialect] : [MySQL5InnoDB] -> [org.hibernate.dialect.MySQL5InnoDBDialect] (replacing [org.hibernate.dialect.MySQL5InnoDBDialect])
+HHH000412: Hibernate Core {4.3.8.Final}
+HHH000206: hibernate.properties not found
+HHH000021: Bytecode provider name : javassist
+Overriding existing service binding [org.hibernate.secure.spi.JaccService]
+Adding type registration boolean -> org.hibernate.type.BooleanType@724bade8
+Adding type registration boolean -> org.hibernate.type.BooleanType@724bade8
+Adding type registration java.lang.Boolean -> org.hibernate.type.BooleanType@724bade8
+Adding type registration numeric_boolean -> org.hibernate.type.NumericBooleanType@70ab80e3
+Adding type registration true_false -> org.hibernate.type.TrueFalseType@58c540cf
+Adding type registration yes_no -> org.hibernate.type.YesNoType@24a1c17f
+Adding type registration byte -> org.hibernate.type.ByteType@3b366632
+Adding type registration byte -> org.hibernate.type.ByteType@3b366632
+Adding type registration java.lang.Byte -> org.hibernate.type.ByteType@3b366632
+Adding type registration character -> org.hibernate.type.CharacterType@1cf2fed4
+Adding type registration char -> org.hibernate.type.CharacterType@1cf2fed4
+Adding type registration java.lang.Character -> org.hibernate.type.CharacterType@1cf2fed4
+Adding type registration short -> org.hibernate.type.ShortType@7e1a1da6
+Adding type registration short -> org.hibernate.type.ShortType@7e1a1da6
+Adding type registration java.lang.Short -> org.hibernate.type.ShortType@7e1a1da6
+Adding type registration integer -> org.hibernate.type.IntegerType@60094a13
+Adding type registration int -> org.hibernate.type.IntegerType@60094a13
+Adding type registration java.lang.Integer -> org.hibernate.type.IntegerType@60094a13
+Adding type registration long -> org.hibernate.type.LongType@579d011c
+Adding type registration long -> org.hibernate.type.LongType@579d011c
+Adding type registration java.lang.Long -> org.hibernate.type.LongType@579d011c
+Adding type registration float -> org.hibernate.type.FloatType@733c423e
+Adding type registration float -> org.hibernate.type.FloatType@733c423e
+Adding type registration java.lang.Float -> org.hibernate.type.FloatType@733c423e
+Adding type registration double -> org.hibernate.type.DoubleType@5922ae77
+Adding type registration double -> org.hibernate.type.DoubleType@5922ae77
+Adding type registration java.lang.Double -> org.hibernate.type.DoubleType@5922ae77
+Adding type registration big_decimal -> org.hibernate.type.BigDecimalType@127e70c5
+Adding type registration java.math.BigDecimal -> org.hibernate.type.BigDecimalType@127e70c5
+Adding type registration big_integer -> org.hibernate.type.BigIntegerType@27eb3298
+Adding type registration java.math.BigInteger -> org.hibernate.type.BigIntegerType@27eb3298
+Adding type registration string -> org.hibernate.type.StringType@1494b84d
+Adding type registration java.lang.String -> org.hibernate.type.StringType@1494b84d
+Adding type registration nstring -> org.hibernate.type.StringNVarcharType@1df98368
+Adding type registration ncharacter -> org.hibernate.type.CharacterNCharType@cc6460c
+Adding type registration url -> org.hibernate.type.UrlType@5ebd56e9
+Adding type registration java.net.URL -> org.hibernate.type.UrlType@5ebd56e9
+Adding type registration date -> org.hibernate.type.DateType@22c01ab0
+Adding type registration java.sql.Date -> org.hibernate.type.DateType@22c01ab0
+Adding type registration time -> org.hibernate.type.TimeType@5aa0dbf4
+Adding type registration java.sql.Time -> org.hibernate.type.TimeType@5aa0dbf4
+Adding type registration timestamp -> org.hibernate.type.TimestampType@74f7d1d2
+Adding type registration java.sql.Timestamp -> org.hibernate.type.TimestampType@74f7d1d2
+Adding type registration java.util.Date -> org.hibernate.type.TimestampType@74f7d1d2
+Adding type registration dbtimestamp -> org.hibernate.type.DbTimestampType@5a62b2a4
+Adding type registration calendar -> org.hibernate.type.CalendarType@4d411036
+Adding type registration java.util.Calendar -> org.hibernate.type.CalendarType@4d411036
+Adding type registration java.util.GregorianCalendar -> org.hibernate.type.CalendarType@4d411036
+Adding type registration calendar_date -> org.hibernate.type.CalendarDateType@560513ce
+Adding type registration locale -> org.hibernate.type.LocaleType@5dda6f9
+Adding type registration java.util.Locale -> org.hibernate.type.LocaleType@5dda6f9
+Adding type registration currency -> org.hibernate.type.CurrencyType@263f04ca
+Adding type registration java.util.Currency -> org.hibernate.type.CurrencyType@263f04ca
+Adding type registration timezone -> org.hibernate.type.TimeZoneType@4a9419d7
+Adding type registration java.util.TimeZone -> org.hibernate.type.TimeZoneType@4a9419d7
+Adding type registration class -> org.hibernate.type.ClassType@41394595
+Adding type registration java.lang.Class -> org.hibernate.type.ClassType@41394595
+Adding type registration uuid-binary -> org.hibernate.type.UUIDBinaryType@62f87c44
+Adding type registration java.util.UUID -> org.hibernate.type.UUIDBinaryType@62f87c44
+Adding type registration uuid-char -> org.hibernate.type.UUIDCharType@5149f008
+Adding type registration pg-uuid -> org.hibernate.type.PostgresUUIDType@5707c1cb
+Adding type registration binary -> org.hibernate.type.BinaryType@2970a5bc
+Adding type registration byte[] -> org.hibernate.type.BinaryType@2970a5bc
+Adding type registration [B -> org.hibernate.type.BinaryType@2970a5bc
+Adding type registration wrapper-binary -> org.hibernate.type.WrapperBinaryType@4fbdc0f0
+Adding type registration Byte[] -> org.hibernate.type.WrapperBinaryType@4fbdc0f0
+Adding type registration [Ljava.lang.Byte; -> org.hibernate.type.WrapperBinaryType@4fbdc0f0
+Adding type registration image -> org.hibernate.type.ImageType@24be2d9c
+Adding type registration characters -> org.hibernate.type.CharArrayType@120f38e6
+Adding type registration char[] -> org.hibernate.type.CharArrayType@120f38e6
+Adding type registration [C -> org.hibernate.type.CharArrayType@120f38e6
+Adding type registration wrapper-characters -> org.hibernate.type.CharacterArrayType@70e29e14
+Adding type registration [Ljava.lang.Character; -> org.hibernate.type.CharacterArrayType@70e29e14
+Adding type registration Character[] -> org.hibernate.type.CharacterArrayType@70e29e14
+Adding type registration text -> org.hibernate.type.TextType@42a9a63e
+Adding type registration ntext -> org.hibernate.type.NTextType@e3cee7b
+Adding type registration blob -> org.hibernate.type.BlobType@285f09de
+Adding type registration java.sql.Blob -> org.hibernate.type.BlobType@285f09de
+Adding type registration materialized_blob -> org.hibernate.type.MaterializedBlobType@1827a871
+Adding type registration clob -> org.hibernate.type.ClobType@473b3b7a
+Adding type registration java.sql.Clob -> org.hibernate.type.ClobType@473b3b7a
+Adding type registration nclob -> org.hibernate.type.NClobType@372b0d86
+Adding type registration java.sql.NClob -> org.hibernate.type.NClobType@372b0d86
+Adding type registration materialized_clob -> org.hibernate.type.MaterializedClobType@213e3629
+Adding type registration materialized_nclob -> org.hibernate.type.MaterializedNClobType@20312893
+Adding type registration serializable -> org.hibernate.type.SerializableType@52eacb4b
+Adding type registration object -> org.hibernate.type.ObjectType@51a06cbe
+Adding type registration java.lang.Object -> org.hibernate.type.ObjectType@51a06cbe
+Adding type registration imm_date -> org.hibernate.type.AdaptedImmutableType@344561e0
+Adding type registration imm_time -> org.hibernate.type.AdaptedImmutableType@66d23e4a
+Adding type registration imm_timestamp -> org.hibernate.type.AdaptedImmutableType@36ac8a63
+Adding type registration imm_dbtimestamp -> org.hibernate.type.AdaptedImmutableType@4d9d1b69
+Adding type registration imm_calendar -> org.hibernate.type.AdaptedImmutableType@52c8295b
+Adding type registration imm_calendar_date -> org.hibernate.type.AdaptedImmutableType@251f7d26
+Adding type registration imm_binary -> org.hibernate.type.AdaptedImmutableType@77b21474
+Adding type registration imm_serializable -> org.hibernate.type.AdaptedImmutableType@52d10fb8
+HCANN000001: Hibernate Commons Annotations {4.0.5.Final}
+Registering IdentifierGenerator strategy [uuid2] -> [org.hibernate.id.UUIDGenerator]
+Registering IdentifierGenerator strategy [guid] -> [org.hibernate.id.GUIDGenerator]
+Registering IdentifierGenerator strategy [uuid] -> [org.hibernate.id.UUIDHexGenerator]
+Registering IdentifierGenerator strategy [uuid.hex] -> [org.hibernate.id.UUIDHexGenerator]
+Registering IdentifierGenerator strategy [hilo] -> [org.hibernate.id.TableHiLoGenerator]
+Registering IdentifierGenerator strategy [assigned] -> [org.hibernate.id.Assigned]
+Registering IdentifierGenerator strategy [identity] -> [org.hibernate.id.IdentityGenerator]
+Registering IdentifierGenerator strategy [select] -> [org.hibernate.id.SelectGenerator]
+Registering IdentifierGenerator strategy [sequence] -> [org.hibernate.id.SequenceGenerator]
+Registering IdentifierGenerator strategy [seqhilo] -> [org.hibernate.id.SequenceHiLoGenerator]
+Registering IdentifierGenerator strategy [increment] -> [org.hibernate.id.IncrementGenerator]
+Registering IdentifierGenerator strategy [foreign] -> [org.hibernate.id.ForeignGenerator]
+Registering IdentifierGenerator strategy [sequence-identity] -> [org.hibernate.id.SequenceIdentityGenerator]
+Registering IdentifierGenerator strategy [enhanced-sequence] -> [org.hibernate.id.enhanced.SequenceStyleGenerator]
+Registering IdentifierGenerator strategy [enhanced-table] -> [org.hibernate.id.enhanced.TableGenerator]
+Preparing to build session factory with filters : {}
+Database ->
+       name : MySQL
+    version : 5.5.54-0+deb8u1
+      major : 5
+      minor : 5
+Driver ->
+       name : MySQL-AB JDBC Driver
+    version : mysql-connector-java-5.1.17 ( Revision: ${bzr.revision-id} )
+      major : 5
+      minor : 1
+JDBC version : 4.0
+Unexpected error trying to gauge level of JDBC REF_CURSOR support : null
+HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+Processing hbm.xml files
+Process annotated classes
+Binding entity from annotated class: com.so.floorball.dal.model.game.SportFlorbalGameActivity
+Binding column: Ejb3DiscriminatorColumn{logicalColumnName'DTYPE', discriminatorTypeName='string'}
+Import with entity name SportFlorbalGameActivity
+Bind entity com.so.floorball.dal.model.game.SportFlorbalGameActivity on table sportFlorbalGameActivity
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=id, insertable=true, updatable=true, unique=true}
+MetadataSourceProcessor property id with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [com.so.floorball.dal.model.game.SportFlorbalGameActivity:id]
+building SimpleValue for id
+Building property id
+Binding column: Ejb3JoinColumn{logicalColumnName='idTeam', referencedColumn='', mappedBy=''}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=competitorTeam, insertable=true, updatable=true, unique=false}
+Building property competitorTeam
+Binding column: Ejb3JoinColumn{logicalColumnName='idAssist2Player', referencedColumn='', mappedBy=''}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=gamePlayerByIdAssist2player, insertable=true, updatable=true, unique=false}
+Building property gamePlayerByIdAssist2player
+Binding column: Ejb3JoinColumn{logicalColumnName='idAssistPlayer', referencedColumn='', mappedBy=''}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=gamePlayerByIdAssistPlayer, insertable=true, updatable=true, unique=false}
+Building property gamePlayerByIdAssistPlayer
+Binding column: Ejb3JoinColumn{logicalColumnName='idGoalPlayer', referencedColumn='', mappedBy=''}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=gamePlayerByIdGoalPlayer, insertable=true, updatable=true, unique=false}
+Building property gamePlayerByIdGoalPlayer
+Binding column: Ejb3JoinColumn{logicalColumnName='idPenaltyPlayer', referencedColumn='', mappedBy=''}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=gamePlayerByIdPenaltyPlayer, insertable=true, updatable=true, unique=false}
+Building property gamePlayerByIdPenaltyPlayer
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=gameTime, insertable=true, updatable=true, unique=false}
+MetadataSourceProcessor property gameTime with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [com.so.floorball.dal.model.game.SportFlorbalGameActivity:gameTime]
+building SimpleValue for gameTime
+Building property gameTime
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=newScoreAway, insertable=true, updatable=true, unique=false}
+MetadataSourceProcessor property newScoreAway with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [com.so.floorball.dal.model.game.SportFlorbalGameActivity:newScoreAway]
+building SimpleValue for newScoreAway
+Building property newScoreAway
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=newScoreHome, insertable=true, updatable=true, unique=false}
+MetadataSourceProcessor property newScoreHome with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [com.so.floorball.dal.model.game.SportFlorbalGameActivity:newScoreHome]
+building SimpleValue for newScoreHome
+Building property newScoreHome
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=penaltySeconds, insertable=true, updatable=true, unique=false}
+MetadataSourceProcessor property penaltySeconds with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [com.so.floorball.dal.model.game.SportFlorbalGameActivity:penaltySeconds]
+building SimpleValue for penaltySeconds
+Building property penaltySeconds
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=realTime, insertable=true, updatable=true, unique=false}
+MetadataSourceProcessor property realTime with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [com.so.floorball.dal.model.game.SportFlorbalGameActivity:realTime]
+building SimpleValue for realTime
+Building property realTime
+Binding column: Ejb3JoinColumn{logicalColumnName='idPenaltyType', referencedColumn='', mappedBy=''}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=seasonTournamentPenaltySettings, insertable=true, updatable=true, unique=false}
+Building property seasonTournamentPenaltySettings
+Binding column: Ejb3JoinColumn{logicalColumnName='idGamePeriod', referencedColumn='', mappedBy=''}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=seasonTournamentPeriod, insertable=true, updatable=true, unique=false}
+Building property seasonTournamentPeriod
+Binding column: Ejb3JoinColumn{logicalColumnName='idGame', referencedColumn='', mappedBy=''}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=sportFlorbalGame, insertable=true, updatable=true, unique=false}
+Building property sportFlorbalGame
+Binding column: Ejb3JoinColumn{logicalColumnName='idType', referencedColumn='', mappedBy=''}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=sportFlorbalGameActivityType, insertable=true, updatable=true, unique=false}
+Building property sportFlorbalGameActivityType
+Binding column: Ejb3JoinColumn{logicalColumnName='idGoalType', referencedColumn='', mappedBy=''}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=sportFlorbalGoalType, insertable=true, updatable=true, unique=false}
+Building property sportFlorbalGoalType
+Binding entity from annotated class: com.so.floorball.dal.model.game.SportFlorbalGameActivityType
+Binding column: Ejb3DiscriminatorColumn{logicalColumnName'DTYPE', discriminatorTypeName='string'}
+Import with entity name SportFlorbalGameActivityType
+Bind entity com.so.floorball.dal.model.game.SportFlorbalGameActivityType on table sportFlorbalGameActivityType
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivityType), mappingColumn=id, insertable=true, updatable=true, unique=true}
+MetadataSourceProcessor property id with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [com.so.floorball.dal.model.game.SportFlorbalGameActivityType:id]
+building SimpleValue for id
+Building property id
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivityType), mappingColumn=name, insertable=true, updatable=true, unique=false}
+MetadataSourceProcessor property name with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [com.so.floorball.dal.model.game.SportFlorbalGameActivityType:name]
+building SimpleValue for name
+Building property name
+Binding column: Ejb3JoinColumn{logicalColumnName='null', referencedColumn='null', mappedBy='sportFlorbalGameActivityType'}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivityType), mappingColumn=sportFlorbalGameActivities, insertable=true, updatable=true, unique=false}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivityType), mappingColumn=null, insertable=true, updatable=true, unique=false}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivityType), mappingColumn=element, insertable=true, updatable=true, unique=false}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivityType), mappingColumn=sportFlorbalGameActivities_KEY, insertable=true, updatable=true, unique=false}
+Binding column: Ejb3JoinColumn{logicalColumnName='sportFlorbalGameActivities_KEY', referencedColumn='null', mappedBy='null'}
+Binding column: Ejb3JoinColumn{logicalColumnName='null', referencedColumn='null', mappedBy='sportFlorbalGameActivityType'}
+Binding column: Ejb3JoinColumn{logicalColumnName='null', referencedColumn='null', mappedBy='sportFlorbalGameActivityType'}
+Collection role: com.so.floorball.dal.model.game.SportFlorbalGameActivityType.sportFlorbalGameActivities
+Building property sportFlorbalGameActivities
+Binding entity from annotated class: com.so.floorball.dal.model.game.SportFlorbalGoalType
+Binding column: Ejb3DiscriminatorColumn{logicalColumnName'DTYPE', discriminatorTypeName='string'}
+Import with entity name SportFlorbalGoalType
+Bind entity com.so.floorball.dal.model.game.SportFlorbalGoalType on table sportFlorbalGoalType
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGoalType), mappingColumn=id, insertable=true, updatable=true, unique=true}
+MetadataSourceProcessor property id with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [com.so.floorball.dal.model.game.SportFlorbalGoalType:id]
+building SimpleValue for id
+Building property id
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGoalType), mappingColumn=name, insertable=true, updatable=true, unique=false}
+MetadataSourceProcessor property name with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [com.so.floorball.dal.model.game.SportFlorbalGoalType:name]
+building SimpleValue for name
+Building property name
+Binding column: Ejb3JoinColumn{logicalColumnName='null', referencedColumn='null', mappedBy='sportFlorbalGoalType'}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGoalType), mappingColumn=sportFlorbalGameActivities, insertable=true, updatable=true, unique=false}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGoalType), mappingColumn=null, insertable=true, updatable=true, unique=false}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGoalType), mappingColumn=element, insertable=true, updatable=true, unique=false}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGoalType), mappingColumn=sportFlorbalGameActivities_KEY, insertable=true, updatable=true, unique=false}
+Binding column: Ejb3JoinColumn{logicalColumnName='sportFlorbalGameActivities_KEY', referencedColumn='null', mappedBy='null'}
+Binding column: Ejb3JoinColumn{logicalColumnName='null', referencedColumn='null', mappedBy='sportFlorbalGoalType'}
+Binding column: Ejb3JoinColumn{logicalColumnName='null', referencedColumn='null', mappedBy='sportFlorbalGoalType'}
+Collection role: com.so.floorball.dal.model.game.SportFlorbalGoalType.sportFlorbalGameActivities
+Building property sportFlorbalGameActivities
+Binding entity from annotated class: com.so.floorball.dal.model.game.SportFlorbalGameShots
+Binding column: Ejb3DiscriminatorColumn{logicalColumnName'DTYPE', discriminatorTypeName='string'}
+Import with entity name SportFlorbalGameShots
+Bind entity com.so.floorball.dal.model.game.SportFlorbalGameShots on table sportFlorbalGameShots
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameShots), mappingColumn=id, insertable=true, updatable=true, unique=true}
+MetadataSourceProcessor property id with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [com.so.floorball.dal.model.game.SportFlorbalGameShots:id]
+building SimpleValue for id
+Building property id
+Binding column: Ejb3JoinColumn{logicalColumnName='idTeam', referencedColumn='', mappedBy=''}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameShots), mappingColumn=competitorTeam, insertable=true, updatable=true, unique=false}
+Building property competitorTeam
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameShots), mappingColumn=count, insertable=true, updatable=true, unique=false}
+MetadataSourceProcessor property count with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [com.so.floorball.dal.model.game.SportFlorbalGameShots:count]
+building SimpleValue for count
+Building property count
+Binding column: Ejb3JoinColumn{logicalColumnName='idPeriod', referencedColumn='', mappedBy=''}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameShots), mappingColumn=seasonTournamentPeriod, insertable=true, updatable=true, unique=false}
+Building property seasonTournamentPeriod
+Binding column: Ejb3JoinColumn{logicalColumnName='idGame', referencedColumn='', mappedBy=''}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameShots), mappingColumn=sportFlorbalGame, insertable=true, updatable=true, unique=false}
+Building property sportFlorbalGame
+Starting fillSimpleValue for id
+Starting fillSimpleValue for gameTime
+Starting fillSimpleValue for newScoreAway
+Starting fillSimpleValue for newScoreHome
+Starting fillSimpleValue for penaltySeconds
+Starting fillSimpleValue for realTime
+Starting fillSimpleValue for id
+Starting fillSimpleValue for name
+Starting fillSimpleValue for id
+Starting fillSimpleValue for name
+Starting fillSimpleValue for id
+Starting fillSimpleValue for count
+Processing fk mappings (*ToOne and JoinedSubclass)
+Logging Provider: org.jboss.logging.Log4jLoggerProvider
+HHH015016: Encountered a deprecated javax.persistence.spi.PersistenceProvider [org.hibernate.ejb.HibernatePersistence]; use [org.hibernate.jpa.HibernatePersistenceProvider] instead.
+PersistenceUnitInfo [
+	name: default
+	persistence provider classname: null
+	classloader: sun.misc.Launcher$AppClassLoader@75b84c92
+	excludeUnlistedClasses: true
+	JTA datasource: null
+	Non JTA datasource: org.springframework.jdbc.datasource.DriverManagerDataSource@478ee483
+	Transaction type: RESOURCE_LOCAL
+	PU root URL: file:/C:/Users/peter/Documents/Timak_master/SportApp/Floorball/target/test-classes/
+	Shared Cache Mode: UNSPECIFIED
+	Validation Mode: AUTO
+	Jar files URLs []
+	Managed classes names [
+		com.so.floorball.dal.model.game.SportFlorbalGameActivity
+		com.so.floorball.dal.model.game.SportFlorbalGameActivityType
+		com.so.floorball.dal.model.game.SportFlorbalGameShots
+		com.so.floorball.dal.model.game.SportFlorbalGoalType]
+	Mapping files names []
+	Properties []
+Adding Integrator [org.hibernate.cfg.beanvalidation.BeanValidationIntegrator].
+Adding Integrator [org.hibernate.secure.spi.JaccIntegrator].
+Adding Integrator [org.hibernate.cache.internal.CollectionCacheInvalidator].
+Adding Integrator [org.hibernate.jpa.event.spi.JpaIntegrator].
+Registering named strategy selector [org.hibernate.dialect.Dialect] : [MySQL5] -> [org.hibernate.dialect.MySQL5Dialect] (replacing [org.hibernate.dialect.MySQL5Dialect])
+Registering named strategy selector [org.hibernate.dialect.Dialect] : [MySQL5InnoDB] -> [org.hibernate.dialect.MySQL5InnoDBDialect] (replacing [org.hibernate.dialect.MySQL5InnoDBDialect])
+HHH000412: Hibernate Core {4.3.8.Final}
+HHH000206: hibernate.properties not found
+HHH000021: Bytecode provider name : javassist
+Overriding existing service binding [org.hibernate.secure.spi.JaccService]
+Adding type registration boolean -> org.hibernate.type.BooleanType@3aa3193a
+Adding type registration boolean -> org.hibernate.type.BooleanType@3aa3193a
+Adding type registration java.lang.Boolean -> org.hibernate.type.BooleanType@3aa3193a
+Adding type registration numeric_boolean -> org.hibernate.type.NumericBooleanType@16fb356
+Adding type registration true_false -> org.hibernate.type.TrueFalseType@78461bc4
+Adding type registration yes_no -> org.hibernate.type.YesNoType@1095f122
+Adding type registration byte -> org.hibernate.type.ByteType@7927bd9f
+Adding type registration byte -> org.hibernate.type.ByteType@7927bd9f
+Adding type registration java.lang.Byte -> org.hibernate.type.ByteType@7927bd9f
+Adding type registration character -> org.hibernate.type.CharacterType@51f49060
+Adding type registration char -> org.hibernate.type.CharacterType@51f49060
+Adding type registration java.lang.Character -> org.hibernate.type.CharacterType@51f49060
+Adding type registration short -> org.hibernate.type.ShortType@4d63b624
+Adding type registration short -> org.hibernate.type.ShortType@4d63b624
+Adding type registration java.lang.Short -> org.hibernate.type.ShortType@4d63b624
+Adding type registration integer -> org.hibernate.type.IntegerType@5f7f2382
+Adding type registration int -> org.hibernate.type.IntegerType@5f7f2382
+Adding type registration java.lang.Integer -> org.hibernate.type.IntegerType@5f7f2382
+Adding type registration long -> org.hibernate.type.LongType@3a4b0e5d
+Adding type registration long -> org.hibernate.type.LongType@3a4b0e5d
+Adding type registration java.lang.Long -> org.hibernate.type.LongType@3a4b0e5d
+Adding type registration float -> org.hibernate.type.FloatType@42257bdd
+Adding type registration float -> org.hibernate.type.FloatType@42257bdd
+Adding type registration java.lang.Float -> org.hibernate.type.FloatType@42257bdd
+Adding type registration double -> org.hibernate.type.DoubleType@1b9ea3e3
+Adding type registration double -> org.hibernate.type.DoubleType@1b9ea3e3
+Adding type registration java.lang.Double -> org.hibernate.type.DoubleType@1b9ea3e3
+Adding type registration big_decimal -> org.hibernate.type.BigDecimalType@7889a1ac
+Adding type registration java.math.BigDecimal -> org.hibernate.type.BigDecimalType@7889a1ac
+Adding type registration big_integer -> org.hibernate.type.BigIntegerType@4108fa66
+Adding type registration java.math.BigInteger -> org.hibernate.type.BigIntegerType@4108fa66
+Adding type registration string -> org.hibernate.type.StringType@200a26bc
+Adding type registration java.lang.String -> org.hibernate.type.StringType@200a26bc
+Adding type registration nstring -> org.hibernate.type.StringNVarcharType@34abdee4
+Adding type registration ncharacter -> org.hibernate.type.CharacterNCharType@21ca139c
+Adding type registration url -> org.hibernate.type.UrlType@52350abb
+Adding type registration java.net.URL -> org.hibernate.type.UrlType@52350abb
+Adding type registration date -> org.hibernate.type.DateType@76318a7d
+Adding type registration java.sql.Date -> org.hibernate.type.DateType@76318a7d
+Adding type registration time -> org.hibernate.type.TimeType@5400db36
+Adding type registration java.sql.Time -> org.hibernate.type.TimeType@5400db36
+Adding type registration timestamp -> org.hibernate.type.TimestampType@7fe083b1
+Adding type registration java.sql.Timestamp -> org.hibernate.type.TimestampType@7fe083b1
+Adding type registration java.util.Date -> org.hibernate.type.TimestampType@7fe083b1
+Adding type registration dbtimestamp -> org.hibernate.type.DbTimestampType@f713686
+Adding type registration calendar -> org.hibernate.type.CalendarType@35293c05
+Adding type registration java.util.Calendar -> org.hibernate.type.CalendarType@35293c05
+Adding type registration java.util.GregorianCalendar -> org.hibernate.type.CalendarType@35293c05
+Adding type registration calendar_date -> org.hibernate.type.CalendarDateType@3174cb09
+Adding type registration locale -> org.hibernate.type.LocaleType@37fbe4a8
+Adding type registration java.util.Locale -> org.hibernate.type.LocaleType@37fbe4a8
+Adding type registration currency -> org.hibernate.type.CurrencyType@54afd745
+Adding type registration java.util.Currency -> org.hibernate.type.CurrencyType@54afd745
+Adding type registration timezone -> org.hibernate.type.TimeZoneType@5a021cb9
+Adding type registration java.util.TimeZone -> org.hibernate.type.TimeZoneType@5a021cb9
+Adding type registration class -> org.hibernate.type.ClassType@2f3c6ac4
+Adding type registration java.lang.Class -> org.hibernate.type.ClassType@2f3c6ac4
+Adding type registration uuid-binary -> org.hibernate.type.UUIDBinaryType@287f94b1
+Adding type registration java.util.UUID -> org.hibernate.type.UUIDBinaryType@287f94b1
+Adding type registration uuid-char -> org.hibernate.type.UUIDCharType@3676ac27
+Adding type registration pg-uuid -> org.hibernate.type.PostgresUUIDType@7072bc39
+Adding type registration binary -> org.hibernate.type.BinaryType@2b5cb9b2
+Adding type registration byte[] -> org.hibernate.type.BinaryType@2b5cb9b2
+Adding type registration [B -> org.hibernate.type.BinaryType@2b5cb9b2
+Adding type registration wrapper-binary -> org.hibernate.type.WrapperBinaryType@72efb5c1
+Adding type registration Byte[] -> org.hibernate.type.WrapperBinaryType@72efb5c1
+Adding type registration [Ljava.lang.Byte; -> org.hibernate.type.WrapperBinaryType@72efb5c1
+Adding type registration image -> org.hibernate.type.ImageType@2ad3a1bb
+Adding type registration characters -> org.hibernate.type.CharArrayType@5bd73d1a
+Adding type registration char[] -> org.hibernate.type.CharArrayType@5bd73d1a
+Adding type registration [C -> org.hibernate.type.CharArrayType@5bd73d1a
+Adding type registration wrapper-characters -> org.hibernate.type.CharacterArrayType@702ed190
+Adding type registration [Ljava.lang.Character; -> org.hibernate.type.CharacterArrayType@702ed190
+Adding type registration Character[] -> org.hibernate.type.CharacterArrayType@702ed190
+Adding type registration text -> org.hibernate.type.TextType@3b1bb3ab
+Adding type registration ntext -> org.hibernate.type.NTextType@62da83ed
+Adding type registration blob -> org.hibernate.type.BlobType@344344fa
+Adding type registration java.sql.Blob -> org.hibernate.type.BlobType@344344fa
+Adding type registration materialized_blob -> org.hibernate.type.MaterializedBlobType@615f972
+Adding type registration clob -> org.hibernate.type.ClobType@600b0b7
+Adding type registration java.sql.Clob -> org.hibernate.type.ClobType@600b0b7
+Adding type registration nclob -> org.hibernate.type.NClobType@d816dde
+Adding type registration java.sql.NClob -> org.hibernate.type.NClobType@d816dde
+Adding type registration materialized_clob -> org.hibernate.type.MaterializedClobType@31c269fd
+Adding type registration materialized_nclob -> org.hibernate.type.MaterializedNClobType@3113a37
+Adding type registration serializable -> org.hibernate.type.SerializableType@70eecdc2
+Adding type registration object -> org.hibernate.type.ObjectType@32f61a31
+Adding type registration java.lang.Object -> org.hibernate.type.ObjectType@32f61a31
+Adding type registration imm_date -> org.hibernate.type.AdaptedImmutableType@5305c37d
+Adding type registration imm_time -> org.hibernate.type.AdaptedImmutableType@51a06cbe
+Adding type registration imm_timestamp -> org.hibernate.type.AdaptedImmutableType@3dddbe65
+Adding type registration imm_dbtimestamp -> org.hibernate.type.AdaptedImmutableType@49a64d82
+Adding type registration imm_calendar -> org.hibernate.type.AdaptedImmutableType@344561e0
+Adding type registration imm_calendar_date -> org.hibernate.type.AdaptedImmutableType@66d23e4a
+Adding type registration imm_binary -> org.hibernate.type.AdaptedImmutableType@36ac8a63
+Adding type registration imm_serializable -> org.hibernate.type.AdaptedImmutableType@4d9d1b69
+HCANN000001: Hibernate Commons Annotations {4.0.5.Final}
+Registering IdentifierGenerator strategy [uuid2] -> [org.hibernate.id.UUIDGenerator]
+Registering IdentifierGenerator strategy [guid] -> [org.hibernate.id.GUIDGenerator]
+Registering IdentifierGenerator strategy [uuid] -> [org.hibernate.id.UUIDHexGenerator]
+Registering IdentifierGenerator strategy [uuid.hex] -> [org.hibernate.id.UUIDHexGenerator]
+Registering IdentifierGenerator strategy [hilo] -> [org.hibernate.id.TableHiLoGenerator]
+Registering IdentifierGenerator strategy [assigned] -> [org.hibernate.id.Assigned]
+Registering IdentifierGenerator strategy [identity] -> [org.hibernate.id.IdentityGenerator]
+Registering IdentifierGenerator strategy [select] -> [org.hibernate.id.SelectGenerator]
+Registering IdentifierGenerator strategy [sequence] -> [org.hibernate.id.SequenceGenerator]
+Registering IdentifierGenerator strategy [seqhilo] -> [org.hibernate.id.SequenceHiLoGenerator]
+Registering IdentifierGenerator strategy [increment] -> [org.hibernate.id.IncrementGenerator]
+Registering IdentifierGenerator strategy [foreign] -> [org.hibernate.id.ForeignGenerator]
+Registering IdentifierGenerator strategy [sequence-identity] -> [org.hibernate.id.SequenceIdentityGenerator]
+Registering IdentifierGenerator strategy [enhanced-sequence] -> [org.hibernate.id.enhanced.SequenceStyleGenerator]
+Registering IdentifierGenerator strategy [enhanced-table] -> [org.hibernate.id.enhanced.TableGenerator]
+Preparing to build session factory with filters : {}
+Database ->
+       name : MySQL
+    version : 5.5.54-0+deb8u1
+      major : 5
+      minor : 5
+Driver ->
+       name : MySQL-AB JDBC Driver
+    version : mysql-connector-java-5.1.17 ( Revision: ${bzr.revision-id} )
+      major : 5
+      minor : 1
+JDBC version : 4.0
+Unexpected error trying to gauge level of JDBC REF_CURSOR support : null
+HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+Processing hbm.xml files
+Process annotated classes
+Binding entity from annotated class: com.so.floorball.dal.model.game.SportFlorbalGameActivity
+Binding column: Ejb3DiscriminatorColumn{logicalColumnName'DTYPE', discriminatorTypeName='string'}
+Import with entity name SportFlorbalGameActivity
+Bind entity com.so.floorball.dal.model.game.SportFlorbalGameActivity on table sportFlorbalGameActivity
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=id, insertable=true, updatable=true, unique=true}
+MetadataSourceProcessor property id with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [com.so.floorball.dal.model.game.SportFlorbalGameActivity:id]
+building SimpleValue for id
+Building property id
+Binding column: Ejb3JoinColumn{logicalColumnName='idTeam', referencedColumn='', mappedBy=''}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=competitorTeam, insertable=true, updatable=true, unique=false}
+Building property competitorTeam
+Binding column: Ejb3JoinColumn{logicalColumnName='idAssist2Player', referencedColumn='', mappedBy=''}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=gamePlayerByIdAssist2player, insertable=true, updatable=true, unique=false}
+Building property gamePlayerByIdAssist2player
+Binding column: Ejb3JoinColumn{logicalColumnName='idAssistPlayer', referencedColumn='', mappedBy=''}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=gamePlayerByIdAssistPlayer, insertable=true, updatable=true, unique=false}
+Building property gamePlayerByIdAssistPlayer
+Binding column: Ejb3JoinColumn{logicalColumnName='idGoalPlayer', referencedColumn='', mappedBy=''}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=gamePlayerByIdGoalPlayer, insertable=true, updatable=true, unique=false}
+Building property gamePlayerByIdGoalPlayer
+Binding column: Ejb3JoinColumn{logicalColumnName='idPenaltyPlayer', referencedColumn='', mappedBy=''}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=gamePlayerByIdPenaltyPlayer, insertable=true, updatable=true, unique=false}
+Building property gamePlayerByIdPenaltyPlayer
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=gameTime, insertable=true, updatable=true, unique=false}
+MetadataSourceProcessor property gameTime with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [com.so.floorball.dal.model.game.SportFlorbalGameActivity:gameTime]
+building SimpleValue for gameTime
+Building property gameTime
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=newScoreAway, insertable=true, updatable=true, unique=false}
+MetadataSourceProcessor property newScoreAway with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [com.so.floorball.dal.model.game.SportFlorbalGameActivity:newScoreAway]
+building SimpleValue for newScoreAway
+Building property newScoreAway
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=newScoreHome, insertable=true, updatable=true, unique=false}
+MetadataSourceProcessor property newScoreHome with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [com.so.floorball.dal.model.game.SportFlorbalGameActivity:newScoreHome]
+building SimpleValue for newScoreHome
+Building property newScoreHome
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=penaltySeconds, insertable=true, updatable=true, unique=false}
+MetadataSourceProcessor property penaltySeconds with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [com.so.floorball.dal.model.game.SportFlorbalGameActivity:penaltySeconds]
+building SimpleValue for penaltySeconds
+Building property penaltySeconds
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=realTime, insertable=true, updatable=true, unique=false}
+MetadataSourceProcessor property realTime with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [com.so.floorball.dal.model.game.SportFlorbalGameActivity:realTime]
+building SimpleValue for realTime
+Building property realTime
+Binding column: Ejb3JoinColumn{logicalColumnName='idPenaltyType', referencedColumn='', mappedBy=''}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=seasonTournamentPenaltySettings, insertable=true, updatable=true, unique=false}
+Building property seasonTournamentPenaltySettings
+Binding column: Ejb3JoinColumn{logicalColumnName='idGamePeriod', referencedColumn='', mappedBy=''}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=seasonTournamentPeriod, insertable=true, updatable=true, unique=false}
+Building property seasonTournamentPeriod
+Binding column: Ejb3JoinColumn{logicalColumnName='idGame', referencedColumn='', mappedBy=''}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=sportFlorbalGame, insertable=true, updatable=true, unique=false}
+Building property sportFlorbalGame
+Binding column: Ejb3JoinColumn{logicalColumnName='idType', referencedColumn='', mappedBy=''}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=sportFlorbalGameActivityType, insertable=true, updatable=true, unique=false}
+Building property sportFlorbalGameActivityType
+Binding column: Ejb3JoinColumn{logicalColumnName='idGoalType', referencedColumn='', mappedBy=''}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivity), mappingColumn=sportFlorbalGoalType, insertable=true, updatable=true, unique=false}
+Building property sportFlorbalGoalType
+Binding entity from annotated class: com.so.floorball.dal.model.game.SportFlorbalGameActivityType
+Binding column: Ejb3DiscriminatorColumn{logicalColumnName'DTYPE', discriminatorTypeName='string'}
+Import with entity name SportFlorbalGameActivityType
+Bind entity com.so.floorball.dal.model.game.SportFlorbalGameActivityType on table sportFlorbalGameActivityType
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivityType), mappingColumn=id, insertable=true, updatable=true, unique=true}
+MetadataSourceProcessor property id with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [com.so.floorball.dal.model.game.SportFlorbalGameActivityType:id]
+building SimpleValue for id
+Building property id
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivityType), mappingColumn=name, insertable=true, updatable=true, unique=false}
+MetadataSourceProcessor property name with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [com.so.floorball.dal.model.game.SportFlorbalGameActivityType:name]
+building SimpleValue for name
+Building property name
+Binding column: Ejb3JoinColumn{logicalColumnName='null', referencedColumn='null', mappedBy='sportFlorbalGameActivityType'}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivityType), mappingColumn=sportFlorbalGameActivities, insertable=true, updatable=true, unique=false}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivityType), mappingColumn=null, insertable=true, updatable=true, unique=false}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivityType), mappingColumn=element, insertable=true, updatable=true, unique=false}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameActivityType), mappingColumn=sportFlorbalGameActivities_KEY, insertable=true, updatable=true, unique=false}
+Binding column: Ejb3JoinColumn{logicalColumnName='sportFlorbalGameActivities_KEY', referencedColumn='null', mappedBy='null'}
+Binding column: Ejb3JoinColumn{logicalColumnName='null', referencedColumn='null', mappedBy='sportFlorbalGameActivityType'}
+Binding column: Ejb3JoinColumn{logicalColumnName='null', referencedColumn='null', mappedBy='sportFlorbalGameActivityType'}
+Collection role: com.so.floorball.dal.model.game.SportFlorbalGameActivityType.sportFlorbalGameActivities
+Building property sportFlorbalGameActivities
+Binding entity from annotated class: com.so.floorball.dal.model.game.SportFlorbalGoalType
+Binding column: Ejb3DiscriminatorColumn{logicalColumnName'DTYPE', discriminatorTypeName='string'}
+Import with entity name SportFlorbalGoalType
+Bind entity com.so.floorball.dal.model.game.SportFlorbalGoalType on table sportFlorbalGoalType
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGoalType), mappingColumn=id, insertable=true, updatable=true, unique=true}
+MetadataSourceProcessor property id with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [com.so.floorball.dal.model.game.SportFlorbalGoalType:id]
+building SimpleValue for id
+Building property id
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGoalType), mappingColumn=name, insertable=true, updatable=true, unique=false}
+MetadataSourceProcessor property name with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [com.so.floorball.dal.model.game.SportFlorbalGoalType:name]
+building SimpleValue for name
+Building property name
+Binding column: Ejb3JoinColumn{logicalColumnName='null', referencedColumn='null', mappedBy='sportFlorbalGoalType'}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGoalType), mappingColumn=sportFlorbalGameActivities, insertable=true, updatable=true, unique=false}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGoalType), mappingColumn=null, insertable=true, updatable=true, unique=false}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGoalType), mappingColumn=element, insertable=true, updatable=true, unique=false}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGoalType), mappingColumn=sportFlorbalGameActivities_KEY, insertable=true, updatable=true, unique=false}
+Binding column: Ejb3JoinColumn{logicalColumnName='sportFlorbalGameActivities_KEY', referencedColumn='null', mappedBy='null'}
+Binding column: Ejb3JoinColumn{logicalColumnName='null', referencedColumn='null', mappedBy='sportFlorbalGoalType'}
+Binding column: Ejb3JoinColumn{logicalColumnName='null', referencedColumn='null', mappedBy='sportFlorbalGoalType'}
+Collection role: com.so.floorball.dal.model.game.SportFlorbalGoalType.sportFlorbalGameActivities
+Building property sportFlorbalGameActivities
+Binding entity from annotated class: com.so.floorball.dal.model.game.SportFlorbalGameShots
+Binding column: Ejb3DiscriminatorColumn{logicalColumnName'DTYPE', discriminatorTypeName='string'}
+Import with entity name SportFlorbalGameShots
+Bind entity com.so.floorball.dal.model.game.SportFlorbalGameShots on table sportFlorbalGameShots
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameShots), mappingColumn=id, insertable=true, updatable=true, unique=true}
+MetadataSourceProcessor property id with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [com.so.floorball.dal.model.game.SportFlorbalGameShots:id]
+building SimpleValue for id
+Building property id
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameShots), mappingColumn=competitorTeam, insertable=true, updatable=true, unique=false}
+MetadataSourceProcessor property competitorTeam with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [com.so.floorball.dal.model.game.SportFlorbalGameShots:competitorTeam]
+building SimpleValue for competitorTeam
+Building property competitorTeam
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameShots), mappingColumn=count, insertable=true, updatable=true, unique=false}
+MetadataSourceProcessor property count with lazy=false
+Attempting to locate auto-apply AttributeConverter for property [com.so.floorball.dal.model.game.SportFlorbalGameShots:count]
+building SimpleValue for count
+Building property count
+Binding column: Ejb3JoinColumn{logicalColumnName='idPeriod', referencedColumn='', mappedBy=''}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameShots), mappingColumn=seasonTournamentPeriod, insertable=true, updatable=true, unique=false}
+Building property seasonTournamentPeriod
+Binding column: Ejb3JoinColumn{logicalColumnName='idGame', referencedColumn='', mappedBy=''}
+Binding column: Ejb3Column{table=org.hibernate.mapping.Table(sport_app_dev.sportFlorbalGameShots), mappingColumn=sportFlorbalGame, insertable=true, updatable=true, unique=false}
+Building property sportFlorbalGame
+Starting fillSimpleValue for id
+Starting fillSimpleValue for gameTime
+Starting fillSimpleValue for newScoreAway
+Starting fillSimpleValue for newScoreHome
+Starting fillSimpleValue for penaltySeconds
+Starting fillSimpleValue for realTime
+Starting fillSimpleValue for id
+Starting fillSimpleValue for name
+Starting fillSimpleValue for id
+Starting fillSimpleValue for name
+Starting fillSimpleValue for id
+Starting fillSimpleValue for competitorTeam
+Starting fillSimpleValue for count
+Processing fk mappings (*ToOne and JoinedSubclass)
