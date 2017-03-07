@@ -4,8 +4,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan(basePackages = {"com.so.core.controller", "com.so.core.main","com.so.core.services"})
-//@ComponentScan("com.so.core")
+@ComponentScan(basePackages = {"com.so.core.controller", "com.so.core.main","com.so.core.services","com.so.dal"})
+//@ComponentScan({"com.so"})
 public class AppConfig  {
 
 
