@@ -17,9 +17,10 @@ import java.util.List;
 
 
 @RestController
-
+@CrossOrigin
 @RequestMapping("/season")
 public class SeasonController {
+    
     @Autowired
     SeasonService seasonService;
 
