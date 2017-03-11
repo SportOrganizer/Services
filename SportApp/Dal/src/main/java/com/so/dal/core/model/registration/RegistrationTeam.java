@@ -36,16 +36,16 @@ public class RegistrationTeam  implements java.io.Serializable {
      private String name;
      private String shortName;
      private Date createdTime;
-     private boolean isCancelled;
+     private Boolean isCancelled;
      private String color;
-     private boolean isVerify;
+     private Boolean isVerify;
      private Set<RegistrationPlayer> registrationPlayers = new HashSet<RegistrationPlayer>(0);
 
     public RegistrationTeam() {
     }
 
 	
-    public RegistrationTeam(Resource resource, SeasonTournament seasonTournament, String name, String shortName, Date createdTime, boolean isCancelled, String color, boolean isVerify) {
+    public RegistrationTeam(Resource resource, SeasonTournament seasonTournament, String name, String shortName, Date createdTime, Boolean isCancelled, String color, Boolean isVerify) {
         this.resource = resource;
         this.seasonTournament = seasonTournament;
         this.name = name;
@@ -55,7 +55,7 @@ public class RegistrationTeam  implements java.io.Serializable {
         this.color = color;
         this.isVerify = isVerify;
     }
-    public RegistrationTeam(Resource resource, SeasonTournament seasonTournament, String name, String shortName, Date createdTime, boolean isCancelled, String color, boolean isVerify, Set<RegistrationPlayer> registrationPlayers) {
+    public RegistrationTeam(Resource resource, SeasonTournament seasonTournament, String name, String shortName, Date createdTime, Boolean isCancelled, String color, Boolean isVerify, Set<RegistrationPlayer> registrationPlayers) {
        this.resource = resource;
        this.seasonTournament = seasonTournament;
        this.name = name;
@@ -131,11 +131,11 @@ public class RegistrationTeam  implements java.io.Serializable {
 
     
     @Column(name="isCancelled", nullable=false)
-    public boolean isIsCancelled() {
+    public Boolean isIsCancelled() {
         return this.isCancelled;
     }
     
-    public void setIsCancelled(boolean isCancelled) {
+    public void setIsCancelled(Boolean isCancelled) {
         this.isCancelled = isCancelled;
     }
 
@@ -151,11 +151,11 @@ public class RegistrationTeam  implements java.io.Serializable {
 
     
     @Column(name="isVerify", nullable=false)
-    public boolean isIsVerify() {
+    public Boolean isIsVerify() {
         return this.isVerify;
     }
     
-    public void setIsVerify(boolean isVerify) {
+    public void setIsVerify(Boolean isVerify) {
         this.isVerify = isVerify;
     }
 

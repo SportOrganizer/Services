@@ -5,12 +5,13 @@
  */
 package com.so.core.services;
 
+import com.so.core.controller.converter.RegistrationConverter;
 import com.so.core.controller.dto.registration.RegistrationPlayerDto;
 import com.so.core.controller.dto.registration.RegistrationTeamDto;
 import com.so.core.services.document.DocumentService;
+import com.so.dal.core.model.Resource;
 import com.so.dal.core.model.registration.RegistrationPlayer;
 import com.so.dal.core.model.registration.RegistrationTeam;
-import com.so.dal.core.model.season.SeasonTournament;
 import com.so.dal.core.repository.registration.RegistrationPlayerRepository;
 import com.so.dal.core.repository.registration.RegistrationTeamRepository;
 import com.so.dal.core.repository.season.SeasonTournamentRepository;
@@ -31,21 +32,25 @@ import org.springframework.transaction.annotation.Transactional;
 public class RegistrationService {
 
     private final static Logger LOG = LoggerFactory.getLogger(RegistrationService.class);
+   
     @Autowired
-    RegistrationTeamRepository regTeamRepo;
+    private RegistrationTeamRepository regTeamRepo;
 
     @Autowired
-    RegistrationPlayerRepository regPlayerRepo;
+    private RegistrationPlayerRepository regPlayerRepo;
 
     @Autowired
-    SeasonTournamentRepository seasonTournamentRepo;
+    private SeasonTournamentRepository seasonTournamentRepo;
 
     @Autowired
-    DocumentService documentService;
+    private DocumentService documentService;
+
+    @Autowired
+    private RegistrationConverter converter;
 
     @Transactional
-    public RegistrationTeam registrationTeam(RegistrationTeamDto teamDto) throws IOException {
-        LOG.info("registrationTeam(teamDto) teamDto={}", teamDto);
+    public RegistrationTeamDto registrationTeam(RegistrationTeamDto teamDto) throws IOException {
+        LOG.info("registrationTeam(teamDto)");
 
         if (teamDto.getColor() == null || teamDto.getName() == null || teamDto.getShortName() == null
                 || teamDto.getZnak() == null || teamDto.getRegistrationPlayers() == null || teamDto.getSeasonTournamentId() == null) {
@@ -53,28 +58,33 @@ public class RegistrationService {
                     teamDto.getName(), teamDto.getShortName(), teamDto.getZnak(), teamDto.getRegistrationPlayers(), teamDto.getSeasonTournamentId());
             throw new InvalidParameterException("nevyplnene povinne parametre");
         }
-        RegistrationTeam team = regTeamDtoToEntity(teamDto);
+        Resource znak = documentService.createFile(teamDto.getZnak().getData(), teamDto.getZnak().getMimeType(), "/opt/glassfish4/glassfish/domains/domain1/applications/resources/logos",
+                teamDto.getName());
+        teamDto.getZnak().setId(znak.getId());
+        teamDto.setCreatedTime(new Date());
 
+        RegistrationTeam team = converter.regTeamDtoToEntity(teamDto, false);
         RegistrationTeam savedTeam = regTeamRepo.saveAndFlush(team);
 
         if (savedTeam == null) {
-            LOG.error(" do databayz sa nepodarilo ulozit team={} ", team);
+            LOG.error(" do databazy sa nepodarilo ulozit team={} ", team);
             throw new IllegalStateException("do databazy sa neulozil novo vytvoreny team, koncim spracovanie");
         }
 
         for (RegistrationPlayerDto p : teamDto.getRegistrationPlayers()) {
             try {
-                registrationPlayer(p, savedTeam);
+                savedTeam.getRegistrationPlayers().add(registrationPlayer(p, savedTeam));
             } catch (IllegalStateException e) {
-            //catch aby ak jeden hrac zakape dalsi sa ulozili .... ake najlepsie riesenie?
+                //catch aby ak jeden hrac zakape dalsi sa ulozili .... ake najlepsie riesenie?
                 // bud prejde vsetko alebo nic? alebo ulozime dobrych hracov??
+
             }
         }
-        return regTeamRepo.findOne(savedTeam.getId()); // vraciam z dbs aby mal uz aj odkaz na playerov
+        return converter.regTeamEntityToDto(savedTeam); // vraciam z dbs aby mal uz aj odkaz na playerov
     }
 
     @Transactional
-  private void registrationPlayer(RegistrationPlayerDto playerDto, RegistrationTeam team) {
+    private RegistrationPlayer registrationPlayer(RegistrationPlayerDto playerDto, RegistrationTeam team) {
         LOG.info("registrationPlayer(playerDto, team)-> playerDto={} teamID={}", playerDto, team.getId());
 
         if (playerDto.getIsProfessional() == null || playerDto.getIsStudent() == null || playerDto.getName() == null
@@ -85,54 +95,14 @@ public class RegistrationService {
             throw new InvalidParameterException("nevyplnene povinne parametre");
         }
 
-        RegistrationPlayer player = regPlayerDtoToEntity(playerDto);
+        RegistrationPlayer player = converter.regPlayerDtoToEntity(playerDto);
         player.setRegistrationTeam(team);
         RegistrationPlayer savedPlayer = regPlayerRepo.saveAndFlush(player);
         if (savedPlayer == null) {
             LOG.error(" do databazy sa nepodarilo ulozit hraca={} ", player);
             throw new IllegalStateException("do databazy sa neulozil novo vytvoreny hrac, koncim spracovanie");
-
         }
+        return savedPlayer;
     }
 
-    private RegistrationTeam regTeamDtoToEntity(RegistrationTeamDto dto) throws IOException {
-        SeasonTournament st = seasonTournamentRepo.findOne(dto.getSeasonTournamentId());
-
-        if (st == null) {
-            LOG.error(" chyba v konvertore regTeam, nenajdeny seasonTournament s id={}  koncim spracovanie", dto.getSeasonTournamentId());
-            throw new IllegalStateException("nenajdeny seasonTournament s id=" + dto.getSeasonTournamentId());
-
-        }
-
-        RegistrationTeam entity = new RegistrationTeam();
-        entity.setColor(dto.getColor());
-        entity.setCreatedTime(new Date()); // malo by vratit aktualny datum testnut ci naozaj
-        entity.setIsCancelled(false);
-        entity.setIsVerify(false);
-        entity.setName(dto.getName());
-        entity.setSeasonTournament(st);
-        entity.setResource(documentService.createFile(dto.getZnak(), "jpeg", "photos", dto.getName()));
-        entity.setShortName(dto.getShortName());
-
-        return entity;
-    }
-
-    private RegistrationPlayer regPlayerDtoToEntity(RegistrationPlayerDto dto) {
-        RegistrationPlayer entity = new RegistrationPlayer();
-
-        entity.setBirthDate(dto.getBirthDate());
-        entity.setIsProfessional(dto.getIsProfessional());
-        entity.setIsStudent(dto.getIsStudent());
-        entity.setIsVerified(false);
-        entity.setMail(dto.getMail());
-        entity.setName(dto.getName());
-        entity.setNote(dto.getNote());
-        entity.setNumber(dto.getNumber());
-        entity.setPhone(dto.getPhone());
-        //entity.setRegistrationTeam();
-        entity.setSex(dto.getSex());
-        entity.setSurname(dto.getSurname());
-
-        return entity;
-    }
 }

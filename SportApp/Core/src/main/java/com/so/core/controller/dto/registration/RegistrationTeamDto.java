@@ -5,6 +5,7 @@
  */
 package com.so.core.controller.dto.registration;
 
+import com.so.core.controller.dto.ResourceDto;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,29 +16,71 @@ import java.util.Set;
  */
 public class RegistrationTeamDto {
 
-    private String znak;
+    private Integer id;
+    private ResourceDto znak;
     private Integer seasonTournamentId;
     private String name;
     private String shortName;
     private String color;
+    private Boolean isCancelled;
+    private Boolean isVerify;
+    private Date createdTime;
     private Set<RegistrationPlayerDto> registrationPlayers = new HashSet<RegistrationPlayerDto>(0);
 
     public RegistrationTeamDto() {
     }
 
-    public RegistrationTeamDto( String znak, Integer seasonTournamentId, String name, String shortName, String color) {
+    public RegistrationTeamDto(Integer id,Date createdTime, ResourceDto znak, Integer seasonTournamentId, String name, String shortName, String color, Boolean isCancelled, Boolean isVerify) {
+        this.id = id;
         this.znak = znak;
         this.seasonTournamentId = seasonTournamentId;
         this.name = name;
         this.shortName = shortName;
         this.color = color;
+        this.isCancelled = isCancelled;
+        this.isVerify = isVerify;
+        this.createdTime = createdTime;
     }
 
-    public String getZnak() {
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Boolean getIsCancelled() {
+        return isCancelled;
+    }
+
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
+    
+    
+
+    public void setIsCancelled(Boolean isCancelled) {
+        this.isCancelled = isCancelled;
+    }
+
+    public Boolean getIsVerify() {
+        return isVerify;
+    }
+
+    public void setIsVerify(Boolean isVerify) {
+        this.isVerify = isVerify;
+    }
+
+    public ResourceDto getZnak() {
         return znak;
     }
 
-    public void setZnak(String znak) {
+    public void setZnak(ResourceDto znak) {
         this.znak = znak;
     }
 
