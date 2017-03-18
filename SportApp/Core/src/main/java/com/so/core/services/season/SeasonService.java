@@ -5,6 +5,8 @@
  */
 package com.so.core.services.season;
 
+import com.so.core.controller.converter.SeasonConverter;
+import com.so.core.controller.dto.season.SeasonDTO;
 import com.so.dal.core.model.season.Season;
 import com.so.dal.core.repository.season.SeasonRepository;
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,8 +27,12 @@ public class SeasonService {
 
     @Autowired
     SeasonRepository seasonRepo;
+    
+    @Autowired
+    SeasonConverter seasonConverter;
 
-    public Season findById(Integer id){
+    @Transactional
+    public SeasonDTO findById(Integer id){
         LOG.info("findById({})", id);
         if(id == null){
             LOG.error("id can't be null: {}", id);
@@ -33,18 +40,28 @@ public class SeasonService {
         }
 
         Season s = seasonRepo.findOne(id);
-        return s;
+        if(s==null){
+            LOG.error("k danemu id neexistuje zaznam v dbs");
+        }
+        
+        return seasonConverter.entityToDto(s, true);
     }
 
-    public List<Season> findByNameContaining(String name){
+    public List<SeasonDTO> findByNameContaining(String name){
         LOG.info("findByNameContaining({})", name);
 
         if(name == null){
             LOG.error("name can't be null: {}", name);
             throw new InvalidParameterException("required parameter null");
         }
+        List<SeasonDTO> seasonList = new ArrayList<>();
         List<Season> ls= seasonRepo.findByNameContaining(name);
-        return ls;
+        
+        for(Season s:ls){
+            seasonList.add(seasonConverter.entityToDto(s, false));
+        }
+        
+        return seasonList;
     }
 
     public Season findByName(String name){
@@ -58,11 +75,16 @@ public class SeasonService {
         return  s;
     }
 
-    public List<Season> findAll(){
+    public List<SeasonDTO> findAll(){
         LOG.info("findAll()");
-
         List<Season> ls= seasonRepo.findAll();
-        return ls;
+        List<SeasonDTO> seasonList = new ArrayList<>();
+        
+        for(Season s:ls){
+            seasonList.add(seasonConverter.entityToDto(s, false));
+        }
+        
+        return seasonList;
     }
 
     @Transactional

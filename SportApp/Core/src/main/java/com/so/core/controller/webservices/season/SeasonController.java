@@ -12,7 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.LinkedList;
 import java.util.List;
 
 
@@ -27,39 +26,33 @@ public class SeasonController {
 
     @RequestMapping(path = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getSeasons(@RequestParam(value = "q",required = false) String query ){
-        List<Season> seasons;
-        List<SeasonDTO> seasonDTOS = new LinkedList<SeasonDTO>();
+        List<SeasonDTO> result;
         JsonObject jo = new JsonObject();
         Gson gson = new Gson();
 
         if(query != null){
-            seasons = seasonService.findByNameContaining(query);
+            result = seasonService.findByNameContaining(query);
             jo.addProperty("query",query);
 
         }else{
-            seasons = seasonService.findAll();
+            result = seasonService.findAll();
         }
 
-        for(Season s: seasons){
-            seasonDTOS.add(new SeasonDTO(s));
-        }
 
-        jo.addProperty("length",seasonDTOS.size());
-        jo.add("results",gson.toJsonTree(seasonDTOS));
-        return jo.toString();
+
+        return gson.toJson(result);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getSeason(@PathVariable(value="id") Integer id ){
 
-        Season season;
-        SeasonDTO seasonDTO;
+        SeasonDTO result;
         Gson gson = new Gson();
 
-        season = seasonService.findById(id);
-        seasonDTO = new SeasonDTO(season);
+        result = seasonService.findById(id);
+       
 
-        return gson.toJson(seasonDTO);
+        return gson.toJson(result);
     }
 
 

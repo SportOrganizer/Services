@@ -10,6 +10,7 @@ import com.so.dal.core.model.season.Season;
 import com.so.dal.core.model.season.SeasonTournament;
 import com.so.dal.core.repository.season.SeasonTournamentRepository;
 import com.so.core.services.TournamentService;
+import com.so.dal.core.repository.season.SeasonRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class SeasonTournamentService {
 
     @Autowired
     SeasonService seasonService;
+    
+    @Autowired
+    SeasonRepository seasonRepo;
 
     @Autowired
     TournamentService tournamentService;
@@ -92,7 +96,7 @@ public class SeasonTournamentService {
             return false;
         }
 
-        season = seasonService.findById(seasonId);
+        season = seasonRepo.findOne(seasonId);
 
         if(season == null){
             LOG.error("wrong reference id: {}", seasonId);
