@@ -8,19 +8,19 @@
     </parent>
     <artifactId>Dal</artifactId>
     <packaging>jar</packaging>
-<!--    <repositories>
+    <!--    <repositories>
         <repository>
             <id>unknown-jars-temp-repo</id>
             <name>A temporary repository created by NetBeans for libraries and jars it could not identify. Please replace the dependencies in this repository with correct ones and delete this repository.</name>
             <url>file:${project.basedir}/lib</url>
         </repository>
     </repositories>-->
-  <properties>
+    <properties>
         <spring.version>4.3.5.RELEASE</spring.version>
         <jstl.version>1.2</jstl.version>
         <servletapi.version>3.1.0</servletapi.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-         <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
 
@@ -31,7 +31,7 @@
             <version>${spring.version}</version>
         </dependency>
         <!-- compile only, deployed container will provide this -->
-         <dependency>
+        <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
             <version>1.7.3.RELEASE</version>
@@ -102,6 +102,17 @@
             <version>2.8.0</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.5</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.jadira.usertype</groupId>
+            <artifactId>usertype.core</artifactId>
+            <version>3.1.0.CR1</version>
+        </dependency> 
     </dependencies>
 
     <build>
@@ -112,7 +123,7 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                 </plugin>
-<!--                <plugin>
+                <!--                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
                     <version>2.1.1</version>
@@ -164,7 +175,7 @@
             </plugin>
         </plugins>
     </build>
-<!--    <properties>
+    <!--    <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
     </properties>-->

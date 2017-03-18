@@ -71,7 +71,7 @@ public class RegistrationConverter {
         return entity;
     }
 
-    public RegistrationTeam regTeamDtoToEntity(RegistrationTeamDto dto, Boolean ifCopyPlayers) throws IOException {
+    public RegistrationTeam regTeamDtoToEntity(RegistrationTeamDto dto, Boolean ifCopyPlayers) {
 
         RegistrationTeam entity;
 
@@ -91,16 +91,16 @@ public class RegistrationConverter {
         }
 
         entity.setColor(dto.getColor());
-        entity.setCreatedTime(dto.getCreatedTime()); 
+        entity.setCreatedTime(dto.getCreatedTime());
         entity.setIsCancelled(dto.getIsCancelled());
         entity.setIsVerify(dto.getIsVerify());
         entity.setName(dto.getName());
         entity.setSeasonTournament(st);
 
         entity.setShortName(dto.getShortName());
-        Set<RegistrationPlayer> set = new HashSet<RegistrationPlayer>();
 
         if (ifCopyPlayers) {
+            Set<RegistrationPlayer> set = new HashSet<RegistrationPlayer>();
             for (RegistrationPlayerDto player : dto.getRegistrationPlayers()) {
                 set.add(regPlayerDtoToEntity(player));
             }

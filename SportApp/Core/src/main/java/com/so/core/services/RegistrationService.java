@@ -14,7 +14,6 @@ import com.so.dal.core.model.registration.RegistrationPlayer;
 import com.so.dal.core.model.registration.RegistrationTeam;
 import com.so.dal.core.repository.registration.RegistrationPlayerRepository;
 import com.so.dal.core.repository.registration.RegistrationTeamRepository;
-import com.so.dal.core.repository.season.SeasonTournamentRepository;
 import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.Date;
@@ -32,15 +31,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class RegistrationService {
 
     private final static Logger LOG = LoggerFactory.getLogger(RegistrationService.class);
-   
+
     @Autowired
     private RegistrationTeamRepository regTeamRepo;
 
     @Autowired
     private RegistrationPlayerRepository regPlayerRepo;
-
-    @Autowired
-    private SeasonTournamentRepository seasonTournamentRepo;
 
     @Autowired
     private DocumentService documentService;
@@ -58,8 +54,7 @@ public class RegistrationService {
                     teamDto.getName(), teamDto.getShortName(), teamDto.getZnak(), teamDto.getRegistrationPlayers(), teamDto.getSeasonTournamentId());
             throw new InvalidParameterException("nevyplnene povinne parametre");
         }
-        Resource znak = documentService.createFile(teamDto.getZnak().getData(), teamDto.getZnak().getMimeType(), "/opt/glassfish4/glassfish/domains/domain1/applications/resources/logos",
-                teamDto.getName());
+        Resource znak = documentService.createFile(teamDto.getZnak().getData(), teamDto.getZnak().getMimeType(), "/opt/glassfish4/glassfish/domains/domain1/applications/resources/logos");
         teamDto.getZnak().setId(znak.getId());
         teamDto.setCreatedTime(new Date());
 
@@ -105,4 +100,67 @@ public class RegistrationService {
         return savedPlayer;
     }
 
+    @Transactional
+    public void deleteRegistrationTeam(Integer id) {
+
+        RegistrationTeam team = regTeamRepo.findOne(id);
+
+        if (team == null) {
+            throw new InvalidParameterException("nenajdeny tim s id:" + id);
+        }
+
+        //explicitne mazanie playerov kvoli resourcosom
+        for (RegistrationPlayer p : team.getRegistrationPlayers()) {
+            deleteRegistrationPlayer(p.getId());
+        }
+        regTeamRepo.delete(id);
+
+        if (team.getResource().getCompetitorTeams().isEmpty()) {
+            documentService.deleteFile(team.getResource());
+        }
+
+    }
+
+    @Transactional
+    public void deleteRegistrationPlayer(Integer id) {
+
+        RegistrationPlayer p = regPlayerRepo.findOne(id);
+
+        if (p == null) {
+            throw new InvalidParameterException("nenajdeny hrac s :" + id);
+        }
+
+        regPlayerRepo.delete(id);
+
+        //TODO doplnit vymazenie resourcov ak sa doplni do db
+        //   if(p.g)
+    }
+
+    @Transactional
+    public RegistrationTeamDto editTeam(RegistrationTeamDto team) {
+
+        RegistrationTeam entity = converter.regTeamDtoToEntity(team, false);
+        RegistrationTeam savedTeam = regTeamRepo.save(entity);
+
+        if (savedTeam == null) {
+            LOG.error("nepodarilo sa ulozit aktualizovany tim do db timId={}", team.getId());
+            throw new IllegalStateException("nepodarilo sa ulozit aktualizovany tim do db");
+        }
+
+        return converter.regTeamEntityToDto(savedTeam);
+    }
+
+    @Transactional
+    public RegistrationPlayerDto editPlayer(RegistrationPlayerDto player) {
+
+        RegistrationPlayer entity = converter.regPlayerDtoToEntity(player);
+        RegistrationPlayer savedPlayer = regPlayerRepo.saveAndFlush(entity);
+
+        if (savedPlayer == null) {
+            LOG.error("nepodarilo sa ulozit aktualizovaneho hraca do db playerId={}", player.getId());
+            throw new IllegalStateException("nepodarilo sa ulozit aktualizovaneho hraca do db");
+        }
+
+        return converter.regPlayerEntityToDto(savedPlayer);
+    }
 }
