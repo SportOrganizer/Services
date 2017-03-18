@@ -7,6 +7,7 @@ package com.so.dal.core.repository.registration;
 
 
 import com.so.dal.core.model.registration.RegistrationPlayer;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,5 +17,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface RegistrationPlayerRepository extends JpaRepository<RegistrationPlayer, Integer>{
-    
+    List<RegistrationPlayer> findByMailAndSurname(String mail, String Surname);
 }

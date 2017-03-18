@@ -32,18 +32,18 @@ public class RegistrationPlayer  implements java.io.Serializable {
      private Date birthDate;
      private String mail;
      private String phone;
-     private boolean isStudent;
+     private Boolean isStudent;
      private String sex;
-     private boolean isVerified;
-     private boolean isProfessional;
+     private Boolean isVerified;
+     private Boolean isProfessional;
      private String note;
-     private int number;
+     private Integer number;
 
     public RegistrationPlayer() {
     }
 
 	
-    public RegistrationPlayer(RegistrationTeam registrationTeam, String name, String surname, boolean isStudent, String sex, boolean isVerified, boolean isProfessional, String note, int number) {
+    public RegistrationPlayer(RegistrationTeam registrationTeam, String name, String surname, Boolean isStudent, String sex, Boolean isVerified, Boolean isProfessional, String note, int number) {
         this.registrationTeam = registrationTeam;
         this.name = name;
         this.surname = surname;
@@ -54,7 +54,7 @@ public class RegistrationPlayer  implements java.io.Serializable {
         this.note = note;
         this.number = number;
     }
-    public RegistrationPlayer(RegistrationTeam registrationTeam, String name, String surname, Date birthDate, String mail, String phone, boolean isStudent, String sex, boolean isVerified, boolean isProfessional, String note, int number) {
+    public RegistrationPlayer(RegistrationTeam registrationTeam, String name, String surname, Date birthDate, String mail, String phone, Boolean isStudent, String sex, Boolean isVerified, Boolean isProfessional, String note, int number) {
        this.registrationTeam = registrationTeam;
        this.name = name;
        this.surname = surname;
@@ -143,11 +143,11 @@ public class RegistrationPlayer  implements java.io.Serializable {
 
     
     @Column(name="isStudent", nullable=false)
-    public boolean isIsStudent() {
+    public Boolean isIsStudent() {
         return this.isStudent;
     }
     
-    public void setIsStudent(boolean isStudent) {
+    public void setIsStudent(Boolean isStudent) {
         this.isStudent = isStudent;
     }
 
@@ -163,21 +163,21 @@ public class RegistrationPlayer  implements java.io.Serializable {
 
     
     @Column(name="isVerified", nullable=false)
-    public boolean isIsVerified() {
+    public Boolean isIsVerified() {
         return this.isVerified;
     }
     
-    public void setIsVerified(boolean isVerified) {
+    public void setIsVerified(Boolean isVerified) {
         this.isVerified = isVerified;
     }
 
     
     @Column(name="isProfessional", nullable=false)
-    public boolean isIsProfessional() {
+    public Boolean isIsProfessional() {
         return this.isProfessional;
     }
     
-    public void setIsProfessional(boolean isProfessional) {
+    public void setIsProfessional(Boolean isProfessional) {
         this.isProfessional = isProfessional;
     }
 

@@ -143,7 +143,7 @@ public class SeasonTournament  implements java.io.Serializable {
         this.seasonTournamentRounds = seasonTournamentRounds;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="seasonTournament")
+@OneToMany(fetch=FetchType.LAZY, mappedBy="seasonTournament", orphanRemoval=true)
     public Set<RegistrationTeam> getRegistrationTeams() {
         return this.registrationTeams;
     }

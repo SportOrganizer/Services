@@ -15,6 +15,6 @@ import org.springframework.stereotype.Repository;
  * @author peter
  */
 @Repository
-public interface RegistrationTemRepository extends JpaRepository<RegistrationTeam, Integer>{
+public interface RegistrationTeamRepository extends JpaRepository<RegistrationTeam, Integer>{
     
 }

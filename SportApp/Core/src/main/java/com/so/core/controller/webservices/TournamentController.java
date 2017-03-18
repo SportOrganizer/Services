@@ -17,7 +17,7 @@ import java.util.List;
 
 
 @RestController
-
+@CrossOrigin
 @RequestMapping("/tournament")
 public class TournamentController {
     @Autowired

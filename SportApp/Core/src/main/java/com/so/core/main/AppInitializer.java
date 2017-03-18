@@ -25,7 +25,7 @@ public class AppInitializer implements WebApplicationInitializer {
 
     private AnnotationConfigWebApplicationContext getContext() {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.setConfigLocation("com.so.core.configuration");
+            context.setConfigLocation("com.so.core.configuration");
         return context;
     }
 
