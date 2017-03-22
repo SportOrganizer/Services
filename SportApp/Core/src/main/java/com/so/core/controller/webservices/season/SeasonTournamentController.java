@@ -67,6 +67,7 @@ public class SeasonTournamentController {
 //            "tournamentId": 1,
 //            "name": "Tests2"
 //    }
+    
     @RequestMapping(path = "/", method = RequestMethod.POST)
     public ResponseEntity createSeasonTournament(@RequestBody SeasonTournamentDTO st ){
 

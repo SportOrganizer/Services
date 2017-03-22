@@ -23,14 +23,14 @@ public class PersonServiceTest extends TestParent{
     
     @Test
     public void addPersonTest(){
-      Boolean b=  service.addPerson("peter", "ondovcik", null, null, null, true, "MALE", null);
-         assertTrue(b);
+      Person p=  service.addPerson("peter", "ondovcik", null, null, null, true, "MALE");
+         assertTrue(p.getName().equals("peter"));
          
      }
     
     @Test
     public void findByNameAndSurnameTest(){
-        service.addPerson("peter", "ondovcik", null, null, null, true, "MALE", null);
+        service.addPerson("peter", "ondovcik", null, null, null, true, "MALE");
         
         Person p = service.findPersonByNameAndSurname("peter", "ondovcik");
         
