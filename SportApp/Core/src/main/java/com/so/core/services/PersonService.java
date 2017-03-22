@@ -33,10 +33,10 @@ public class PersonService {
     PersonRepository personRepo;
 
     @Transactional
-    public Boolean addPerson(String name, String surname, Date birthDate, String mail, String phone, Boolean isStudent,
-            String sex, Set<CompetitorTeamPlayer> competitorTeamPlayers) {
+    public Person addPerson(String name, String surname, Date birthDate, String mail, String phone, Boolean isStudent,
+            String sex) {
 
-        LOG.info("addPerson({},{},{},{},{},{},{},{})", name, surname, birthDate, mail, phone, isStudent, sex, competitorTeamPlayers);
+        LOG.info("addPerson({},{},{},{},{},{},{},{})", name, surname, birthDate, mail, phone, isStudent, sex);
 
         if (name == null || surname == null || isStudent == null || sex == null) {
             LOG.error("name surname isStudent sex nesmu byt prazdne: name={} surname={} sex={} isStudent={} ", name, surname, sex, isStudent);
@@ -45,15 +45,16 @@ public class PersonService {
 
         //todo competitorTeamPlayers sa bude v buducnu doplnat vyhladavanim timu po poslani z napr. id z FE to sa odkomentuje este
         // pri tvorbe FE
-        Person p = new Person(name, surname, birthDate, mail, phone, isStudent, sex, competitorTeamPlayers);
+        Person p = new Person(name, surname, birthDate, mail, phone, isStudent, sex, null);
 
         p = personRepo.saveAndFlush(p);
 
         if (p == null) {
-            return false;
+            LOG.info("Chyba pri pridavani persony {}", p);
+            throw new IllegalStateException();
         }
         LOG.info("pridana osoba {}", p);
-        return true;
+        return p;
     }
 
     public Person findPersonByNameAndSurname(String name, String surname) {
@@ -61,6 +62,14 @@ public class PersonService {
         LOG.info("findPersonByNameAndSurname({},{})", name, surname);
 
         Person p = personRepo.findByNameAndSurname(name, surname);
+        return p;
+    }
+    
+     public Person findPersonByEmail(String mail) {
+
+        LOG.info("findPersonByEmail({})", mail);
+
+        Person p = personRepo.findByMail(mail);
         return p;
     }
 }

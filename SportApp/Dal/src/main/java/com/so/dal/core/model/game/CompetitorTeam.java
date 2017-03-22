@@ -83,7 +83,7 @@ public class CompetitorTeam  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="idGroup", nullable=false)
+    @JoinColumn(name="idGroup")
     public SeasonTournamentGroup getSeasonTournamentGroup() {
         return this.seasonTournamentGroup;
     }
