@@ -13,12 +13,12 @@ import com.so.dal.core.model.registration.RegistrationPlayer;
  *
  * @author Kristián Kačinetz
  */
-public class IncompatiblePlayers {
+public class IncompatiblePlayersDTO {
     
     RegistrationPlayer rp;
     Person p;
 
-    public IncompatiblePlayers(RegistrationPlayer rp, Person p) {
+    public IncompatiblePlayersDTO(RegistrationPlayer rp, Person p) {
         this.rp = rp;
         this.p = p;
     }

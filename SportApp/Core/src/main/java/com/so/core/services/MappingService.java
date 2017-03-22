@@ -6,7 +6,7 @@
 
 package com.so.core.services;
 
-import com.so.core.controller.dto.IncompatiblePlayers;
+import com.so.core.controller.dto.IncompatiblePlayersDTO;
 import com.so.core.services.season.SeasonTournamentService;
 import com.so.dal.core.model.Person;
 import com.so.dal.core.model.Team;
@@ -46,7 +46,7 @@ public class MappingService {
     
     Set<RegistrationTeam> registrationTeams;
     Set<RegistrationPlayer> registrationPlayers; 
-    Set<IncompatiblePlayers> incompatiblePersons;
+    Set<IncompatiblePlayersDTO> incompatiblePersons;
     
     
     public void MappingPlayers(Integer idSeasonTournament, CompetitorTeam competitorTeam){
@@ -77,7 +77,7 @@ public class MappingService {
                         !(rp.getSex().equals(existedPerson.getSex())) || !(rp.isIsStudent().equals(existedPerson.isIsStudent()))){
                     //vrat obidve objekty? 
                     
-                    incompatiblePersons.add(new IncompatiblePlayers(rp, existedPerson));
+                    incompatiblePersons.add(new IncompatiblePlayersDTO(rp, existedPerson));
                     
                 }
             }
@@ -86,7 +86,7 @@ public class MappingService {
     }
     
     //tato sa bude volat v controlleri
-    public Set<IncompatiblePlayers> MappingTeamsAndPlayers(Integer idSeasonTournament){
+    public Set<IncompatiblePlayersDTO> MappingTeamsAndPlayers(Integer idSeasonTournament){
         LOG.info("MappingTeams(idSeasonTournament) idSeasonTournament={}", idSeasonTournament);
         
         SeasonTournament seasonTournament;     
