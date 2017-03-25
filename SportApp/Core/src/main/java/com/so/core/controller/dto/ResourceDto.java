@@ -12,7 +12,7 @@ package com.so.core.controller.dto;
 public class ResourceDto {
 
     private Integer id;
-    private String data;
+    private byte[] data;
     private String mimeType;
     private String path;
 
@@ -25,7 +25,7 @@ public class ResourceDto {
     }
 
     
-    public ResourceDto(Integer id, String data, String mimeType, String path) {
+    public ResourceDto(Integer id, byte[] data, String mimeType, String path) {
         this.data = data;
         this.mimeType = mimeType;
         this.path = path;
@@ -40,11 +40,11 @@ public class ResourceDto {
         this.id = id;
     }
 
-    public String getData() {
+    public byte[] getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(byte[] data) {
         this.data = data;
     }
 
