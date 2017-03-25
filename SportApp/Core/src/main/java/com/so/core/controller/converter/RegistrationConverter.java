@@ -100,7 +100,7 @@ public class RegistrationConverter {
         entity.setShortName(dto.getShortName());
 
         if (ifCopyPlayers) {
-            Set<RegistrationPlayer> set = new HashSet<RegistrationPlayer>();
+            Set<RegistrationPlayer> set = new HashSet<>();
             for (RegistrationPlayerDto player : dto.getRegistrationPlayers()) {
                 set.add(regPlayerDtoToEntity(player));
             }

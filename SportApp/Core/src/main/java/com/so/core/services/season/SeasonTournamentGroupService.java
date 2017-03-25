@@ -8,6 +8,7 @@ package com.so.core.services.season;
 import com.so.dal.core.model.season.SeasonTournament;
 import com.so.dal.core.model.season.SeasonTournamentGroup;
 import com.so.dal.core.repository.season.SeasonTournamentGroupRepository;
+import com.so.dal.core.repository.season.SeasonTournamentRepository;
 import java.security.InvalidParameterException;
 import java.util.List;
 import org.slf4j.Logger;
@@ -30,6 +31,9 @@ public class SeasonTournamentGroupService {
     
     @Autowired
     SeasonTournamentService seasonTournamentService;
+    
+        @Autowired
+    SeasonTournamentRepository seasonTournamentRepo;
     
     
     public List<SeasonTournamentGroup> findAll(){
@@ -81,7 +85,7 @@ public class SeasonTournamentGroupService {
             return false;
         }
         
-        seasonTournament = seasonTournamentService.findById(seasonTournamentId);
+        seasonTournament = seasonTournamentRepo.findOne(seasonTournamentId);
         
         if(seasonTournament == null){
             LOG.error("wrong reference id: {}", seasonTournamentId);

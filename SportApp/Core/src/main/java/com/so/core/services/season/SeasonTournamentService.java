@@ -5,12 +5,16 @@
  */
 package com.so.core.services.season;
 
-import com.so.dal.core.model.Tournament;
-import com.so.dal.core.model.season.Season;
+import com.so.core.controller.converter.SeasonTournamentConverter;
+import com.so.core.controller.dto.ResourceDto;
+import com.so.core.controller.dto.season.SeasonTournamentDTO;
 import com.so.dal.core.model.season.SeasonTournament;
 import com.so.dal.core.repository.season.SeasonTournamentRepository;
 import com.so.core.services.TournamentService;
+import com.so.core.services.document.DocumentService;
+import com.so.dal.core.model.Resource;
 import com.so.dal.core.repository.season.SeasonRepository;
+import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +22,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.List;
-
 
 @Service
 public class SeasonTournamentService {
@@ -31,95 +35,139 @@ public class SeasonTournamentService {
 
     @Autowired
     SeasonService seasonService;
-    
+
     @Autowired
     SeasonRepository seasonRepo;
 
     @Autowired
     TournamentService tournamentService;
 
-    public SeasonTournament findById(Integer id){
+    @Autowired
+    DocumentService documentService;
+
+    @Autowired
+    SeasonTournamentConverter seasonTournamentConverter;
+
+    @Transactional
+    public SeasonTournamentDTO findById(Integer id) {
         LOG.info("findById({})", id);
-        if(id == null){
+        if (id == null) {
             LOG.error("id can't be null: {}", id);
             throw new InvalidParameterException("required parameter null");
         }
 
         SeasonTournament s = seasonTournamentRepo.findOne(id);
-        return s;
+
+        if (s == null) {
+            return new SeasonTournamentDTO();
+        }
+
+        return seasonTournamentConverter.entityToDto(s);
     }
 
-    public List<SeasonTournament> findByNameContaining(String name){
+    @Transactional
+    public List<SeasonTournamentDTO> findByNameContaining(String name) {
         LOG.info("findByNameContaining({})", name);
 
-        if(name == null){
+        if (name == null) {
             LOG.error("name can't be null: {}", name);
             throw new InvalidParameterException("required parameter null");
         }
-        List<SeasonTournament> ls= seasonTournamentRepo.findByNameContaining(name);
-        return ls;
+        List<SeasonTournament> ls = seasonTournamentRepo.findByNameContaining(name);
+        List<SeasonTournamentDTO> l = new ArrayList<>();
+
+        for (SeasonTournament st : ls) {
+            l.add(seasonTournamentConverter.entityToDto(st));
+        }
+
+        return l;
     }
 
-    public SeasonTournament findByName(String name){
+    @Transactional
+    public SeasonTournamentDTO findByName(String name) {
         LOG.info("findByNameContaining({})", name);
-        if(name == null){
+        if (name == null) {
             LOG.error("name can't be null: {}", name);
             throw new InvalidParameterException("required parameter null");
         }
 
         SeasonTournament s = seasonTournamentRepo.findByName(name);
-        return  s;
-    }
 
-    public List<SeasonTournament> findAll(){
-        LOG.info("findAll()");
+        if (s == null) {
+            return new SeasonTournamentDTO();
+        }
 
-        List<SeasonTournament> ls= seasonTournamentRepo.findAll();
-        return ls;
+        return seasonTournamentConverter.entityToDto(s);
     }
 
     @Transactional
-    public Boolean createSeasonTournament(Integer seasonId, Integer tournamentId, String name) {
-        LOG.info("createSeasonTournament({},{},{})",seasonId,tournamentId,name);
+    public List<SeasonTournamentDTO> findAll() {
+        LOG.info("findAll()");
 
-        Season season;
-        Tournament tournament;
-        SeasonTournament seasonTournament;
+        List<SeasonTournamentDTO> l = new ArrayList<>();
 
-        if(seasonId == null || tournamentId == null || name == null){
-            LOG.error("required can't be null: {}, {}, {}", seasonId,tournamentId,name);
+        List<SeasonTournament> ls = seasonTournamentRepo.findAll();
+
+        for (SeasonTournament st : ls) {
+            l.add(seasonTournamentConverter.entityToDto(st));
+        }
+        return l;
+    }
+
+    @Transactional
+    public SeasonTournamentDTO createSeasonTournament(SeasonTournamentDTO dto) throws IOException {
+        LOG.info("createSeasonTournament({},{},{})", dto.getSeasonId(), dto.getName(), dto.getTournamentId());
+
+        if (dto.getSeasonId() == null || dto.getTournamentId() == null || dto.getName() == null) {
+            LOG.error("required can't be null: {}, {}, {}", dto.getSeasonId(), dto.getTournamentId(), dto.getName());
             throw new InvalidParameterException("required parameter null");
         }
 
-        if(seasonTournamentRepo.findByName(name) != null){
-            LOG.error("duplicate name: {}", name);
-            return false;
+        if (seasonTournamentRepo.findByName(dto.getName()) != null) {
+            LOG.error("duplicate name: {}", dto.getName());
+            throw new InvalidParameterException("duplicate name");
         }
+        Resource r = documentService.createFile(dto.getLogo().getData(), dto.getLogo().getMimeType());
 
-        season = seasonRepo.findOne(seasonId);
+        dto.setLogo(new ResourceDto(r.getId(), r.getPath()));
 
-        if(season == null){
-            LOG.error("wrong reference id: {}", seasonId);
-            return false;
-        }
-
-        tournament = tournamentService.findById(tournamentId);
-        if(tournament == null){
-            LOG.error("wrong reference id: {}", tournamentId);
-            return false;
-        }
-
-        seasonTournament = new SeasonTournament(season, tournament, name);
-        seasonTournament  = seasonTournamentRepo.saveAndFlush(seasonTournament);
+        SeasonTournament s = seasonTournamentConverter.dtoToEntity(dto);
+        SeasonTournament seasonTournament = seasonTournamentRepo.saveAndFlush(s);
 
         if (seasonTournament == null) {
-            LOG.error("save has failed: {}", name);
-            return false;
+            LOG.error("save has failed: {}", dto.getName());
+            throw new InvalidParameterException("save has faild");
         }
 
-        return true;
+        return seasonTournamentConverter.entityToDto(seasonTournament);
     }
 
+    @Transactional
+    public void deleteSeasonTournament(Integer id) {
+        LOG.info("deleteSeasonTournament({})",id);
+        SeasonTournament s = seasonTournamentRepo.findOne(id);
 
+        if (s == null) {
+            throw new InvalidParameterException("nenajdene seasonTournament");
+        }
+        if (s.getResource() != null) {
+            documentService.deleteFile(s.getResource());
+        }
 
+        seasonTournamentRepo.delete(s);
+    }
+
+    @Transactional
+    public SeasonTournamentDTO update(SeasonTournamentDTO updated) {
+     LOG.info("update()");
+        SeasonTournament s = seasonTournamentConverter.dtoToEntity(updated);
+
+        SeasonTournament saved = seasonTournamentRepo.saveAndFlush(s);
+
+        if (saved == null) {
+            LOG.error("nepodarilo sa ulozit st do db");
+            throw new IllegalStateException("nepodarilo sa ulozit st do db");
+        }
+        return seasonTournamentConverter.entityToDto(saved);
+    }
 }

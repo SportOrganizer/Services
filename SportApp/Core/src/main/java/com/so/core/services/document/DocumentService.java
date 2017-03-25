@@ -33,8 +33,10 @@ public class DocumentService {
     private ResourceRepository resourceRepo;
 
     @Transactional
-    public Resource createFile(String data, String mimeType, String path) throws IOException {
+    public Resource createFile(String data, String mimeType) throws IOException {
         LOG.debug("data={}", data);
+        String  path =  "/opt/glassfish4/glassfish/domains/domain1/applications/resources/logos";
+        //String path = "C:\\Users\\peter\\Documents\\Timak_master\\target\\resources";
         byte[] decodedImg = Base64.getDecoder().decode(data.getBytes());
         Path destinationFile = Paths.get(path, UUID.randomUUID().toString() + "." + mimeType);
         Files.write(destinationFile, decodedImg);
@@ -46,16 +48,21 @@ public class DocumentService {
         }
         return r;
     }
-    
-    public void deleteFile(Resource r){
-     File file = new File(r.getPath());
-        	
-    		if(file.delete()){
-    			LOG.info(file.getName() + " is deleted!");
-    		}else{
-    			LOG.error("Delete operation is failed.");
-                        throw new IllegalStateException("nepodarilo sa vymazat resource");
-    		}
-        
+
+    public void deleteFile(Resource r) {
+
+        if (r != null) {
+            File file = new File(r.getPath());
+
+            if (file.delete()) {
+                LOG.info(file.getName() + " is deleted!");
+            } else {
+                LOG.error("Delete operation is failed.");
+                throw new IllegalStateException("nepodarilo sa vymazat resource");
+            }
+        }
+
     }
+    
+    
 }

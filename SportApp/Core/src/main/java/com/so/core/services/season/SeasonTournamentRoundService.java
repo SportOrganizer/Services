@@ -7,6 +7,7 @@ package com.so.core.services.season;
 
 import com.so.dal.core.model.season.SeasonTournament;
 import com.so.dal.core.model.season.SeasonTournamentRound;
+import com.so.dal.core.repository.season.SeasonTournamentRepository;
 import com.so.dal.core.repository.season.SeasonTournamentRoundRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +28,7 @@ public class SeasonTournamentRoundService {
     SeasonTournamentRoundRepository seasonTournamentRoundRepository;
 
     @Autowired
-    SeasonTournamentService seasonTournamentService;
+    SeasonTournamentRepository seasonTournamentRepo;
 
 
     public SeasonTournamentRound findById(Integer id){
@@ -87,7 +88,7 @@ public class SeasonTournamentRoundService {
             return false;
         }
 
-        seasonTournament = seasonTournamentService.findById(seasonTournamentId);
+        seasonTournament = seasonTournamentRepo.findOne(seasonTournamentId);
 
         if(seasonTournament == null){
             LOG.error("wrong reference id: {}", seasonTournament);

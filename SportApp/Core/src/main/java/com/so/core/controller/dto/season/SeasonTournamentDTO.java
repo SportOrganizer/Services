@@ -1,5 +1,6 @@
 package com.so.core.controller.dto.season;
 
+import com.so.core.controller.dto.ResourceDto;
 import com.so.dal.core.model.season.SeasonTournament;
 
 public class SeasonTournamentDTO{
@@ -7,6 +8,7 @@ public class SeasonTournamentDTO{
     private Integer id;
     private Integer seasonId;
     private Integer tournamentId;
+    private ResourceDto logo;
     private String name;
 
     public SeasonTournamentDTO() {
@@ -19,11 +21,25 @@ public class SeasonTournamentDTO{
         this.name = st.getName();
     }
 
-    public SeasonTournamentDTO ( Integer seasonId, Integer tournamentId, String name) {
+    public SeasonTournamentDTO(Integer id, Integer seasonId, Integer tournamentId, ResourceDto resource, String name) {
+        this.id = id;
         this.seasonId = seasonId;
         this.tournamentId = tournamentId;
+        this.logo = resource;
         this.name = name;
     }
+
+    
+    
+    public ResourceDto getLogo() {
+        return logo;
+    }
+
+    public void setLogo(ResourceDto logo) {
+        this.logo = logo;
+    }
+
+
 
     public SeasonTournamentDTO ( String seasonId, String tournamentId, String name) {
         this.seasonId = Integer.parseInt(seasonId);
