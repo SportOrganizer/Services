@@ -98,5 +98,5 @@
       # request: /{id}
       # response: if success same like find All operations result without deleted season tournament
 
-# end SeasonTournamet #####################################################################################
+
 
