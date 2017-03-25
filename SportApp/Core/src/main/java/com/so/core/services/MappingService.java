@@ -7,13 +7,13 @@
 package com.so.core.services;
 
 import com.so.core.controller.dto.IncompatiblePlayersDTO;
-import com.so.core.services.season.SeasonTournamentService;
 import com.so.dal.core.model.Person;
 import com.so.dal.core.model.Team;
 import com.so.dal.core.model.game.CompetitorTeam;
 import com.so.dal.core.model.registration.RegistrationPlayer;
 import com.so.dal.core.model.registration.RegistrationTeam;
 import com.so.dal.core.model.season.SeasonTournament;
+import com.so.dal.core.repository.season.SeasonTournamentRepository;
 import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +42,7 @@ public class MappingService {
     PersonService personService;
     
     @Autowired
-    SeasonTournamentService seasonTournamentService;
+    SeasonTournamentRepository seasonTournamentRepo;
     
     Set<RegistrationTeam> registrationTeams;
     Set<RegistrationPlayer> registrationPlayers; 
@@ -53,7 +53,7 @@ public class MappingService {
         LOG.info("MappingPlayers(idSeasonTournament) idSeasonTournament={}", idSeasonTournament);
         
         SeasonTournament seasonTournament;     
-        seasonTournament = seasonTournamentService.findById(idSeasonTournament);
+        seasonTournament = seasonTournamentRepo.findOne(idSeasonTournament);
         
         registrationTeams.addAll(seasonTournament.getRegistrationTeams());
         for(RegistrationTeam t : registrationTeams){
@@ -90,7 +90,7 @@ public class MappingService {
         LOG.info("MappingTeams(idSeasonTournament) idSeasonTournament={}", idSeasonTournament);
         
         SeasonTournament seasonTournament;     
-        seasonTournament = seasonTournamentService.findById(idSeasonTournament);
+        seasonTournament = seasonTournamentRepo.findOne(idSeasonTournament);
         
         registrationTeams.addAll(seasonTournament.getRegistrationTeams());
         for(RegistrationTeam rt : registrationTeams){

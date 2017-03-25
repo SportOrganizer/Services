@@ -54,7 +54,7 @@ public class RegistrationService {
                     teamDto.getName(), teamDto.getShortName(), teamDto.getZnak(), teamDto.getRegistrationPlayers(), teamDto.getSeasonTournamentId());
             throw new InvalidParameterException("nevyplnene povinne parametre");
         }
-        Resource znak = documentService.createFile(teamDto.getZnak().getData(), teamDto.getZnak().getMimeType(), "/opt/glassfish4/glassfish/domains/domain1/applications/resources/logos");
+        Resource znak = documentService.createFile(teamDto.getZnak().getData(), teamDto.getZnak().getMimeType());
         teamDto.getZnak().setId(znak.getId());
         teamDto.setCreatedTime(new Date());
 
