@@ -3,42 +3,42 @@
     # SeasonTournamet 
      # request : /seasontournament/
         # find All
-        # request: /
-        # response: 
-         {
-           "length": 4,
-           "results":    [
-               {
-                 "id": 1,
-                 "seasonId": 1,
-                 "tournamentId": 1,
-                 "name": "Tests"
-              },
-                    {
-                 "id": 2,
-                 "seasonId": 1,
-                 "tournamentId": 1,
-                 "name": "testick"
-              },
-                    {
-                 "id": 3,
-                 "seasonId": 1,
-                 "tournamentId": 1,
-                 "name": "Tests2"
-              },
-                    {
-                 "id": 4,
-                 "seasonId": 1,
-                 "tournamentId": 1,
-                 "logo":          {
-                    "id": 69,
-                    "path": "cesta1"
-                 },
-                 "name": "novyNazov"
-              }
-           ]
-        }
-        
+          # request: /
+          # response: 
+           {
+             "length": 4,
+             "results":    [
+                 {
+                   "id": 1,
+                   "seasonId": 1,
+                   "tournamentId": 1,
+                   "name": "Tests"
+                },
+                      {
+                   "id": 2,
+                   "seasonId": 1,
+                   "tournamentId": 1,
+                   "name": "testick"
+                },
+                      {
+                   "id": 3,
+                   "seasonId": 1,
+                   "tournamentId": 1,
+                   "name": "Tests2"
+                },
+                      {
+                   "id": 4,
+                   "seasonId": 1,
+                   "tournamentId": 1,
+                   "logo":          {
+                      "id": 69,
+                      "path": "cesta1"
+                   },
+                   "name": "novyNazov"
+                }
+             ]
+          }
+
     # find one
       # request: /{id}
       # response:
