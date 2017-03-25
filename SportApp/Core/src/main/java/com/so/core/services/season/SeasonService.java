@@ -5,7 +5,7 @@
  */
 package com.so.core.services.season;
 
-import com.so.core.controller.converter.SeasonConverter;
+import com.so.core.controller.converter.season.SeasonConverter;
 import com.so.core.controller.dto.season.SeasonDTO;
 import com.so.dal.core.model.season.Season;
 import com.so.dal.core.repository.season.SeasonRepository;
