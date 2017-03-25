@@ -54,49 +54,49 @@
         }
         
         
-    # create
-      # request: /
+      # create
+        # request: /
+           {
+             "seasonId": 1,
+             "tournamentId": 1,
+             "logo":    {
+                "data": "VmFuMmFqejQ5NThwdA==",
+                "mimeType": "jpeg"
+             },
+             "name": "nameee"
+          }
+
+        # response:
+           {
+             "id": 18,
+             "seasonId": 1,
+             "tournamentId": 1,
+             "logo":    {
+                "id": 753,
+                "path": "C:\\Users\\peter\\Documents\\Timak_master\\target\\resources\\d1f531cb-bfbe-41cc-b16b-d172dec6fba4.jpeg"
+             },
+             "name": "nameee"
+          }
+
+     # edit
+      # request : /update/
          {
-           "seasonId": 1,
-           "tournamentId": 1,
-           "logo":    {
-              "data": "VmFuMmFqejQ5NThwdA==",
-              "mimeType": "jpeg"
-           },
-           "name": "nameee"
-        }
-          
-      # response:
-         {
-           "id": 18,
-           "seasonId": 1,
-           "tournamentId": 1,
-           "logo":    {
-              "id": 753,
-              "path": "C:\\Users\\peter\\Documents\\Timak_master\\target\\resources\\d1f531cb-bfbe-41cc-b16b-d172dec6fba4.jpeg"
-           },
-           "name": "nameee"
-        }
-        
-   # edit
-    # request : /update/
-       {
-           "id": 18,
-           "seasonId": 1,
-           "tournamentId": 1,
-           "logo":    {
-              "id": 753,
-              "path": "C:\\Users\\peter\\Documents\\Timak_master\\target\\resources\\d1f531cb-bfbe-41cc-b16b-d172dec6fba4.jpeg"
-           },
-           "name": "new Name"
-        }
-      
-     # response:
-       if success same like request
-      
-  # delete
-    # request: /{id}
-    # response: if success same like find All operations result without deleted season tournament
-  
+             "id": 18,
+             "seasonId": 1,
+             "tournamentId": 1,
+             "logo":    {
+                "id": 753,
+                "path": "C:\\Users\\peter\\Documents\\Timak_master\\target\\resources\\d1f531cb-bfbe-41cc-b16b-d172dec6fba4.jpeg"
+             },
+             "name": "new Name"
+          }
+
+       # response:
+         if success same like request
+
+    # delete
+      # request: /{id}
+      # response: if success same like find All operations result without deleted season tournament
+
 # end SeasonTournamet #####################################################################################
 
