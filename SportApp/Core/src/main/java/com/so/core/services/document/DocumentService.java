@@ -33,13 +33,13 @@ public class DocumentService {
     private ResourceRepository resourceRepo;
 
     @Transactional
-    public Resource createFile(String data, String mimeType) throws IOException {
-        LOG.debug("data={}", data);
-        String  path =  "/opt/glassfish4/glassfish/domains/domain1/applications/resources/logos";
-        //String path = "C:\\Users\\peter\\Documents\\Timak_master\\target\\resources";
-        byte[] decodedImg = Base64.getDecoder().decode(data.getBytes());
+    public Resource createFile(byte[] data, String mimeType) throws IOException {
+        //  LOG.debug("data={}", data);
+        String path = "/opt/glassfish4/glassfish/domains/domain1/applications/resources/logos";
+        //  String path = "C:\\Users\\peter\\Documents\\resources";
         Path destinationFile = Paths.get(path, UUID.randomUUID().toString() + "." + mimeType);
-        Files.write(destinationFile, decodedImg);
+        Files.write(destinationFile, data);
+
         Resource r = resourceRepo.saveAndFlush(new Resource(destinationFile.toString()));
 
         if (r == null) {
@@ -63,6 +63,5 @@ public class DocumentService {
         }
 
     }
-    
-    
+
 }
