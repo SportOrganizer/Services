@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.so.core.controller.converter;
+package com.so.core.controller.converter.season;
 
 import com.so.core.controller.dto.ResourceDto;
 import com.so.core.controller.dto.season.SeasonTournamentDTO;
