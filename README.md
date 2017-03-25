@@ -1,48 +1,48 @@
 # Services 
   # Core
-    ######################################## SeasonTournamet  ########################################
-    request : /seasontournament/  
-      #########find All ############
-      request: /
-      response: 
-   {
-   "length": 4,
-   "results":    [
-            {
-         "id": 1,
-         "seasonId": 1,
-         "tournamentId": 1,
-         "name": "Tests"
-      },
-            {
-         "id": 2,
-         "seasonId": 1,
-         "tournamentId": 1,
-         "name": "testick"
-      },
-            {
-         "id": 3,
-         "seasonId": 1,
-         "tournamentId": 1,
-         "name": "Tests2"
-      },
-            {
-         "id": 4,
-         "seasonId": 1,
-         "tournamentId": 1,
-         "logo":          {
-            "id": 69,
-            "path": "cesta1"
-         },
-         "name": "novyNazov"
-      }
-   ]
-}
-
-    ####### find one ############
-    request: /{id}
-    response:
-       {
+    # SeasonTournamet 
+     # request : /seasontournament/
+        # find All
+        # request: /
+        # response: 
+         {
+           "length": 4,
+           "results":    [
+               {
+                 "id": 1,
+                 "seasonId": 1,
+                 "tournamentId": 1,
+                 "name": "Tests"
+              },
+                    {
+                 "id": 2,
+                 "seasonId": 1,
+                 "tournamentId": 1,
+                 "name": "testick"
+              },
+                    {
+                 "id": 3,
+                 "seasonId": 1,
+                 "tournamentId": 1,
+                 "name": "Tests2"
+              },
+                    {
+                 "id": 4,
+                 "seasonId": 1,
+                 "tournamentId": 1,
+                 "logo":          {
+                    "id": 69,
+                    "path": "cesta1"
+                 },
+                 "name": "novyNazov"
+              }
+           ]
+        }
+        
+    # find one
+      # request: /{id}
+      # response:
+        {
            "id": 4,
            "seasonId": 1,
            "tournamentId": 1,
@@ -54,19 +54,19 @@
         }
         
         
-    ####### create ################
-    request: /
-           {
-             "seasonId": 1,
-             "tournamentId": 1,
-             "logo":    {
-                "data": "VmFuMmFqejQ5NThwdA==",
-                "mimeType": "jpeg"
-             },
-             "name": "nameee"
-          }
+    # create
+      # request: /
+         {
+           "seasonId": 1,
+           "tournamentId": 1,
+           "logo":    {
+              "data": "VmFuMmFqejQ5NThwdA==",
+              "mimeType": "jpeg"
+           },
+           "name": "nameee"
+        }
           
-  response:
+      # response:
          {
            "id": 18,
            "seasonId": 1,
@@ -78,8 +78,8 @@
            "name": "nameee"
         }
         
-  ########## edit ##############
-    request : /update/
+   # edit
+    # request : /update/
        {
            "id": 18,
            "seasonId": 1,
@@ -91,12 +91,12 @@
            "name": "new Name"
         }
       
-      response:
-      if success same like request
+     # response:
+       if success same like request
       
- ############ delete ############
-   request: /{id}
-   response: if success same like find All operations result without deleted season tournament
+  # delete
+    # request: /{id}
+    # response: if success same like find All operations result without deleted season tournament
   
-#################################################################################################################
+# end SeasonTournamet #####################################################################################
 
