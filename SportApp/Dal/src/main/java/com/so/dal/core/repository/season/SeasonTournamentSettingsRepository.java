@@ -5,7 +5,9 @@
  */
 package com.so.dal.core.repository.season;
 
+import com.so.dal.core.model.season.SeasonTournament;
 import com.so.dal.core.model.season.SeasonTournamentSettings;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +17,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface SeasonTournamentSettingsRepository extends JpaRepository<SeasonTournamentSettings, Integer>{
-    
+    List<SeasonTournamentSettings> findBySeasonTournament(SeasonTournament t); 
 }
