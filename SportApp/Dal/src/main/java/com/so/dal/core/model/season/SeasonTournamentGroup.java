@@ -30,8 +30,8 @@ public class SeasonTournamentGroup  implements java.io.Serializable {
      private Integer id;
      private SeasonTournament seasonTournament;
      private String name;
-     private Set<Game> games = new HashSet<Game>(0);
-     private Set<CompetitorTeam> competitorTeams = new HashSet<CompetitorTeam>(0);
+     private Set<Game> games = new HashSet<>(0);
+     private Set<CompetitorTeam> competitorTeams = new HashSet<>(0);
 
     public SeasonTournamentGroup() {
     }

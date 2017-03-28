@@ -77,7 +77,7 @@ public class SeasonTournamentConverter {
         }
         
         if (dto.getTournamentId() != null) {
-            Tournament tournament = tournamentRepo.findOne(dto.getSeasonId());
+            Tournament tournament = tournamentRepo.findOne(dto.getTournamentId());
             if (tournament == null) {
                 LOG.error("wrong reference id: {}", dto.getTournamentId());
                 throw new InvalidParameterException("wrong reference id");
