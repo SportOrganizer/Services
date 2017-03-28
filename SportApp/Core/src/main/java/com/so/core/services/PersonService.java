@@ -5,11 +5,15 @@
  */
 package com.so.core.services;
 
+import com.so.core.controller.converter.PersonConverter;
+import com.so.core.controller.dto.PersonDTO;
 import com.so.dal.core.model.Person;
 import com.so.dal.core.model.game.CompetitorTeamPlayer;
 import com.so.dal.core.repository.PersonRepository;
 import java.security.InvalidParameterException;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import org.slf4j.Logger;
 
@@ -22,7 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author peter
  */
-
 @Service
 public class PersonService {
 
@@ -31,6 +34,9 @@ public class PersonService {
 
     @Autowired
     PersonRepository personRepo;
+
+    @Autowired
+    PersonConverter personConverter;
 
     @Transactional
     public Person addPerson(String name, String surname, Date birthDate, String mail, String phone, Boolean isStudent,
@@ -64,12 +70,65 @@ public class PersonService {
         Person p = personRepo.findByNameAndSurname(name, surname);
         return p;
     }
-    
-     public Person findPersonByEmail(String mail) {
+
+    public Person findPersonByEmail(String mail) {
 
         LOG.info("findPersonByEmail({})", mail);
 
         Person p = personRepo.findByMail(mail);
         return p;
+    }
+
+    @Transactional
+    public PersonDTO findById(Integer id) {
+        LOG.info("Person findById({})", id);
+        if (id == null) {
+            LOG.error("id can't be null: {}", id);
+            throw new InvalidParameterException("required parameter null");
+        }
+
+        Person p = personRepo.findOne(id);
+        if (p == null) {
+            LOG.error("k danemu id neexistuje zaznam v dbs");
+        }
+
+        return personConverter.personEntityToDto(p);
+    }
+
+    @Transactional
+    public Set<PersonDTO> findAll() {
+        LOG.info("Person findByAll()");
+        List<Person> lp = personRepo.findAll();
+        Set<PersonDTO> personList = new HashSet<>();
+        for (Person p : lp) {
+            personList.add(personConverter.personEntityToDto(p));
+        }
+        return personList;
+    }
+
+    @Transactional
+    public void deletePerson(Integer id) {
+        LOG.info("deleteTournament({})", id);
+        Person p = personRepo.findOne(id);
+
+        if (p == null) {
+            throw new InvalidParameterException("nenajdene Person");
+        }
+
+        personRepo.delete(p);
+    }
+
+    @Transactional
+    public PersonDTO update(PersonDTO updated) {
+        LOG.info("update()");
+        Person p = personConverter.dtoToEntity(updated);
+
+        Person saved = personRepo.saveAndFlush(p);
+
+        if (saved == null) {
+            LOG.error("nepodarilo sa ulozit st do db");
+            throw new IllegalStateException("nepodarilo sa ulozit st do db");
+        }
+        return personConverter.personEntityToDto(saved);
     }
 }

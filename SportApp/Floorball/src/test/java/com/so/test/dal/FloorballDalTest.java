@@ -49,20 +49,20 @@ public class FloorballDalTest {
         assertTrue(size == 0);
     }
 
-    @Test
-    public void getPathsToLogsTest() {
-        Resource r1 = resourceRepo.saveAndFlush(new Resource("cesta1"));
-        Resource r2 = resourceRepo.saveAndFlush(new Resource("cesta2"));
-        Resource r3 = resourceRepo.saveAndFlush(new Resource("cesta3"));
-        Resource r4 = resourceRepo.saveAndFlush(new Resource("cesta4"));
-
-        teamRepo.saveAndFlush(new Team(r1, "prvy tim", "pt", "r"));
-        teamRepo.saveAndFlush(new Team(r2, "druhy tim", "dt", "r"));
-        teamRepo.saveAndFlush(new Team(r3, "treti tim", "tt", "r"));
-        teamRepo.saveAndFlush(new Team(r4, "stvrty tim", "st", "r"));
-
-        List<PathsToLogos> l1 = teamRepo.getPathsToLogos();
-        assertTrue(l1.get(0).getPath().equals(r1.getPath()));
-    }
+//    @Test
+//    public void getPathsToLogsTest() {
+//        Resource r1 = resourceRepo.saveAndFlush(new Resource("cesta1"));
+//        Resource r2 = resourceRepo.saveAndFlush(new Resource("cesta2"));
+//        Resource r3 = resourceRepo.saveAndFlush(new Resource("cesta3"));
+//        Resource r4 = resourceRepo.saveAndFlush(new Resource("cesta4"));
+//
+//        teamRepo.saveAndFlush(new Team(r1, "prvy tim", "pt", "r"));
+//        teamRepo.saveAndFlush(new Team(r2, "druhy tim", "dt", "r"));
+//        teamRepo.saveAndFlush(new Team(r3, "treti tim", "tt", "r"));
+//        teamRepo.saveAndFlush(new Team(r4, "stvrty tim", "st", "r"));
+//
+//        List<PathsToLogos> l1 = teamRepo.getPathsToLogos();
+//        assertTrue(l1.get(0).getPath().equals(r1.getPath()));
+//    }
 
 }

@@ -25,7 +25,7 @@ public class RegistrationTeamDto {
     private Boolean isCancelled;
     private Boolean isVerify;
     private Date createdTime;
-    private Set<RegistrationPlayerDto> registrationPlayers = new HashSet<RegistrationPlayerDto>(0);
+    private Set<RegistrationPlayerDto> registrationPlayers = new HashSet<>(0);
 
     public RegistrationTeamDto() {
     }

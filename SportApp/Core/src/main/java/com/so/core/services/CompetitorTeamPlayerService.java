@@ -30,11 +30,11 @@ public class CompetitorTeamPlayerService {
     CompetitorTeamPlayerRepository competitorTeamPlayerRepo;
     
     @Transactional
-    public CompetitorTeamPlayer addCompetitorTeamPlayer(CompetitorTeam competitorTeam, Person person, Resource resource, int number, boolean isCapitan) {
+    public CompetitorTeamPlayer addCompetitorTeamPlayer(CompetitorTeam competitorTeam, Person person, Resource resource, Integer number, Boolean isCapitan) {
 
         LOG.info("addTeam({},{},{},{},{})", competitorTeam, person, resource, number, isCapitan);
 
-        if (competitorTeam == null || person == null || resource == null) {
+        if (competitorTeam == null || person == null || resource == null || number == null || isCapitan == null) {
             LOG.error("competitorTeam person resource number isCapitan nesmu byt prazdne: competitorTeam={} person={} resource={} number={} isCapitan={}", 
                     competitorTeam, person, resource, number, isCapitan);
             throw new InvalidParameterException("nevyplnene povinne parametre"); // zachytavat exceptiony v controllery alebo premysliet ako kde

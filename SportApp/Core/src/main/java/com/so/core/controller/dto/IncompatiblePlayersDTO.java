@@ -6,6 +6,7 @@
 
 package com.so.core.controller.dto;
 
+import com.so.core.controller.dto.registration.RegistrationPlayerDto;
 import com.so.dal.core.model.Person;
 import com.so.dal.core.model.registration.RegistrationPlayer;
 
@@ -15,29 +16,47 @@ import com.so.dal.core.model.registration.RegistrationPlayer;
  */
 public class IncompatiblePlayersDTO {
     
-    RegistrationPlayer rp;
-    Person p;
+    RegistrationPlayerDto rp;
+    PersonDTO p;
+    Integer idCT;
 
-    public IncompatiblePlayersDTO(RegistrationPlayer rp, Person p) {
-        this.rp = rp;
-        this.p = p;
+    public IncompatiblePlayersDTO() {
     }
 
-    public RegistrationPlayer getRp() {
+    public IncompatiblePlayersDTO(RegistrationPlayerDto rp, PersonDTO p, Integer idCT) {
+        this.rp = rp;
+        this.p = p;
+        this.idCT = idCT;
+    }
+   
+    
+
+    public RegistrationPlayerDto getRp() {
         return rp;
     }
 
-    public Person getP() {
-        return p;
-    }
-
-    public void setRp(RegistrationPlayer rp) {
+    public void setRp(RegistrationPlayerDto rp) {
         this.rp = rp;
     }
 
-    public void setP(Person p) {
+    public PersonDTO getP() {
+        return p;
+    }
+
+    public void setP(PersonDTO p) {
         this.p = p;
     }
+
+    public Integer getIdCT() {
+        return idCT;
+    }
+
+    public void setIdCT(Integer idCT) {
+        this.idCT = idCT;
+    }
+
+
+
     
     
     
