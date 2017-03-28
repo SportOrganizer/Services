@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.so.core.controller.converter.season;
+package com.so.core.controller.converter;
 
-import com.so.core.controller.dto.season.SeasonDTO;
+import com.so.core.controller.converter.season.SeasonTournamentConverter;
+import com.so.core.controller.dto.TournamentDTO;
 import com.so.core.controller.dto.season.SeasonTournamentDTO;
-import com.so.dal.core.model.season.Season;
+import com.so.dal.core.model.Tournament;
 import com.so.dal.core.model.season.SeasonTournament;
-import com.so.dal.core.repository.season.SeasonRepository;
+import com.so.dal.core.repository.TournamentRepository;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,19 +19,19 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author peter
+ * @author Kristián Kačinetz
  */
 @Service
-public class SeasonConverter {
+public class TournamentConverter {
 
     @Autowired
     private SeasonTournamentConverter stConverter;
 
     @Autowired
-    private SeasonRepository seasonRepo;
+    private TournamentRepository tournamentRepo;
 
-    public SeasonDTO entityToDto(Season entity, boolean ifCopySeasonTournament) {
-        SeasonDTO dto = new SeasonDTO();
+    public TournamentDTO entityToDto(Tournament entity, boolean ifCopySeasonTournament) {
+        TournamentDTO dto = new TournamentDTO();
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         List<SeasonTournamentDTO> seasonTournaments = new ArrayList<>();
@@ -40,21 +41,24 @@ public class SeasonConverter {
             }
             dto.setSeasonTournaments(seasonTournaments);
         }
+        dto.setLength(dto.getSeasonTournaments().size());
+
         return dto;
     }
 
-    public Season dtoToEntity(SeasonDTO dto) {
+    public Tournament dtoToEntity(TournamentDTO dto) {
 
-        Season entity;
+        Tournament entity;
 
         if (dto.getId() != null) {
-            entity = seasonRepo.findOne(dto.getId());
+            entity = tournamentRepo.findOne(dto.getId());
 
             if (entity == null) {
-                throw new InvalidParameterException("nenajdeny seasonTournament podla id");
+                throw new InvalidParameterException("nenajdeny Tournament podla id");
             }
+
         } else {
-            entity = new Season();
+            entity = new Tournament();
         }
 
         entity.setName(dto.getName());

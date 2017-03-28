@@ -68,6 +68,28 @@ public class SeasonController {
         }
 
     }
+    
+      @RequestMapping(path = "/{id}", method = RequestMethod.DELETE ,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String deleteSeason(@PathVariable(value = "id") Integer i) {
+
+        Gson gson = new Gson();
+        seasonService.deleteSeason(i);
+
+        List< SeasonDTO> response = seasonService.findAll();
+
+        return gson.toJson(response);
+    }
+    
+      @RequestMapping(path = "/update/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+      public String editSeasonTOurnament(@RequestBody SeasonDTO st){
+          
+          Gson gson = new Gson();
+          
+          SeasonDTO edited = seasonService.update(st);
+          
+          return gson.toJson(edited);
+          
+      }
 
 
 }

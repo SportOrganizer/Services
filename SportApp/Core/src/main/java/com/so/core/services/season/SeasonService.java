@@ -110,10 +110,34 @@ public class SeasonService {
         }
 
         return true;
+        
+
     }
 
+ @Transactional
+    public void deleteSeason(Integer id) {
+        LOG.info("deleteSeason({})",id);
+        Season s = seasonRepo.findOne(id);
 
+        if (s == null) {
+            throw new InvalidParameterException("nenajdene seasonTournament");
+        }
 
+        seasonRepo.delete(s);
+    }
 
+    @Transactional
+    public SeasonDTO update(SeasonDTO updated) {
+     LOG.info("update()");
+        Season s = seasonConverter.dtoToEntity(updated);
+
+        Season saved = seasonRepo.saveAndFlush(s);
+
+        if (saved == null) {
+            LOG.error("nepodarilo sa ulozit st do db");
+            throw new IllegalStateException("nepodarilo sa ulozit st do db");
+        }
+        return seasonConverter.entityToDto(saved, false);
+    }
 
 }
