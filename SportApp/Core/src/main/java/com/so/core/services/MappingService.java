@@ -14,11 +14,13 @@ import com.so.dal.core.model.registration.RegistrationPlayer;
 import com.so.dal.core.model.registration.RegistrationTeam;
 import com.so.dal.core.model.season.SeasonTournament;
 import com.so.dal.core.repository.season.SeasonTournamentRepository;
+import java.util.HashSet;
 import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -44,23 +46,14 @@ public class MappingService {
     @Autowired
     SeasonTournamentRepository seasonTournamentRepo;
     
-    Set<RegistrationTeam> registrationTeams;
-    Set<RegistrationPlayer> registrationPlayers; 
     Set<IncompatiblePlayersDTO> incompatiblePersons;
     
-    
-    public void MappingPlayers(Integer idSeasonTournament, CompetitorTeam competitorTeam){
-        LOG.info("MappingPlayers(idSeasonTournament) idSeasonTournament={}", idSeasonTournament);
+    @Transactional
+    public void MappingPlayers(Set<RegistrationPlayer> players, CompetitorTeam competitorTeam){
+        LOG.info("MappingPlayers");
         
-        SeasonTournament seasonTournament;     
-        seasonTournament = seasonTournamentRepo.findOne(idSeasonTournament);
-        
-        registrationTeams.addAll(seasonTournament.getRegistrationTeams());
-        for(RegistrationTeam t : registrationTeams){
-            registrationPlayers.addAll(t.getRegistrationPlayers());
-        }
-        
-        for(RegistrationPlayer rp : registrationPlayers){
+
+        for(RegistrationPlayer rp : players){
             //ak neexistuje taky mail, tak pridaj personu
             if(personService.findPersonByEmail(rp.getMail()) == null){
                 Person person = personService.addPerson(rp.getName(), rp.getSurname(), rp.getBirthDate(), rp.getMail(), rp.getPhone(), rp.isIsStudent(),
@@ -86,17 +79,18 @@ public class MappingService {
     }
     
     //tato sa bude volat v controlleri
+    @Transactional
     public Set<IncompatiblePlayersDTO> MappingTeamsAndPlayers(Integer idSeasonTournament){
         LOG.info("MappingTeams(idSeasonTournament) idSeasonTournament={}", idSeasonTournament);
+        incompatiblePersons = new HashSet<>();
         
         SeasonTournament seasonTournament;     
         seasonTournament = seasonTournamentRepo.findOne(idSeasonTournament);
         
-        registrationTeams.addAll(seasonTournament.getRegistrationTeams());
-        for(RegistrationTeam rt : registrationTeams){
+        for(RegistrationTeam rt : seasonTournament.getRegistrationTeams()){
             Team team = teamService.addTeam(rt.getResource(), rt.getName(), rt.getShortName(), rt.getColor());
             CompetitorTeam competitorTeam = competitorTeamService.addCompetitorTeam(team.getResource(), null, team);
-            MappingPlayers(idSeasonTournament, competitorTeam);
+            MappingPlayers(rt.getRegistrationPlayers(), competitorTeam);
             
         }
         return incompatiblePersons;
