@@ -27,16 +27,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class DocumentService {
 
     private final static Logger LOG = LoggerFactory.getLogger(DocumentService.class);
-    private final String PATH = "/opt/glassfish4/glassfish/domains/domain1/applications/resources/logos";
-
+    //  private final String PATH = "/opt/glassfish4/glassfish/domains/domain1/applications/resources/logos";
+    private final String PATH = "C:\\Users\\peter\\Documents\\resources";
     @Autowired
     private ResourceRepository resourceRepo;
 
     @Transactional
     public Resource createFile(byte[] data, String mimeType) throws IOException {
-          LOG.debug("createFile(data,mimeType:{})", mimeType);
-       // String path = "/opt/glassfish4/glassfish/domains/domain1/applications/resources/logos";
-        //  String path = "C:\\Users\\peter\\Documents\\resources";
+        LOG.debug("createFile(data,mimeType:{})", mimeType);
         String nameOfFile = UUID.randomUUID().toString() + "." + mimeType;
         Path destinationFile = Paths.get(PATH, nameOfFile);
         Files.write(destinationFile, data);
@@ -49,19 +47,19 @@ public class DocumentService {
         return r;
     }
 
+    @Transactional
     public void deleteFile(Resource r) {
 
         if (r != null) {
-            File file = new File(PATH+r.getPath());
+            File file = new File(PATH +"\\"+ r.getPath());
 
             if (file.delete()) {
+                resourceRepo.delete(r);
                 LOG.info(file.getName() + " is deleted!");
             } else {
                 LOG.error("Delete operation is failed.");
                 throw new IllegalStateException("nepodarilo sa vymazat resource");
             }
         }
-
     }
-
 }

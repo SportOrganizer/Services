@@ -4,6 +4,7 @@ package com.so.dal.core.model;
 
 import com.so.dal.core.model.game.CompetitorTeam;
 import com.so.dal.core.model.game.CompetitorTeamPlayer;
+import com.so.dal.core.model.registration.RegistrationPlayer;
 import com.so.dal.core.model.registration.RegistrationTeam;
 import com.so.dal.core.model.season.SeasonTournament;
 import java.util.HashSet;
@@ -29,11 +30,12 @@ public class Resource  implements java.io.Serializable {
 
      private Integer id;
      private String path;
-     private Set<CompetitorTeam> competitorTeams = new HashSet<CompetitorTeam>(0);
-     private Set<SeasonTournament> seasonTournaments = new HashSet<SeasonTournament>(0);
-     private Set<RegistrationTeam> registrationTeams = new HashSet<RegistrationTeam>(0);
-     private Set<Team> teams = new HashSet<Team>(0);
-     private Set<CompetitorTeamPlayer> competitorTeamPlayers = new HashSet<CompetitorTeamPlayer>(0);
+     private Set<CompetitorTeam> competitorTeams = new HashSet<>(0);
+     private Set<SeasonTournament> seasonTournaments = new HashSet<>(0);
+     private Set<RegistrationTeam> registrationTeams = new HashSet<>(0);
+     private Set<Team> teams = new HashSet<>(0);
+     private Set<CompetitorTeamPlayer> competitorTeamPlayers = new HashSet<>(0);
+     private Set<RegistrationPlayer> registrationPlayers = new HashSet<>(0);
 
     public Resource() {
     }
@@ -42,13 +44,14 @@ public class Resource  implements java.io.Serializable {
     public Resource(String path) {
         this.path = path;
     }
-    public Resource(String path, Set<CompetitorTeam> competitorTeams, Set<SeasonTournament> seasonTournaments, Set<RegistrationTeam> registrationTeams, Set<Team> teams, Set<CompetitorTeamPlayer> competitorTeamPlayers) {
+    public Resource(String path, Set<CompetitorTeam> competitorTeams, Set<SeasonTournament> seasonTournaments, Set<RegistrationTeam> registrationTeams, Set<Team> teams, Set<CompetitorTeamPlayer> competitorTeamPlayers, Set<RegistrationPlayer> registrationPlayers) {
        this.path = path;
        this.competitorTeams = competitorTeams;
        this.seasonTournaments = seasonTournaments;
        this.registrationTeams = registrationTeams;
        this.teams = teams;
        this.competitorTeamPlayers = competitorTeamPlayers;
+       this.registrationPlayers= registrationPlayers;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -118,7 +121,17 @@ public class Resource  implements java.io.Serializable {
         this.competitorTeamPlayers = competitorTeamPlayers;
     }
 
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="photo")
+    public Set<RegistrationPlayer> getRegistrationPlayers() {
+        return registrationPlayers;
+    }
 
+    public void setRegistrationPlayers(Set<RegistrationPlayer> registrationPlayers) {
+        this.registrationPlayers = registrationPlayers;
+    }
+
+
+    
 
 
 }

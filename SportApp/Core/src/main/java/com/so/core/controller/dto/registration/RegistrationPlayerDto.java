@@ -5,6 +5,7 @@
  */
 package com.so.core.controller.dto.registration;
 
+import com.so.core.controller.dto.ResourceDto;
 import java.util.Date;
 
 /**
@@ -26,11 +27,12 @@ public class RegistrationPlayerDto {
     private Boolean isProfessional;
     private String note;
     private Integer number;
+    private ResourceDto photo;
 
     public RegistrationPlayerDto() {
     }
 
-    public RegistrationPlayerDto(Integer id, Integer registrationTeam, String name, String surname, Date birthDate, String mail, String phone, Boolean isStudent, Boolean isVerified, String sex, Boolean isProfessional, String note, Integer number) {
+    public RegistrationPlayerDto(Integer id, Integer registrationTeam, String name, String surname, Date birthDate, String mail, String phone, Boolean isStudent, Boolean isVerified, String sex, Boolean isProfessional, String note, Integer number, ResourceDto photo) {
         this.id = id;
         this.registrationTeam = registrationTeam;
         this.name = name;
@@ -44,6 +46,7 @@ public class RegistrationPlayerDto {
         this.isProfessional = isProfessional;
         this.note = note;
         this.number = number;
+        this.photo = photo;
     }
 
     public Integer getId() {
@@ -152,4 +155,13 @@ public class RegistrationPlayerDto {
         this.number = number;
     }
 
+    public ResourceDto getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(ResourceDto photo) {
+        this.photo = photo;
+    }
+
+    
 }
