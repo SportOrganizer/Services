@@ -8,11 +8,13 @@ package com.so.core.controller.webservices;
 import com.google.gson.Gson;
 import com.so.core.controller.dto.PersonDTO;
 import com.so.core.services.PersonService;
+import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,6 +51,28 @@ public class PersonController {
         result = personService.findById(id);
 
         return gson.toJson(result);
+    }
+    
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String deletePerson(@PathVariable(value = "id") Integer i) {
+
+        Gson gson = new Gson();
+        personService.deletePerson(i);
+
+        Set<PersonDTO> response = personService.findAll();
+
+        return gson.toJson(response);
+    }
+
+    @RequestMapping(path = "/update/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String editTournament(@RequestBody PersonDTO t) {
+
+        Gson gson = new Gson();
+
+        PersonDTO edited = personService.update(t);
+
+        return gson.toJson(edited);
+
     }
 
 }

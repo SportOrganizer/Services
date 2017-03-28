@@ -28,6 +28,7 @@ public class RegistrationPlayerDto {
     private String note;
     private Integer number;
     private ResourceDto photo;
+    private Boolean isCaptain;
 
     public RegistrationPlayerDto() {
     }
@@ -161,6 +162,14 @@ public class RegistrationPlayerDto {
 
     public void setPhoto(ResourceDto photo) {
         this.photo = photo;
+    }
+
+    public Boolean getIsCaptain() {
+        return isCaptain;
+    }
+
+    public void setIsCaptain(Boolean isCaptain) {
+        this.isCaptain = isCaptain;
     }
 
     

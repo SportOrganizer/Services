@@ -71,6 +71,7 @@ public class RegistrationConverter {
         entity.setPhone(dto.getPhone());
         entity.setSex(dto.getSex());
         entity.setSurname(dto.getSurname());
+        entity.setIsCaptain(dto.getIsCaptain());
 
         return entity;
     }
@@ -129,6 +130,7 @@ public class RegistrationConverter {
         dto.setRegistrationTeam(entity.getRegistrationTeam().getId());
         dto.setSex(entity.getSex());
         dto.setSurname(entity.getSurname());
+        dto.setIsCaptain(entity.getIsCaptain());
         
         if (entity.getPhoto() != null) {
             dto.setPhoto(new ResourceDto(entity.getPhoto().getId(), entity.getPhoto().getPath()));

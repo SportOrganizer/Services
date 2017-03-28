@@ -45,7 +45,7 @@ public class TeamConverter {
         TeamDTO dto = new TeamDTO();
 
         dto.setId(entity.getId());
-        dto.setIdLogo(entity.getResource().getId());
+        //dto.setIdLogo(entity.getResource().getId());
         dto.setName(entity.getName());
         dto.setShortName(entity.getShortName());
         dto.setColor(entity.getColor());

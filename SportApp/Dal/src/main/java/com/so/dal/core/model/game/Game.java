@@ -166,7 +166,7 @@ public class Game  implements java.io.Serializable {
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="realStart", nullable=false, length=19)
+    @Column(name="realStart", nullable=true, length=19)
     public Date getRealStart() {
         return this.realStart;
     }
@@ -176,7 +176,7 @@ public class Game  implements java.io.Serializable {
     }
 
     
-    @Column(name="overtime", nullable=false)
+    @Column(name="overtime", nullable=true)
     public boolean isOvertime() {
         return this.overtime;
     }
@@ -196,7 +196,7 @@ public class Game  implements java.io.Serializable {
     }
 
     
-    @Column(name="contumated", nullable=false)
+    @Column(name="contumated", nullable=true)
     public boolean isContumated() {
         return this.contumated;
     }

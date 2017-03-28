@@ -39,11 +39,12 @@ public class RegistrationPlayer implements java.io.Serializable {
     private String note;
     private Integer number;
     private Resource photo;
+    private Boolean isCaptain;
 
     public RegistrationPlayer() {
     }
 
-    public RegistrationPlayer(RegistrationTeam registrationTeam, String name, String surname, Boolean isStudent, String sex, Boolean isVerified, Boolean isProfessional,  int number) {
+    public RegistrationPlayer(RegistrationTeam registrationTeam, String name, String surname, Boolean isStudent, String sex, Boolean isVerified, Boolean isProfessional, int number) {
         this.registrationTeam = registrationTeam;
         this.name = name;
         this.surname = surname;
@@ -109,8 +110,8 @@ public class RegistrationPlayer implements java.io.Serializable {
         this.surname = surname;
     }
 
-   // @Temporal(TemporalType.DATE)
-    @DateTimeFormat(iso = ISO.DATE, pattern ="yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
+    //@DateTimeFormat(iso = ISO.DATE, pattern = "yyyy-MM-dd")
     @Column(name = "birthDate", length = 10)
     public Date getBirthDate() {
         return this.birthDate;
@@ -184,11 +185,11 @@ public class RegistrationPlayer implements java.io.Serializable {
     }
 
     @Column(name = "number", nullable = false)
-    public int getNumber() {
+    public Integer getNumber() {
         return this.number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
@@ -200,6 +201,15 @@ public class RegistrationPlayer implements java.io.Serializable {
 
     public void setPhoto(Resource photo) {
         this.photo = photo;
+    }
+
+    @Column(name = "isCapitan", nullable = false)
+    public Boolean getIsCaptain() {
+        return isCaptain;
+    }
+
+    public void setIsCaptain(Boolean isCaptain) {
+        this.isCaptain = isCaptain;
     }
 
 }

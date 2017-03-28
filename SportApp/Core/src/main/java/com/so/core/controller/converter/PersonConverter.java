@@ -8,6 +8,8 @@ package com.so.core.controller.converter;
 
 import com.so.core.controller.dto.PersonDTO;
 import com.so.dal.core.model.Person;
+import com.so.dal.core.repository.PersonRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,6 +18,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PersonConverter {
+    
+    @Autowired
+    PersonRepository personRepo;
     
         public PersonDTO personEntityToDto(Person entity) {
         PersonDTO dto = new PersonDTO();
@@ -30,6 +35,28 @@ public class PersonConverter {
         dto.setSurname(entity.getSurname());
 
         return dto;
+    }
+        
+        public Person dtoToEntity(PersonDTO dto) {
+        Person entity;
+
+        if (dto.getId() != null) {
+            entity = personRepo.findOne(dto.getId());
+        } else {
+            entity = new Person();
+        }
+        
+
+        entity.setBirthDate(dto.getBirthDate());
+        entity.setMail(dto.getMail());
+        entity.setName(dto.getName());
+        entity.setPhone(dto.getPhone());
+        entity.setSex(dto.getSex());
+        entity.setSurname(dto.getSurname());
+        entity.setIsStudent(dto.isIsStudent());
+
+
+        return entity;
     }
     
 }

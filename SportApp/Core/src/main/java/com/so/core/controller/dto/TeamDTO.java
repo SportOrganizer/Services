@@ -16,15 +16,13 @@ import java.util.Set;
 public class TeamDTO {
     
     private Integer id;
-    private Integer idLogo;
     private String name;
     private String shortName;
     private String color;
     private Set<CompetitorTeamPlayer> competitorTeamPlayer;
 
-    public TeamDTO(Integer id, Integer idLogo, String name, String shortName, String color, Set<CompetitorTeamPlayer> competitorTeamPlayer) {
+    public TeamDTO(Integer id, String name, String shortName, String color, Set<CompetitorTeamPlayer> competitorTeamPlayer) {
         this.id = id;
-        this.idLogo = idLogo;
         this.name = name;
         this.shortName = shortName;
         this.color = color;
@@ -44,9 +42,6 @@ public class TeamDTO {
         return id;
     }
 
-    public Integer getIdLogo() {
-        return idLogo;
-    }
 
     public String getName() {
         return name;
@@ -68,9 +63,6 @@ public class TeamDTO {
         this.competitorTeamPlayer = competitorTeamPlayer;
     }
 
-    public void setIdLogo(Integer idLogo) {
-        this.idLogo = idLogo;
-    }
 
     public void setName(String name) {
         this.name = name;

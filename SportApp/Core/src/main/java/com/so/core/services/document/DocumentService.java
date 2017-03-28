@@ -27,8 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class DocumentService {
 
     private final static Logger LOG = LoggerFactory.getLogger(DocumentService.class);
-    //  private final String PATH = "/opt/glassfish4/glassfish/domains/domain1/applications/resources/logos";
-    private final String PATH = "C:\\Users\\peter\\Documents\\resources";
+    //private final String PATH = "/opt/glassfish4/glassfish/domains/domain1/applications/resources/logos";
+    private final String PATH = "C:\\Users\\Kristián Kačinetz\\resourcesTimak";
     @Autowired
     private ResourceRepository resourceRepo;
 
@@ -58,7 +58,7 @@ public class DocumentService {
                 LOG.info(file.getName() + " is deleted!");
             } else {
                 LOG.error("Delete operation is failed.");
-                throw new IllegalStateException("nepodarilo sa vymazat resource");
+                //throw new IllegalStateException("nepodarilo sa vymazat resource");
             }
         }
     }

@@ -105,4 +105,30 @@ public class PersonService {
         }
         return personList;
     }
+
+    @Transactional
+    public void deletePerson(Integer id) {
+        LOG.info("deleteTournament({})", id);
+        Person p = personRepo.findOne(id);
+
+        if (p == null) {
+            throw new InvalidParameterException("nenajdene Person");
+        }
+
+        personRepo.delete(p);
+    }
+
+    @Transactional
+    public PersonDTO update(PersonDTO updated) {
+        LOG.info("update()");
+        Person p = personConverter.dtoToEntity(updated);
+
+        Person saved = personRepo.saveAndFlush(p);
+
+        if (saved == null) {
+            LOG.error("nepodarilo sa ulozit st do db");
+            throw new IllegalStateException("nepodarilo sa ulozit st do db");
+        }
+        return personConverter.personEntityToDto(saved);
+    }
 }

@@ -27,27 +27,27 @@ public class TeamRepositoryImpl implements TeamRepositoryCustom {
 
 //////pomocou queryDsl.... o technologii http://www.querydsl.com/index.html
 //funkcia vrati list timov s cestou k ich logom
-    public List<PathsToLogos> getPathsToLogos() {
-        QTeam qTeam = QTeam.team;
-        QResource qLogo = QResource.resource;
-        List<PathsToLogos> l = new JPAQuery(em).from(qTeam, qLogo)
-                .where(qTeam.resource.eq(qLogo))
-                .list(Projections.bean(PathsToLogos.class, qTeam.name, qLogo.path));
-        return l;
-    }
-
-    public List<PathsToLogos> getPathsToLogos2() {
-        List<Object[]> l = em.createQuery("SELECT t.name, r.path FROM Team t, Resource r WHERE t.resource.id = r.id").getResultList();
-        return convertObjectToDto(l);
-    }
-
-    private List<PathsToLogos> convertObjectToDto(List<Object[]> object) {
-        List<PathsToLogos> l = new ArrayList<PathsToLogos>();
-        for (Object[] o : object) {
-            PathsToLogos pt = new PathsToLogos((String) o[0], (String) o[1]);
-            l.add(pt);
-        }
-        return l;
-    }
+//    public List<PathsToLogos> getPathsToLogos() {
+//        QTeam qTeam = QTeam.team;
+//        QResource qLogo = QResource.resource;
+//        List<PathsToLogos> l = new JPAQuery(em).from(qTeam, qLogo)
+//                .where(qTeam.resource.eq(qLogo))
+//                .list(Projections.bean(PathsToLogos.class, qTeam.name, qLogo.path));
+//        return l;
+//    }
+//
+//    public List<PathsToLogos> getPathsToLogos2() {
+//        List<Object[]> l = em.createQuery("SELECT t.name, r.path FROM Team t, Resource r WHERE t.resource.id = r.id").getResultList();
+//        return convertObjectToDto(l);
+//    }
+//
+//    private List<PathsToLogos> convertObjectToDto(List<Object[]> object) {
+//        List<PathsToLogos> l = new ArrayList<PathsToLogos>();
+//        for (Object[] o : object) {
+//            PathsToLogos pt = new PathsToLogos((String) o[0], (String) o[1]);
+//            l.add(pt);
+//        }
+//        return l;
+//    }
 
 }

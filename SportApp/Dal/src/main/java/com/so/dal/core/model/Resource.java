@@ -33,7 +33,6 @@ public class Resource  implements java.io.Serializable {
      private Set<CompetitorTeam> competitorTeams = new HashSet<>(0);
      private Set<SeasonTournament> seasonTournaments = new HashSet<>(0);
      private Set<RegistrationTeam> registrationTeams = new HashSet<>(0);
-     private Set<Team> teams = new HashSet<>(0);
      private Set<CompetitorTeamPlayer> competitorTeamPlayers = new HashSet<>(0);
      private Set<RegistrationPlayer> registrationPlayers = new HashSet<>(0);
 
@@ -44,12 +43,11 @@ public class Resource  implements java.io.Serializable {
     public Resource(String path) {
         this.path = path;
     }
-    public Resource(String path, Set<CompetitorTeam> competitorTeams, Set<SeasonTournament> seasonTournaments, Set<RegistrationTeam> registrationTeams, Set<Team> teams, Set<CompetitorTeamPlayer> competitorTeamPlayers, Set<RegistrationPlayer> registrationPlayers) {
+    public Resource(String path, Set<CompetitorTeam> competitorTeams, Set<SeasonTournament> seasonTournaments, Set<RegistrationTeam> registrationTeams, Set<CompetitorTeamPlayer> competitorTeamPlayers, Set<RegistrationPlayer> registrationPlayers) {
        this.path = path;
        this.competitorTeams = competitorTeams;
        this.seasonTournaments = seasonTournaments;
        this.registrationTeams = registrationTeams;
-       this.teams = teams;
        this.competitorTeamPlayers = competitorTeamPlayers;
        this.registrationPlayers= registrationPlayers;
     }
@@ -103,14 +101,6 @@ public class Resource  implements java.io.Serializable {
         this.registrationTeams = registrationTeams;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="resource")
-    public Set<Team> getTeams() {
-        return this.teams;
-    }
-    
-    public void setTeams(Set<Team> teams) {
-        this.teams = teams;
-    }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="resource")
     public Set<CompetitorTeamPlayer> getCompetitorTeamPlayers() {

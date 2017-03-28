@@ -3,16 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.so.core.services;
 
+import com.so.core.controller.converter.PersonConverter;
+import com.so.core.controller.converter.RegistrationConverter;
 import com.so.core.controller.dto.IncompatiblePlayersDTO;
+import com.so.core.controller.dto.PersonDTO;
+import com.so.core.controller.dto.registration.RegistrationPlayerDto;
 import com.so.dal.core.model.Person;
 import com.so.dal.core.model.Team;
 import com.so.dal.core.model.game.CompetitorTeam;
 import com.so.dal.core.model.registration.RegistrationPlayer;
 import com.so.dal.core.model.registration.RegistrationTeam;
 import com.so.dal.core.model.season.SeasonTournament;
+import com.so.dal.core.repository.PersonRepository;
+import com.so.dal.core.repository.ResourceRepository;
+import com.so.dal.core.repository.TeamRepository;
+import com.so.dal.core.repository.game.CompetitorTeamRepository;
 import com.so.dal.core.repository.season.SeasonTournamentRepository;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,73 +35,104 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class MappingService {
-    
+
     private final static Logger LOG = LoggerFactory.getLogger(RegistrationService.class);
-    
+
     @Autowired
     TeamService teamService;
-    
+
     @Autowired
     CompetitorTeamService competitorTeamService;
-    
+
     @Autowired
     CompetitorTeamPlayerService competitorTeamPlayerService;
-    
+
     @Autowired
     PersonService personService;
-    
+
     @Autowired
     SeasonTournamentRepository seasonTournamentRepo;
-    
-    Set<IncompatiblePlayersDTO> incompatiblePersons;
-    
-    @Transactional
-    public void MappingPlayers(Set<RegistrationPlayer> players, CompetitorTeam competitorTeam){
-        LOG.info("MappingPlayers");
-        
 
-        for(RegistrationPlayer rp : players){
+    @Autowired
+    RegistrationConverter registratioConverter;
+
+    @Autowired
+    PersonConverter personConverter;
+
+    @Autowired
+    TeamRepository teamRepo;
+
+    @Autowired
+    PersonRepository personRepo;
+    
+    @Autowired
+    ResourceRepository resourceRepo;
+    
+     @Autowired
+    CompetitorTeamRepository competitorTeamRepo;
+
+    Set<IncompatiblePlayersDTO> incompatiblePersons;
+
+    @Transactional
+    public void MappingPlayers(Set<RegistrationPlayer> players, CompetitorTeam competitorTeam) {
+        LOG.info("MappingPlayers");
+
+        for (RegistrationPlayer rp : players) {
             //ak neexistuje taky mail, tak pridaj personu
-            if(personService.findPersonByEmail(rp.getMail()) == null){
+            if (personService.findPersonByEmail(rp.getMail()) == null) {
                 Person person = personService.addPerson(rp.getName(), rp.getSurname(), rp.getBirthDate(), rp.getMail(), rp.getPhone(), rp.isIsStudent(),
                         rp.getSex());
                 rp.setIsVerified(true);
-                //opravit null pre Resource ked bude opravena databaza a opravit aj posledny parameter isCapitan na hodnotu
-                competitorTeamPlayerService.addCompetitorTeamPlayer(competitorTeam, person, null, rp.getNumber(), true);
-                               
-            }
-            else{
+
+                competitorTeamPlayerService.addCompetitorTeamPlayer(competitorTeam, person, rp.getPhoto(), rp.getNumber(), rp.getIsCaptain());
+
+            } else {
                 Person existedPerson = personService.findPersonByEmail(rp.getMail());
-                if(!(rp.getBirthDate().equals(existedPerson.getBirthDate())) || !(rp.getName().equals(existedPerson.getName())) || 
-                        !(rp.getPhone().equals(existedPerson.getPhone())) || !(rp.getSurname().equals(existedPerson.getSurname())) || 
-                        !(rp.getSex().equals(existedPerson.getSex())) || !(rp.isIsStudent().equals(existedPerson.isIsStudent()))){
+                if (!(rp.getBirthDate().equals(existedPerson.getBirthDate())) || !(rp.getName().equals(existedPerson.getName()))
+                        || !(rp.getPhone().equals(existedPerson.getPhone())) || !(rp.getSurname().equals(existedPerson.getSurname()))
+                        || !(rp.getSex().equals(existedPerson.getSex())) || !(rp.isIsStudent().equals(existedPerson.isIsStudent()))) {
                     //vrat obidve objekty? 
-                    
-                    incompatiblePersons.add(new IncompatiblePlayersDTO(rp, existedPerson));
-                    
+
+                    incompatiblePersons.add(new IncompatiblePlayersDTO(registratioConverter.regPlayerEntityToDto(rp), personConverter.personEntityToDto(existedPerson), competitorTeam.getId()));
+
+                } else {
+                    competitorTeamPlayerService.addCompetitorTeamPlayer(competitorTeam, personRepo.findByMail(rp.getMail()), rp.getPhoto(), rp.getNumber(), rp.getIsCaptain());
                 }
             }
         }
-        
+
     }
-    
+
     //tato sa bude volat v controlleri
     @Transactional
-    public Set<IncompatiblePlayersDTO> MappingTeamsAndPlayers(Integer idSeasonTournament){
+    public Set<IncompatiblePlayersDTO> MappingTeamsAndPlayers(Integer idSeasonTournament) {
         LOG.info("MappingTeams(idSeasonTournament) idSeasonTournament={}", idSeasonTournament);
         incompatiblePersons = new HashSet<>();
-        
-        SeasonTournament seasonTournament;     
+
+        SeasonTournament seasonTournament;
         seasonTournament = seasonTournamentRepo.findOne(idSeasonTournament);
-        
-        for(RegistrationTeam rt : seasonTournament.getRegistrationTeams()){
-            Team team = teamService.addTeam(rt.getResource(), rt.getName(), rt.getShortName(), rt.getColor());
-            CompetitorTeam competitorTeam = competitorTeamService.addCompetitorTeam(team.getResource(), null, team);
+
+        for (RegistrationTeam rt : seasonTournament.getRegistrationTeams()) {
+            Team team = teamRepo.findByName(rt.getName());
+            if (team == null) {
+                team = teamService.addTeam(rt.getName(), rt.getShortName(), rt.getColor());
+            }
+            CompetitorTeam competitorTeam = competitorTeamService.addCompetitorTeam(rt.getResource(), null, team);
             MappingPlayers(rt.getRegistrationPlayers(), competitorTeam);
-            
+
         }
         return incompatiblePersons;
-        
+
     }
-    
+
+    @Transactional
+    public PersonDTO ConfirmIncompatiblePlayers(RegistrationPlayerDto ip, Integer idCT) {
+        Person p = new Person(ip.getName(), ip.getSurname(), ip.getBirthDate(), ip.getMail(), ip.getPhone(), ip.getIsStudent(), ip.getSex(), personRepo.findByMail(ip.getMail()).getCompetitorTeamPlayers());
+        p.setId(personRepo.findByMail(ip.getMail()).getId());
+        PersonDTO person = personService.update(personConverter.personEntityToDto(p));
+        competitorTeamPlayerService.addCompetitorTeamPlayer(competitorTeamRepo.findOne(idCT), personConverter.dtoToEntity(person), resourceRepo.findOne(ip.getPhoto().getId()), ip.getNumber(), ip.getIsCaptain());
+        
+        return person;
+    }
+
 }

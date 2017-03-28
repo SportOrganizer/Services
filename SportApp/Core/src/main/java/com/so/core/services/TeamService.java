@@ -37,18 +37,18 @@ public class TeamService {
     
 
     @Transactional
-    public Team addTeam(Resource resource, String name, String shortName, String color) {
+    public Team addTeam(String name, String shortName, String color) {
 
-        LOG.info("addTeam({},{},{},{})", resource, name, shortName, color);
+        LOG.info("addTeam({},{},{})", name, shortName, color);
 
-        if (resource == null || name == null || shortName == null || color == null) {
-            LOG.error("idLogo name shortName color nesmu byt prazdne: resource={} name={} shortName={} color={} ", resource, name, shortName, color);
+        if (name == null || shortName == null || color == null) {
+            LOG.error("idLogo name shortName color nesmu byt prazdne: name={} shortName={} color={} ", name, shortName, color);
             throw new InvalidParameterException("nevyplnene povinne parametre"); // zachytavat exceptiony v controllery alebo premysliet ako kde
         }
 
         //todo competitorTeamPlayers sa bude v buducnu doplnat vyhladavanim timu po poslani z napr. id z FE to sa odkomentuje este
         // pri tvorbe FE
-        Team t = new Team(resource, name, shortName, color);
+        Team t = new Team(name, shortName, color);
 
         t = teamRepo.saveAndFlush(t);
 
