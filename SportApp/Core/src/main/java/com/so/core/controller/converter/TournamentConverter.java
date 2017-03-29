@@ -40,8 +40,9 @@ public class TournamentConverter {
                 seasonTournaments.add(stConverter.entityToDto(st));
             }
             dto.setSeasonTournaments(seasonTournaments);
+            dto.setLength(dto.getSeasonTournaments().size());
         }
-        dto.setLength(dto.getSeasonTournaments().size());
+       
 
         return dto;
     }
