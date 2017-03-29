@@ -106,7 +106,7 @@
             # request: /   
             # response:{}
             
-       # request : /submit/
+##### request : /submit/
          # submitMappingPlayer
            # request:
            {
