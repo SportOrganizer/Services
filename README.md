@@ -1,8 +1,10 @@
-  # Services 
-    # Core
-      # SeasonTournamet 
-       # request : /seasontournament/
-          # find All
+# Services 
+## Core
+### SeasonTournamet 
+
+#### request : /seasontournament/
+
+##### find All
             # request: /
             # response: 
              {
@@ -38,8 +40,7 @@
                   }
                ]
             }
-
-      # find one
+##### find one
         # request: /{id}
         # response:
           {
@@ -54,7 +55,7 @@
           }
           
           
-        # create
+###### create
           # request: /
              {
                "seasonId": 1,
@@ -78,7 +79,7 @@
                "name": "nameee"
             }
 
-       # edit
+##### edit
         # request : /update/
            {
                "id": 18,
@@ -94,13 +95,14 @@
          # response:
            if success same like request
 
-      # delete
+##### delete
         # request: /{id}
         # response: if success same like find All operations result without deleted season tournament
 
-      # Mapping
-       # request : /mapping/
-          # createMapping
+### Mapping
+
+#### request : /mapping/
+##### createMapping
             # request: /   
             # response:{}
             
@@ -128,18 +130,18 @@
         },
         "isCaptain": false
      },
-  "competitorTeamId": 62
-  }
-           # response:  
-           response:
-  {
-     "id": 491,
-     "name": "pepko",
-     "surname": "priaezvisko",
-     "birthDate": "Jan 1, 2017 1:00:00 AM",
-     "mail": "gej",
-     "phone": "ooooooooo",
-     "isStudent": true,
-     "sex": "male"
-  }
+    "competitorTeamId": 62
+    }
+             # response:  
+             response:
+    {
+       "id": 491,
+       "name": "pepko",
+       "surname": "priaezvisko",
+       "birthDate": "Jan 1, 2017 1:00:00 AM",
+       "mail": "gej",
+       "phone": "ooooooooo",
+       "isStudent": true,
+       "sex": "male"
+    }
           
