@@ -12,6 +12,7 @@ import com.so.dal.core.repository.ResourceRepository;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -33,7 +34,7 @@ public class DocumentService {
 
     private final static Logger LOG = LoggerFactory.getLogger(DocumentService.class);
     private final String PATH = "/opt/glassfish4/glassfish/domains/domain1/applications/resources/logos/";
-   // private final String PATH = "C:\\Users\\peter\\Documents\\foto\\";
+    // private final String PATH = "C:\\Users\\peter\\Documents\\foto\\";
     @Autowired
     private ResourceRepository resourceRepo;
 
@@ -51,18 +52,21 @@ public class DocumentService {
                 throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "do databazy sa neulozil zaznam resourcu");
             }
             return r;
+        } catch (FileNotFoundException ex) {
+            throw new AppException(HttpStatus.NOT_FOUND, "nepodarilo sa vytvorit subor:" + ex);
         } catch (IOException ex) {
             throw new AppException(HttpStatus.NOT_FOUND, "nepodarilo sa vytvorit subor:" + ex);
         }
     }
 
-    public ResourceDto uploadImage(ResourceDto r) throws AppException{
-        Resource image = createFile(r.getData(),r.getMimeType());
-        return new ResourceDto(image.getId(),image.getPath());
+    public ResourceDto uploadImage(ResourceDto r) throws AppException {
+        Resource image = createFile(r.getData(), r.getMimeType());
+        return new ResourceDto(image.getId(), image.getPath());
     }
-    
+
     @Transactional
     public void deleteFile(Resource r) throws AppException {
+
         if (r != null) {
             File file = new File(PATH + "\\" + r.getPath());
             if (file.delete()) {
@@ -75,12 +79,11 @@ public class DocumentService {
         }
     }
 
-    
-    public void deleteFile(String name) throws AppException{
+    public void deleteFile(String name) throws AppException {
         deleteFile(resourceRepo.findByPath(name));
     }
-    
-    public ResourceDto getImage(String name) throws  AppException {
+
+    public ResourceDto getImage(String name) throws AppException {
 
         ResourceDto r = new ResourceDto();
         String filePath = PATH + name;
@@ -95,9 +98,13 @@ public class DocumentService {
             r.setData(fileBytes);
             r.setPath(name);
             return r;
-        } catch (Exception ex) {
+        } catch (FileNotFoundException ex) {
             LOG.error("nepodarilo sa nacitat subor={}", name);
             throw new AppException(HttpStatus.NOT_FOUND, "nepodarilo sa nacitat subor:" + "name " + ex);
+        } catch (IOException e) {
+            LOG.error("nepodarilo sa nacitat subor={}", name);
+            throw new AppException(HttpStatus.NOT_FOUND, "nepodarilo sa nacitat subor:" + "name " + e);
+
         }
 
     }
