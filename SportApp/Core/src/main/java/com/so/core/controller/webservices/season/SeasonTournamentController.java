@@ -3,14 +3,17 @@ package com.so.core.controller.webservices.season;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.so.core.controller.dto.season.SeasonTournamentDTO;
+import com.so.core.exception.AppException;
 import com.so.core.services.season.SeasonTournamentService;
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Objects;
+import javax.ws.rs.PathParam;
+import org.springframework.http.HttpStatus;
 
 @RestController
 @CrossOrigin
@@ -21,7 +24,7 @@ public class SeasonTournamentController {
     SeasonTournamentService seasonTournamentService;
 
     @RequestMapping(path = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String getSeasonTournaments(@RequestParam(value = "q", required = false) String query) {
+    public String getSeasonTournaments(@RequestParam(value = "q", required = false) String query) throws AppException {
         List<SeasonTournamentDTO> seasonTournaments;
         JsonObject jo = new JsonObject();
         Gson gson = new Gson();
@@ -41,55 +44,38 @@ public class SeasonTournamentController {
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String getSeasonTournament(@PathVariable(value = "id") Integer id) {
-
+    public String getSeasonTournament(@PathVariable(value = "id") Integer id) throws AppException {
         SeasonTournamentDTO seasonTournamentDTO;
         Gson gson = new Gson();
 
         seasonTournamentDTO = seasonTournamentService.findById(id);
-
         return gson.toJson(seasonTournamentDTO);
     }
 
-//    {
-//        "seasonId": 1,
-//            "tournamentId": 1,
-//            "name": "Tests2"
-//    }
     @RequestMapping(path = "/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String createSeasonTournament(@RequestBody SeasonTournamentDTO st) {
-
+    public String createSeasonTournament(@RequestBody SeasonTournamentDTO st) throws IOException, AppException {
         Gson gson = new Gson();
 
-        SeasonTournamentDTO response = null;
-        try {
-            response = seasonTournamentService.createSeasonTournament(st);
-        } catch (Exception ex) {
-            Logger.getLogger(SeasonTournamentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        SeasonTournamentDTO response = seasonTournamentService.createSeasonTournament(st);
         return gson.toJson(response);
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE ,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String deleteSeasonTournament(@PathVariable(value = "id") Integer i) {
-
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String deleteSeasonTournament(@PathVariable(value = "id") Integer i) throws AppException {
         Gson gson = new Gson();
+
         seasonTournamentService.deleteSeasonTournament(i);
-
         List< SeasonTournamentDTO> response = seasonTournamentService.findAll();
-
         return gson.toJson(response);
     }
-    
-      @RequestMapping(path = "/update/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-      public String editSeasonTOurnament(@RequestBody SeasonTournamentDTO st){
-          
-          Gson gson = new Gson();
-          
-          SeasonTournamentDTO edited = seasonTournamentService.update(st);
-          
-          return gson.toJson(edited);
-          
-      }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String editSeasonTOurnament(@PathVariable(value="id") Integer id, @RequestBody SeasonTournamentDTO st) throws AppException {
+        Gson gson = new Gson();
+        if(!Objects.equals(id, st.getId())){
+            throw new AppException(HttpStatus.BAD_REQUEST,"id url sa nerovna s id v dto");
+        }
+        SeasonTournamentDTO edited = seasonTournamentService.update(st);
+        return gson.toJson(edited);
+    }
 }

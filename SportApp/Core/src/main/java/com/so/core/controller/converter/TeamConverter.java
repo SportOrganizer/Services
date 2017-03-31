@@ -8,8 +8,6 @@ package com.so.core.controller.converter;
 import com.so.core.controller.dto.TeamDTO;
 import com.so.dal.core.model.Team;
 import com.so.dal.core.model.game.CompetitorTeamPlayer;
-import com.so.dal.core.repository.ResourceRepository;
-import com.so.dal.core.repository.TeamRepository;
 import com.so.dal.core.repository.game.CompetitorTeamPlayerRepository;
 import com.so.dal.core.repository.game.CompetitorTeamRepository;
 import java.util.HashSet;
@@ -29,23 +27,16 @@ public class TeamConverter {
     private final static Logger LOG = LoggerFactory.getLogger(RegistrationConverter.class);
 
     @Autowired
-    TeamRepository teamRepo;
+    private CompetitorTeamRepository competitorTeamRepo;
 
     @Autowired
-    ResourceRepository resourceRepo;
-
-    @Autowired
-    CompetitorTeamRepository competitorTeamRepo;
-
-    @Autowired
-    CompetitorTeamPlayerRepository competitorTeamPlayerRepo;
+    private CompetitorTeamPlayerRepository competitorTeamPlayerRepo;
 
     public TeamDTO teamEntityToDto(Team entity, boolean ifCopyCompetitorTeamPlayer) {
         Set<CompetitorTeamPlayer> set = new HashSet<>();
         TeamDTO dto = new TeamDTO();
 
         dto.setId(entity.getId());
-        //dto.setIdLogo(entity.getResource().getId());
         dto.setName(entity.getName());
         dto.setShortName(entity.getShortName());
         dto.setColor(entity.getColor());

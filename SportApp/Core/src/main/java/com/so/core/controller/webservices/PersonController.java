@@ -7,8 +7,8 @@ package com.so.core.controller.webservices;
 
 import com.google.gson.Gson;
 import com.so.core.controller.dto.PersonDTO;
+import com.so.core.exception.AppException;
 import com.so.core.services.PersonService;
-import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -36,43 +36,31 @@ public class PersonController {
     public String getPersons(@RequestParam(value = "q", required = false) String query) {
         Set<PersonDTO> result;
         Gson gson = new Gson();
-
         result = personService.findAll();
-
         return gson.toJson(result);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String getPerson(@PathVariable(value = "id") Integer id) {
-
+    public String getPerson(@PathVariable(value = "id") Integer id) throws AppException {
         PersonDTO result;
         Gson gson = new Gson();
-
         result = personService.findById(id);
-
         return gson.toJson(result);
     }
     
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String deletePerson(@PathVariable(value = "id") Integer i) {
-
+    public String deletePerson(@PathVariable(value = "id") Integer i) throws AppException {
         Gson gson = new Gson();
         personService.deletePerson(i);
-
         Set<PersonDTO> response = personService.findAll();
-
         return gson.toJson(response);
     }
 
     @RequestMapping(path = "/update/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String editTournament(@RequestBody PersonDTO t) {
-
+    public String editTournament(@RequestBody PersonDTO t) throws AppException {
         Gson gson = new Gson();
-
         PersonDTO edited = personService.update(t);
-
         return gson.toJson(edited);
-
     }
 
 }

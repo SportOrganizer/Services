@@ -9,13 +9,9 @@ import com.google.gson.Gson;
 import com.so.core.controller.dto.IncompatiblePlayersDTO;
 import com.so.core.controller.dto.MappingDTO;
 import com.so.core.controller.dto.PersonDTO;
-import com.so.core.controller.dto.registration.RegistrationTeamDto;
+import com.so.core.exception.AppException;
 import com.so.core.services.MappingService;
-import com.so.dal.core.model.season.SeasonTournament;
-import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -38,35 +34,17 @@ public class MappingController {
     private MappingService mappingService;
 
     @RequestMapping(path = "/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String createMapping(@PathVariable(value = "id") Integer seasonTournamentId) {
-
+    public String createMapping(@PathVariable(value = "id") Integer seasonTournamentId) throws AppException {
         Gson gson = new Gson();
-
-        Set<IncompatiblePlayersDTO> response = new HashSet<>();
-        try {
-            response = mappingService.MappingTeamsAndPlayers(seasonTournamentId);
-        } catch (Exception ex) {
-            Logger.getLogger(RegistrationController.class.getName()).log(Level.SEVERE, null, ex);
-            // vyriesit co robit ak exception
-        }
-
+        Set<IncompatiblePlayersDTO> response = mappingService.MappingTeamsAndPlayers(seasonTournamentId);
         return gson.toJson(response);
     }
-    
-     @RequestMapping(path = "/submit/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String submitMappingPlayer(@RequestBody MappingDTO request){
-        Gson gson = new Gson();
-        PersonDTO response = new PersonDTO();
-        
-        try {
-            response = mappingService.ConfirmIncompatiblePlayers(request.getNewPlayer(), request.getCompetitorTeamId());
-        } catch (Exception ex) {
-            Logger.getLogger(RegistrationController.class.getName()).log(Level.SEVERE, null, ex);
-            // vyriesit co robit ak exception
-        }
 
+    @RequestMapping(path = "/submit/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String submitMappingPlayer(@RequestBody MappingDTO request) throws AppException {
+        Gson gson = new Gson();
+        PersonDTO response = mappingService.ConfirmIncompatiblePlayers(request.getNewPlayer(), request.getCompetitorTeamId());
         return gson.toJson(response);
     }
-    
 
 }

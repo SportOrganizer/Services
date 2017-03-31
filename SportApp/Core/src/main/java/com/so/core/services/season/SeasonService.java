@@ -7,6 +7,7 @@ package com.so.core.services.season;
 
 import com.so.core.controller.converter.season.SeasonConverter;
 import com.so.core.controller.dto.season.SeasonDTO;
+import com.so.core.exception.AppException;
 import com.so.dal.core.model.season.Season;
 import com.so.dal.core.repository.season.SeasonRepository;
 import org.slf4j.Logger;
@@ -14,11 +15,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
-
+import org.springframework.http.HttpStatus;
 
 @Service
 public class SeasonService {
@@ -26,118 +25,118 @@ public class SeasonService {
     private final static Logger LOG = LoggerFactory.getLogger(SeasonService.class); /// logovanie..
 
     @Autowired
-    SeasonRepository seasonRepo;
-    
+    private SeasonRepository seasonRepo;
+
     @Autowired
-    SeasonConverter seasonConverter;
+    private SeasonConverter seasonConverter;
 
     @Transactional
-    public SeasonDTO findById(Integer id){
+    public SeasonDTO findById(Integer id) throws AppException {
         LOG.info("findById({})", id);
-        if(id == null){
-            LOG.error("id can't be null: {}", id);
-            throw new InvalidParameterException("required parameter null");
+        if (id == null) {
+            LOG.error("nevyplneny povinny atribut id:{}", id);
+            throw new AppException(HttpStatus.BAD_REQUEST, "nevyplneny povinny atribut id=" + id);
         }
-
         Season s = seasonRepo.findOne(id);
-        if(s==null){
+        if (s == null) {
             LOG.error("k danemu id neexistuje zaznam v dbs");
+            throw new AppException(HttpStatus.NOT_FOUND, "pre dane id neexistuje Season id=" + id);
         }
-        
         return seasonConverter.entityToDto(s, true);
     }
 
-    public List<SeasonDTO> findByNameContaining(String name){
+    @Transactional
+    public List<SeasonDTO> findByNameContaining(String name) throws AppException {
         LOG.info("findByNameContaining({})", name);
 
-        if(name == null){
-            LOG.error("name can't be null: {}", name);
-            throw new InvalidParameterException("required parameter null");
+        if (name == null) {
+            LOG.error("nevyplneny povinny atribut name:{}", name);
+            throw new AppException(HttpStatus.BAD_REQUEST, "nevyplneny povinny atribut id=" + name);
         }
         List<SeasonDTO> seasonList = new ArrayList<>();
-        List<Season> ls= seasonRepo.findByNameContaining(name);
-        
-        for(Season s:ls){
+        List<Season> ls = seasonRepo.findByNameContaining(name);
+
+        for (Season s : ls) {
             seasonList.add(seasonConverter.entityToDto(s, false));
         }
-        
-        return seasonList;
-    }
 
-    public Season findByName(String name){
-        LOG.info("findByNameContaining({})", name);
-        if(name == null){
-            LOG.error("name can't be null: {}", name);
-            throw new InvalidParameterException("required parameter null");
-        }
-
-        Season s = seasonRepo.findByName(name);
-        return  s;
-    }
-
-    public List<SeasonDTO> findAll(){
-        LOG.info("findAll()");
-        List<Season> ls= seasonRepo.findAll();
-        List<SeasonDTO> seasonList = new ArrayList<>();
-        
-        for(Season s:ls){
-            seasonList.add(seasonConverter.entityToDto(s, false));
-        }
-        
         return seasonList;
     }
 
     @Transactional
-    public Boolean createSeason(String name) {
-        LOG.info("createSeason({})",name);
+    public Season findByName(String name) throws AppException {
+        LOG.info("findByNameContaining({})", name);
+        if (name == null) {
+            LOG.error("nevyplneny povinny atribut name:{}", name);
+            throw new AppException(HttpStatus.BAD_REQUEST, "nevyplneny povinny atribut name=" + name);
+        }
+        Season s = seasonRepo.findByName(name);
+        if (s == null) {
+            LOG.error("k danemu name neexistuje zaznam v dbs");
+            throw new AppException(HttpStatus.NOT_FOUND, "pre dane name neexistuje Season name=" + name);
+        }
+        return s;
+    }
 
-        if(name == null){
-            LOG.error("name can't be null: {}", name);
-            throw new InvalidParameterException("required parameter null");
+    @Transactional
+    public List<SeasonDTO> findAll() throws AppException {
+        LOG.info("findAll()");
+        List<Season> ls = seasonRepo.findAll();
+        List<SeasonDTO> seasonList = new ArrayList<>();
+        for (Season s : ls) {
+            seasonList.add(seasonConverter.entityToDto(s, false));
+        }
+        return seasonList;
+    }
+
+    @Transactional
+    public SeasonDTO createSeason(String name) throws AppException {
+        LOG.info("createSeason({})", name);
+
+        if (name == null) {
+            LOG.error("nevyplneny povinny atribut name:{}", name);
+            throw new AppException(HttpStatus.BAD_REQUEST, "nevyplneny povinny atribut name=" + name);
         }
 
-        if(seasonRepo.findByName(name) != null){
-            LOG.error("duplicate name: {}", name);
-            return false;
+        if (seasonRepo.findByName(name) != null) {
+            LOG.error("dane meno sa uz pouziva: {}", name);
+            throw new AppException(HttpStatus.BAD_REQUEST, "tim s takymto nazvom uz existuje=" + name);
         }
 
         Season s = new Season(name);
-        s  = seasonRepo.saveAndFlush(s);
+        s = seasonRepo.saveAndFlush(s);
 
         if (s == null) {
-            LOG.error("save has failed: {}", name);
-            return false;
+            LOG.error("sesona:{} sa neulozila do databazy");
+            throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "sezona:" + name + " sa neulozila do databazy");
         }
 
-        return true;
-        
+        return seasonConverter.entityToDto(s, true);
 
     }
 
- @Transactional
-    public void deleteSeason(Integer id) {
-        LOG.info("deleteSeason({})",id);
+    @Transactional
+    public void deleteSeason(Integer id) throws AppException {
+        LOG.info("deleteSeason({})", id);
         Season s = seasonRepo.findOne(id);
 
         if (s == null) {
-            throw new InvalidParameterException("nenajdene seasonTournament");
+            throw new AppException(HttpStatus.BAD_REQUEST, "seasonTournament s id=" + id + "nebol najdeny");
         }
-
         seasonRepo.delete(s);
     }
 
     @Transactional
-    public SeasonDTO update(SeasonDTO updated) {
-     LOG.info("update()");
+    public SeasonDTO update(SeasonDTO updated) throws AppException {
+        LOG.info("update()");
         Season s = seasonConverter.dtoToEntity(updated);
-
         Season saved = seasonRepo.saveAndFlush(s);
 
         if (saved == null) {
-            LOG.error("nepodarilo sa ulozit st do db");
-            throw new IllegalStateException("nepodarilo sa ulozit st do db");
+            LOG.error("nepodarilo sa aktualizovat season");
+            throw new AppException(HttpStatus.NOT_MODIFIED, "nepodarilo sa aktualizovat season");
         }
-        return seasonConverter.entityToDto(saved, false);
+        return seasonConverter.entityToDto(saved, true);
     }
 
 }

@@ -2,7 +2,6 @@ package com.so.dal.core.model;
 // Generated 27.2.2017 18:41:18 by Hibernate Tools 4.3.1
 
 
-import com.so.dal.core.model.Resource;
 import com.so.dal.core.model.game.CompetitorTeam;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,8 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 

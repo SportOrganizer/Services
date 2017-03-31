@@ -25,7 +25,7 @@ public class Season  implements java.io.Serializable {
 
      private Integer id;
      private String name;
-     private Set<SeasonTournament> seasonTournaments = new HashSet<SeasonTournament>(0);
+     private Set<SeasonTournament> seasonTournaments = new HashSet<>(0);
 
     public Season() {
     }
