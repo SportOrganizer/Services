@@ -34,11 +34,11 @@ public class CompetitorTeam  implements java.io.Serializable {
      private Resource resource;
      private SeasonTournamentGroup seasonTournamentGroup;
      private Team team;
-     private Set<SportFlorbalGameActivity> sportFlorbalGameActivities = new HashSet<SportFlorbalGameActivity>(0);
-     private Set<SportFlorbalGameShots> sportFlorbalGameShotses = new HashSet<SportFlorbalGameShots>(0);
-     private Set<CompetitorTeamPlayer> competitorTeamPlayers = new HashSet<CompetitorTeamPlayer>(0);
-     private Set<Game> gamesForIdAwayTeam = new HashSet<Game>(0);
-     private Set<Game> gamesForIdHomeTeam = new HashSet<Game>(0);
+     private Set<SportFlorbalGameActivity> sportFlorbalGameActivities = new HashSet<>(0);
+     private Set<SportFlorbalGameShots> sportFlorbalGameShotses = new HashSet<>(0);
+     private Set<CompetitorTeamPlayer> competitorTeamPlayers = new HashSet<>(0);
+     private Set<Game> gamesForIdAwayTeam = new HashSet<>(0);
+     private Set<Game> gamesForIdHomeTeam = new HashSet<>(0);
 
     public CompetitorTeam() {
     }
