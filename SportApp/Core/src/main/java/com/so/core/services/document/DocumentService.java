@@ -68,7 +68,7 @@ public class DocumentService {
     public void deleteFile(Resource r) throws AppException {
 
         if (r != null) {
-            File file = new File(PATH + "\\" + r.getPath());
+            File file = new File(PATH + r.getPath());
             if (file.delete()) {
                 resourceRepo.delete(r);
                 LOG.info(file.getName() + " subor je vymazany!");
@@ -76,6 +76,8 @@ public class DocumentService {
                 LOG.error("Delete operation is failed.");
                 throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "nepodarilo sa vymazat resource");
             }
+        }else{
+            LOG.info("resource je null");
         }
     }
 
@@ -100,10 +102,10 @@ public class DocumentService {
             return r;
         } catch (FileNotFoundException ex) {
             LOG.error("nepodarilo sa nacitat subor={}", name);
-            throw new AppException(HttpStatus.NOT_FOUND, "nepodarilo sa nacitat subor:" + "name " + ex);
+            throw new AppException(HttpStatus.NOT_FOUND, "nepodarilo sa nacitat subor:" + "name " + ex.getMessage());
         } catch (IOException e) {
             LOG.error("nepodarilo sa nacitat subor={}", name);
-            throw new AppException(HttpStatus.NOT_FOUND, "nepodarilo sa nacitat subor:" + "name " + e);
+            throw new AppException(HttpStatus.NOT_FOUND, "nepodarilo sa nacitat subor:" + "name " + e.getMessage());
 
         }
 
