@@ -616,7 +616,7 @@
 
 #### request : /mapping/
 ##### createMapping
-            # request: /   
+            # request: /{idSeasonTournament}   
             # response:{}
             
 ##### request : /submit/
