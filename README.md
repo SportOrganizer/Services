@@ -618,6 +618,42 @@
 ##### createMapping
             # request: /{idSeasonTournament}   
             # response:{}
+      V pripade ze sa v tabulke Person nachadza persona s rovnakym emailom ako ma hrac v RegistrationPlayer a zaroven sa lisi v                                                      nejakom atribute, potom pri mapovani je response nasledovny:
+            [
+                  {
+                  "rp":       {
+                     "id": 90,
+                     "registrationTeam": 49,
+                     "name": "PeterZmena",
+                     "surname": "Petko",
+                     "birthDate": "jan 1, 2017",
+                     "mail": "email@emal",
+                     "phone": "phone",
+                     "isStudent": true,
+                     "isVerified": true,
+                     "sex": "male",
+                     "isProfessional": true,
+                     "note": "note",
+                     "number": 5,
+                     "photo":          {
+                        "id": 815,
+                        "path": "040480dc-e858-415c-a23a-cc09aad9e82f.null"
+                     },
+                     "isCaptain": false
+                  },
+                  "p":       {
+                     "id": 538,
+                     "name": "Peter",
+                     "surname": "Petko",
+                     "birthDate": "jan 1, 2017",
+                     "mail": "email@emal",
+                     "phone": "phone",
+                     "isStudent": true,
+                     "sex": "male"
+                  },
+                  "idCT": 69
+               }
+          ]
             
 ##### request : /submit/
          # submitMappingPlayer
