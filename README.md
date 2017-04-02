@@ -618,7 +618,9 @@
 ##### createMapping
             # request: /{idSeasonTournament}   
             # response:{}
-      V pripade ze sa v tabulke Person nachadza persona s rovnakym emailom ako ma hrac v RegistrationPlayer a zaroven sa lisi v                                                      nejakom atribute, potom pri mapovani je response nasledovny:
+      V pripade ze sa v tabulke Person nachadza persona s rovnakym emailom 
+      ako ma hrac v RegistrationPlayer a zaroven sa lisi vnejakom atribute, 
+      potom pri mapovani je response nasledovny:
             [
                   {
                   "rp":       {
