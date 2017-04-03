@@ -336,7 +336,7 @@
                      "isProfessional": true,
                      "note": "note",
                      "number": 5,
-                     "znak":    {
+                     "photo":    {
                   "data": "pJQDZW4xSvU+AXlkwmPqP/jT39sUq7hVuXMolzIA/mmcfILpWafRkhkt+RX/2Q==",
                   "mimeType": "jpeg"
                },
