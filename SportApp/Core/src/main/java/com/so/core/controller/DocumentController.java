@@ -48,9 +48,11 @@ public class DocumentController {
         return gson.toJson(response);
     }
 
-    @RequestMapping(path = "/", method = RequestMethod.DELETE)
-    public void deleteNotUsedResources() throws AppException {
-
+    @RequestMapping(path = "/", method = RequestMethod.DELETE,  produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String deleteNotUsedResources() throws AppException {
+        Gson gson = new Gson();
+        service.deleteNotUsedResources();
+        return gson.toJson("OK");
     }
 
 }

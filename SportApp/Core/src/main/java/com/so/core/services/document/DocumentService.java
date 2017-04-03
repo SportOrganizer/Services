@@ -70,16 +70,16 @@ public class DocumentService {
 
         if (r != null) {
             File file = new File(PATH + r.getPath());
+            resourceRepo.delete(r);
             if (file.exists()) {
                 if (file.delete()) {
-                    resourceRepo.delete(r);
                     LOG.info(file.getName() + " subor je vymazany!");
                 } else {
                     LOG.error("Delete operation is failed.");
                     throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "nepodarilo sa vymazat resource");
                 }
-            } else{
-                LOG.info("subor {} neexistuje, ale resource bol vymazany",r.getPath());
+            } else {
+                LOG.info("subor {} neexistuje, ale resource bol vymazany", r.getPath());
             }
         } else {
             LOG.info("resource je null");
@@ -96,10 +96,10 @@ public class DocumentService {
         String filePath = PATH + name;
         try {
             File file = new File(filePath);
-            if(!file.exists()){
-                throw new AppException(HttpStatus.NOT_FOUND,"image:"+name+" nebol najdeny");
+            if (!file.exists()) {
+                throw new AppException(HttpStatus.NOT_FOUND, "image:" + name + " nebol najdeny");
             }
-            
+
             FileInputStream fis = new FileInputStream(file);
             byte[] fileBytes;
             try (BufferedInputStream inputStream = new BufferedInputStream(fis)) {
@@ -118,19 +118,18 @@ public class DocumentService {
 
         }
     }
-    
+
     @Transactional
-    public void deleteNotUsedResources() throws AppException{
+    public void deleteNotUsedResources() throws AppException {
         List<Resource> l = resourceRepo.findAll();
-        
-        for(Resource r:l){
-            if(r.getCompetitorTeamPlayers().isEmpty() && r.getCompetitorTeams().isEmpty() && r.getRegistrationPlayers().isEmpty()
-                    && r.getRegistrationTeams().isEmpty() && r.getSeasonTournaments().isEmpty()){
-                deleteFile(r.getPath());
+
+        for (Resource r : l) {
+            if (r.getCompetitorTeamPlayers().isEmpty() && r.getCompetitorTeams().isEmpty() && r.getRegistrationPlayers().isEmpty()
+                    && r.getRegistrationTeams().isEmpty() && r.getSeasonTournaments().isEmpty()) {
+                deleteFile(r);
             }
-            
+
         }
-        
-        
+
     }
 }
