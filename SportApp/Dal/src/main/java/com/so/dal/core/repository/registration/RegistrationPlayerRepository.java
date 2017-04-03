@@ -16,6 +16,6 @@ import org.springframework.stereotype.Repository;
  * @author peter
  */
 @Repository
-public interface RegistrationPlayerRepository extends JpaRepository<RegistrationPlayer, Integer>{
+public interface RegistrationPlayerRepository extends RegistrationPlayerRepositoryCustom, JpaRepository<RegistrationPlayer, Integer>{
     List<RegistrationPlayer> findByMailAndSurname(String mail, String Surname);
 }

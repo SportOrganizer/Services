@@ -18,7 +18,9 @@ import com.so.dal.core.repository.registration.RegistrationTeamRepository;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,6 +105,7 @@ public class RegistrationService {
                     teamDto.getName(), teamDto.getShortName(), teamDto.getZnak(), teamDto.getRegistrationPlayers(), teamDto.getSeasonTournamentId());
             throw new AppException(HttpStatus.BAD_REQUEST, "nevyplnene povinne parametre");
         }
+        validateRegistration(teamDto);
         Resource znak = documentService.createFile(teamDto.getZnak().getData(), teamDto.getZnak().getMimeType());
         teamDto.getZnak().setId(znak.getId());
         teamDto.setCreatedTime(new Date());
@@ -184,7 +187,9 @@ public class RegistrationService {
 
     @Transactional
     public RegistrationTeamDto editTeam(RegistrationTeamDto team) throws AppException {
-
+        if (regTeamRepo.ifUniqeName(team.getSeasonTournamentId(), team.getId(), team.getName())) {
+            throw new AppException(HttpStatus.BAD_REQUEST, "meno tymu: " + team.getName() + " sa v tomto turnaji uz pouziva");
+        }
         RegistrationTeam entity = converter.regTeamDtoToEntity(team, false);
         if (team.getZnak() != null) {
             if (team.getZnak().getData() != null && team.getZnak().getMimeType() != null) {
@@ -203,6 +208,7 @@ public class RegistrationService {
 
     @Transactional
     public RegistrationPlayerDto editPlayer(RegistrationPlayerDto player) throws AppException {
+        validatePlayerEdit(player);
 
         RegistrationPlayer entity = converter.regPlayerDtoToEntity(player);
 
@@ -220,5 +226,75 @@ public class RegistrationService {
             throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "nepodarilo sa ulozit aktualizovaneho hraca do db");
         }
         return converter.regPlayerEntityToDto(savedPlayer);
+    }
+
+    private void validateRegistration(RegistrationTeamDto teamDto) throws AppException {
+        List<String> errorList = new ArrayList<>();
+        Integer captain = 0;
+        Set<String> errorEmail = new HashSet<>();
+        Set<Integer> errorNumber = new HashSet<>();
+        if (regTeamRepo.ifContainName(teamDto.getSeasonTournamentId(), teamDto.getName())) {
+            errorList.add("nazov timu:" + teamDto.getName() + " sa uz v tomto turnaji pouziva");
+        }
+        for (RegistrationPlayerDto p : teamDto.getRegistrationPlayers()) {
+            if (p.getIsCaptain()) {
+                captain++;
+            }
+            if (!isValidEmail(p.getMail())) {
+                errorList.add("email: " + p.getMail() + " nema spravny format");
+            }
+
+            if (!errorEmail.contains(p.getMail())) {
+                errorEmail.add(p.getMail());
+            } else {
+                errorList.add("Email: " + p.getMail() + " je pouzity viac krat");
+            }
+            if (!errorNumber.contains(p.getNumber())) {
+                errorNumber.add(p.getNumber());
+            } else {
+                errorList.add("cislo: " + p.getNumber() + "je pouzite viac krat");
+            }
+        }
+
+        if (captain == 0) {
+            errorList.add("ziadny hrac nie je oznaceny ako kapitan");
+        } else if (captain > 1) {
+            errorList.add("viac hracov je oznacenych ako kapitan");
+        }
+
+        if (!errorList.isEmpty()) {
+            LOG.info("registracia nepresla validaciou {}", errorList.toString());
+            throw new AppException(HttpStatus.BAD_REQUEST, errorList.toString());
+        }
+    }
+
+    private void validatePlayerEdit(RegistrationPlayerDto p) throws AppException {
+        List<String> errorList = new ArrayList<>();
+
+        if (regPlayerRepo.ifUniqueCaptain(p.getRegistrationTeam(), p.getId(), p.getIsCaptain())) {
+            errorList.add("hodnota ifCaptain nemoze byt zmenena, (tym by nemal ziadneho alebo dvoch kapitanov)");
+        }
+        if (regPlayerRepo.ifUniqueEmail(p.getRegistrationTeam(), p.getId(), p.getMail())) {
+            errorList.add("email: " + p.getMail() + " pouziva iny hrac");
+        }
+
+        if (regPlayerRepo.ifUniqueNumber(p.getRegistrationTeam(), p.getId(), p.getNumber())) {
+            errorList.add("cislo:" + p.getNumber() + " pouziva iny hrac");
+        }
+        if (!isValidEmail(p.getMail())) {
+            errorList.add("email:" + p.getMail() + "nema spravny format");
+        }
+        if (!errorList.isEmpty()) {
+            LOG.info("editacia hraca nepresla validaciou {}", errorList.toString());
+            throw new AppException(HttpStatus.BAD_REQUEST, errorList.toString());
+        }
+
+    }
+
+    public boolean isValidEmail(String email) {
+        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+        java.util.regex.Matcher m = p.matcher(email);
+        return m.matches();
     }
 }

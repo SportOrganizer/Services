@@ -26,7 +26,7 @@ public class Penalty  implements java.io.Serializable {
 
      private Integer id;
      private String name;
-     private Set<SeasonTournamentPenaltySettings> seasonTournamentPenaltySettingses = new HashSet<SeasonTournamentPenaltySettings>(0);
+     private Set<SeasonTournamentPenaltySettings> seasonTournamentPenaltySettingses = new HashSet<>(0);
 
     public Penalty() {
     }
