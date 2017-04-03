@@ -139,9 +139,9 @@ public class SeasonTournamentService {
             LOG.error("nenajdeny SeasonTournament s id={}", id);
             throw new AppException(HttpStatus.BAD_REQUEST, "nenajdeny SeasonTournament s id=" + id);
         }
-        if (s.getResource() != null) {
-            documentService.deleteFile(s.getResource());
-        }
+//        if (s.getResource() != null) {
+//            documentService.deleteFile(s.getResource());
+//        }
 
         seasonTournamentRepo.delete(s);
     }

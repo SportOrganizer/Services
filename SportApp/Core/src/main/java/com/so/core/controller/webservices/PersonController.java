@@ -57,7 +57,7 @@ public class PersonController {
     }
 
     @RequestMapping(path = "/update/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String editTournament(@RequestBody PersonDTO t) throws AppException {
+    public String editPerson(@RequestBody PersonDTO t) throws AppException {
         Gson gson = new Gson();
         PersonDTO edited = personService.update(t);
         return gson.toJson(edited);
