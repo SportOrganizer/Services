@@ -57,8 +57,8 @@ public class RegistrationConverter {
         if (dto.getRegistrationTeam() != null) {
             RegistrationTeam t = regTeamRepo.findOne(dto.getRegistrationTeam());
             if (t == null) {
-                LOG.error("neexistuje tim s id={}", dto.getId());
-                throw new AppException(HttpStatus.BAD_REQUEST, "neexistuje tim s id=" + dto.getId());
+                LOG.error("neexistuje tim s id={}", dto.getRegistrationTeam());
+                throw new AppException(HttpStatus.BAD_REQUEST, "neexistuje tim s id=" + dto.getRegistrationTeam());
             } else {
                 entity.setRegistrationTeam(t);
             }
@@ -106,15 +106,18 @@ public class RegistrationConverter {
             LOG.error(" chyba v konvertore regTeam, nenajdeny seasonTournament s id={}  koncim spracovanie", dto.getSeasonTournamentId());
             throw new AppException(HttpStatus.BAD_REQUEST, "nenajdeny seasonTournament s id=" + dto.getSeasonTournamentId());
         }
-        if (dto.getZnak().getId() != null) {
-            Resource r = resourceRepo.findOne(dto.getZnak().getId());
-            if (r == null) {
-                LOG.error("neexistuje resource s id={}", dto.getId());
-                throw new AppException(HttpStatus.BAD_REQUEST, "neexistuje resource s id=" + dto.getId());
-            } else {
-                entity.setResource(r);
+        if (dto.getZnak() != null) {
+            if (dto.getZnak().getId() != null) {
+                Resource r = resourceRepo.findOne(dto.getZnak().getId());
+                if (r == null) {
+                    LOG.error("neexistuje resource s id={}", dto.getId());
+                    throw new AppException(HttpStatus.BAD_REQUEST, "neexistuje resource s id=" + dto.getId());
+                } else {
+                    entity.setResource(r);
+                }
             }
         }
+
         entity.setColor(dto.getColor());
         entity.setCreatedTime(dto.getCreatedTime());
         entity.setIsCancelled(dto.getIsCancelled());

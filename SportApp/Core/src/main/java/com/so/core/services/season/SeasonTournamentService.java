@@ -150,6 +150,14 @@ public class SeasonTournamentService {
     public SeasonTournamentDTO update(SeasonTournamentDTO updated) throws AppException {
         LOG.info("update()");
         SeasonTournament s = seasonTournamentConverter.dtoToEntity(updated);
+        
+                if (updated.getLogo()!= null) {
+            if (updated.getLogo().getData() != null && updated.getLogo().getMimeType() != null) {
+                Resource r = documentService.createFile(updated.getLogo().getData(), updated.getLogo().getMimeType());
+                s.setResource(r);
+            }
+        }
+                
         SeasonTournament saved = seasonTournamentRepo.saveAndFlush(s);
 
         if (saved == null) {

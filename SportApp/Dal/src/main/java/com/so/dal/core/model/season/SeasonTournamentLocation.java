@@ -29,7 +29,7 @@ public class SeasonTournamentLocation  implements java.io.Serializable {
      private Integer id;
      private SeasonTournament seasonTournament;
      private String name;
-     private Set<Game> games = new HashSet<Game>(0);
+     private Set<Game> games = new HashSet<>(0);
 
     public SeasonTournamentLocation() {
     }
@@ -77,7 +77,7 @@ public class SeasonTournamentLocation  implements java.io.Serializable {
         this.name = name;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="seasonTournamentLocation")
+@OneToMany(fetch=FetchType.LAZY, mappedBy="seasonTournamentLocation",orphanRemoval=true)
     public Set<Game> getSportFlorbalGames() {
         return this.games;
     }

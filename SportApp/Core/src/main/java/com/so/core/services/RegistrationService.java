@@ -186,6 +186,12 @@ public class RegistrationService {
     public RegistrationTeamDto editTeam(RegistrationTeamDto team) throws AppException {
 
         RegistrationTeam entity = converter.regTeamDtoToEntity(team, false);
+        if (team.getZnak() != null) {
+            if (team.getZnak().getData() != null && team.getZnak().getMimeType() != null) {
+                Resource r = documentService.createFile(team.getZnak().getData(), team.getZnak().getMimeType());
+                entity.setResource(r);
+            }
+        }
         RegistrationTeam savedTeam = regTeamRepo.save(entity);
 
         if (savedTeam == null) {
@@ -199,6 +205,14 @@ public class RegistrationService {
     public RegistrationPlayerDto editPlayer(RegistrationPlayerDto player) throws AppException {
 
         RegistrationPlayer entity = converter.regPlayerDtoToEntity(player);
+
+        if (player.getPhoto() != null) {
+            if (player.getPhoto().getData() != null && player.getPhoto().getMimeType() != null) {
+                Resource r = documentService.createFile(player.getPhoto().getData(), player.getPhoto().getMimeType());
+                entity.setPhoto(r);
+            }
+        }
+
         RegistrationPlayer savedPlayer = regPlayerRepo.saveAndFlush(entity);
 
         if (savedPlayer == null) {
