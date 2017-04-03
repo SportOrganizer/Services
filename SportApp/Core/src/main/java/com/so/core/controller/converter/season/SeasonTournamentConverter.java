@@ -16,7 +16,6 @@ import com.so.dal.core.repository.ResourceRepository;
 import com.so.dal.core.repository.TournamentRepository;
 import com.so.dal.core.repository.season.SeasonRepository;
 import com.so.dal.core.repository.season.SeasonTournamentRepository;
-import java.security.InvalidParameterException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,13 +98,15 @@ public class SeasonTournamentConverter {
         }
 
         if (dto.getLogo() != null) {
-            Resource resource = resourceRepo.getOne(dto.getLogo().getId());
+            if (dto.getLogo().getId() != null) {
+                Resource resource = resourceRepo.getOne(dto.getLogo().getId());
 
-            if (resource == null) {
-                LOG.error("neexistuje Resource s id: {}", dto.getLogo().getId());
-                throw new AppException(HttpStatus.BAD_REQUEST, "neexistuje Resource s id:" + dto.getLogo().getId());
-            } else {
-                entity.setResource(resource);
+                if (resource == null) {
+                    LOG.error("neexistuje Resource s id: {}", dto.getLogo().getId());
+                    throw new AppException(HttpStatus.BAD_REQUEST, "neexistuje Resource s id:" + dto.getLogo().getId());
+                } else {
+                    entity.setResource(resource);
+                }
             }
         }
         entity.setName(dto.getName());
