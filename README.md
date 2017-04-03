@@ -718,4 +718,8 @@
             
 ##### delete image
             request: /{path} HTTP DELETE
-            response: void (???)
+            response: 200
+##### delete unused resources/images
+             - operacia vymaze vsetky resources spolu so subormi, ktore niesu pouzivane
+            request : / HTTP DELETE
+            response : 200
