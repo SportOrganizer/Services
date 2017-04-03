@@ -32,7 +32,7 @@ public class SeasonTournamentPenaltySettings  implements java.io.Serializable {
      private SeasonTournament seasonTournament;
      private String name;
      private String value;
-     private Set<SportFlorbalGameActivity> sportFlorbalGameActivities = new HashSet<SportFlorbalGameActivity>(0);
+     private Set<SportFlorbalGameActivity> sportFlorbalGameActivities = new HashSet<>(0);
 
     public SeasonTournamentPenaltySettings() {
     }
@@ -104,7 +104,7 @@ public class SeasonTournamentPenaltySettings  implements java.io.Serializable {
         this.value = value;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="seasonTournamentPenaltySettings")
+@OneToMany(fetch=FetchType.LAZY, mappedBy="seasonTournamentPenaltySettings",orphanRemoval=true)
     public Set<SportFlorbalGameActivity> getSportFlorbalGameActivities() {
         return this.sportFlorbalGameActivities;
     }
