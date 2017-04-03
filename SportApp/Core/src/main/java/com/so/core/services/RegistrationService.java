@@ -165,10 +165,10 @@ public class RegistrationService {
         }
         regTeamRepo.delete(id);
 
-        if (team.getResource().getCompetitorTeams().isEmpty()
-                && team.getResource().getRegistrationTeams().size() == 1) {
-            documentService.deleteFile(team.getResource());
-        }
+//        if (team.getResource().getCompetitorTeams().isEmpty()
+//                && team.getResource().getRegistrationTeams().size() == 1) {
+//            documentService.deleteFile(team.getResource());
+//        }
     }
 
     @Transactional
@@ -179,10 +179,10 @@ public class RegistrationService {
             throw new AppException(HttpStatus.NOT_FOUND, "nenajdeny hrac s :" + id);
         }
         regPlayerRepo.delete(id);
-        if (p.getPhoto().getCompetitorTeamPlayers().isEmpty()
-                && p.getPhoto().getRegistrationPlayers().size() == 1) {
-            documentService.deleteFile(p.getPhoto());
-        }
+//        if (p.getPhoto().getCompetitorTeamPlayers().isEmpty()
+//                && p.getPhoto().getRegistrationPlayers().size() == 1) {
+//            documentService.deleteFile(p.getPhoto());
+//        }
     }
 
     @Transactional

@@ -41,11 +41,18 @@ public class DocumentController {
         service.deleteFile(name);
     }
 
-    @RequestMapping(path = "/", method = RequestMethod.POST,  produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(path = "/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String uploadImage(@RequestBody ResourceDto dto) throws AppException {
         Gson gson = new Gson();
         ResourceDto response = service.uploadImage(dto);
         return gson.toJson(response);
+    }
+
+    @RequestMapping(path = "/", method = RequestMethod.DELETE,  produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String deleteNotUsedResources() throws AppException {
+        Gson gson = new Gson();
+        service.deleteNotUsedResources();
+        return gson.toJson("OK");
     }
 
 }
