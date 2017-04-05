@@ -17,17 +17,19 @@ import java.util.Date;
 public class GameDto {
 
     private Integer id;
-    private CompetitorTeamDto awayTeam;
-    private CompetitorTeamDto homeTeam;
+    private Date startTime;
     private SeasonTournamentGroupDTO group;
     private SeasonTournamentLocationDTO location;
     private SeasonTournamentRoundDTO round;
+    private CompetitorTeamDto awayTeam;
+    private CompetitorTeamDto homeTeam;
+
     private String name;
-    private Date startTime;
     private Date realStart;
     private Boolean overtime;
     private Boolean finished;
     private Boolean contumated;
+    private Integer seasonTournamentId;
 
     public GameDto() {
     }
@@ -128,5 +130,12 @@ public class GameDto {
         this.contumated = contumated;
     }
 
+    public Integer getSeasonTournamentId() {
+        return seasonTournamentId;
+    }
+
+    public void setSeasonTournamentId(Integer seasonTournamentId) {
+        this.seasonTournamentId = seasonTournamentId;
+    }
 
 }

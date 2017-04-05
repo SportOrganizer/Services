@@ -9,7 +9,7 @@ import com.so.core.controller.dto.ResourceDto;
 import com.so.core.controller.dto.TeamDTO;
 import java.util.ArrayList;
 import java.util.List;
-
+ 
 /**
  *
  * @author peter
@@ -19,7 +19,7 @@ public class CompetitorTeamDto {
      private Integer id;
      private ResourceDto logo;
    //  private SeasonTournamentGroupDTO seasonTournamentGroup;
-     private Integer seasonTournamentGroupId;
+     private Integer groupId;
      private TeamDTO team;
    //  private Set<SportFlorbalGameActivity> sportFlorbalGameActivities = new HashSet<>(0);
    //  private Set<SportFlorbalGameShots> sportFlorbalGameShotses = new HashSet<>(0);
@@ -54,13 +54,15 @@ public class CompetitorTeamDto {
         this.competitorTeamPlayers = competitorTeamPlayers;
     }
 
-    public Integer getSeasonTournamentGroupId() {
-        return seasonTournamentGroupId;
+    public Integer getGroupId() {
+        return groupId;
     }
 
-    public void setSeasonTournamentGroupId(Integer seasonTournamentGroupId) {
-        this.seasonTournamentGroupId = seasonTournamentGroupId;
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
     }
+
+   
 
     public TeamDTO getTeam() {
         return team;

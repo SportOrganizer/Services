@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -37,6 +38,7 @@ public class GameService {
     @Autowired
     private SeasonTournamentRepository stRepo;
 
+    @Transactional
     public GameDto createGame(GameDto game) throws AppException {
         Game g = gameConverter.gameDtoToEntity(game);
         g = gameRepo.saveAndFlush(g);
@@ -48,6 +50,7 @@ public class GameService {
         return gameConverter.gameEntityToDto(g);
     }
 
+    @Transactional
     public List<GameDto> findAllGames() {
         LOG.info("findAllGames()");
 
@@ -60,6 +63,7 @@ public class GameService {
         return l;
     }
 
+    @Transactional
     public GameDto findGame(Integer id) throws AppException {
         LOG.info("findGame({})", id);
 
@@ -72,6 +76,7 @@ public class GameService {
         return gameConverter.gameEntityToDto(g);
     }
 
+    @Transactional
     public List<GameDto> findBySeasonTournament(Integer stId) throws AppException {
         LOG.info("findBySeasonTournament({})", stId);
         SeasonTournament st = stRepo.findOne(stId);

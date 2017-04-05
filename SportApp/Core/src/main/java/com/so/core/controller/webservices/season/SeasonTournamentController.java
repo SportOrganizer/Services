@@ -42,6 +42,8 @@ public class SeasonTournamentController {
     @Autowired
     private GameService gameService;
     
+    
+    
     @RequestMapping(path = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getSeasonTournaments(@RequestParam(value = "q", required = false) String query) throws AppException {
         List<SeasonTournamentDTO> seasonTournaments;

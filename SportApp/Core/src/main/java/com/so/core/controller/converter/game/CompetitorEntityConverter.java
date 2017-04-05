@@ -133,7 +133,9 @@ public class CompetitorEntityConverter {
 
         dto.setId(entity.getId());
         dto.setLogo(new ResourceDto(entity.getResource().getId(), entity.getResource().getPath()));
-        dto.setSeasonTournamentGroupId(entity.getSeasonTournamentGroup().getId());
+        if(entity.getSeasonTournamentGroup()!=null){
+        dto.setGroupId(entity.getSeasonTournamentGroup().getId());
+        }
         dto.setTeam(teamConverter.teamEntityToDto(entity.getTeam(), false));
 
         if (ifCopyPlayers) {
@@ -171,11 +173,11 @@ public class CompetitorEntityConverter {
             }
         }
 
-        if (dto.getSeasonTournamentGroupId() != null) {
-            SeasonTournamentGroup g = stGroupRepo.findOne(dto.getSeasonTournamentGroupId());
+        if (dto.getGroupId()!= null) {
+            SeasonTournamentGroup g = stGroupRepo.findOne(dto.getGroupId());
             if (g == null) {
-                LOG.error("neexistuje seasonTournamentGroup s id={}", dto.getSeasonTournamentGroupId());
-                throw new AppException(HttpStatus.BAD_REQUEST, "neexistuje seasonTournamentGroup s id=" + dto.getSeasonTournamentGroupId());
+                LOG.error("neexistuje seasonTournamentGroup s id={}", dto.getGroupId());
+                throw new AppException(HttpStatus.BAD_REQUEST, "neexistuje seasonTournamentGroup s id=" + dto.getGroupId());
             } else {
                 entity.setSeasonTournamentGroup(g);
             }
