@@ -34,8 +34,8 @@ public class SeasonTournamentPeriod  implements java.io.Serializable {
      private SeasonTournament seasonTournament;
      private String name;
      private Date length;
-     private Set<SportFlorbalGameActivity> sportFlorbalGameActivities = new HashSet<SportFlorbalGameActivity>(0);
-     private Set<SportFlorbalGameShots> sportFlorbalGameShotses = new HashSet<SportFlorbalGameShots>(0);
+     private Set<SportFlorbalGameActivity> sportFlorbalGameActivities = new HashSet<>(0);
+     private Set<SportFlorbalGameShots> sportFlorbalGameShotses = new HashSet<>(0);
 
     public SeasonTournamentPeriod() {
     }
@@ -96,7 +96,7 @@ public class SeasonTournamentPeriod  implements java.io.Serializable {
         this.length = length;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="seasonTournamentPeriod")
+@OneToMany(fetch=FetchType.LAZY, mappedBy="seasonTournamentPeriod",orphanRemoval=true)
     public Set<SportFlorbalGameActivity> getSportFlorbalGameActivities() {
         return this.sportFlorbalGameActivities;
     }
@@ -105,7 +105,7 @@ public class SeasonTournamentPeriod  implements java.io.Serializable {
         this.sportFlorbalGameActivities = sportFlorbalGameActivities;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="seasonTournamentPeriod")
+@OneToMany(fetch=FetchType.LAZY, mappedBy="seasonTournamentPeriod", orphanRemoval=true)
     public Set<SportFlorbalGameShots> getSportFlorbalGameShotses() {
         return this.sportFlorbalGameShotses;
     }

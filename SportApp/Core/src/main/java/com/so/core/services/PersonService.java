@@ -7,10 +7,9 @@ package com.so.core.services;
 
 import com.so.core.controller.converter.PersonConverter;
 import com.so.core.controller.dto.PersonDTO;
+import com.so.core.exception.AppException;
 import com.so.dal.core.model.Person;
-import com.so.dal.core.model.game.CompetitorTeamPlayer;
 import com.so.dal.core.repository.PersonRepository;
-import java.security.InvalidParameterException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -19,6 +18,7 @@ import org.slf4j.Logger;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +30,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class PersonService {
 
     private final static Logger LOG = LoggerFactory.getLogger(PersonService.class); /// logovanie..
-    //// properties v resources/log4j.properties pozri TODO
 
     @Autowired
     PersonRepository personRepo;
@@ -39,59 +38,111 @@ public class PersonService {
     PersonConverter personConverter;
 
     @Transactional
-    public Person addPerson(String name, String surname, Date birthDate, String mail, String phone, Boolean isStudent,
-            String sex) {
+    public PersonDTO addPerson(String name, String surname, Date birthDate, String mail, String phone, Boolean isStudent,
+            String sex) throws AppException {
 
         LOG.info("addPerson({},{},{},{},{},{},{},{})", name, surname, birthDate, mail, phone, isStudent, sex);
 
         if (name == null || surname == null || isStudent == null || sex == null) {
             LOG.error("name surname isStudent sex nesmu byt prazdne: name={} surname={} sex={} isStudent={} ", name, surname, sex, isStudent);
-            throw new InvalidParameterException("nevyplnene povinne parametre"); // zachytavat exceptiony v controllery alebo premysliet ako kde
+            throw new AppException(HttpStatus.BAD_REQUEST, "nevyplnene povinne parametre"); // zachytavat exceptiony v controllery alebo premysliet ako kde
         }
 
-        //todo competitorTeamPlayers sa bude v buducnu doplnat vyhladavanim timu po poslani z napr. id z FE to sa odkomentuje este
-        // pri tvorbe FE
         Person p = new Person(name, surname, birthDate, mail, phone, isStudent, sex, null);
 
         p = personRepo.saveAndFlush(p);
 
         if (p == null) {
-            LOG.info("Chyba pri pridavani persony {}", p);
-            throw new IllegalStateException();
+            LOG.info("Chyba pri ukladani person {}", p);
+            throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "chyba pri ukladani person do db");
+        }
+        LOG.info("pridana osoba {}", p);
+        return personConverter.personEntityToDto(p);
+    }
+    
+    @Transactional
+    public Person addPerson2(String name, String surname, Date birthDate, String mail, String phone, Boolean isStudent,
+            String sex) throws AppException {
+
+        LOG.info("addPerson({},{},{},{},{},{},{},{})", name, surname, birthDate, mail, phone, isStudent, sex);
+
+        if (name == null || surname == null || isStudent == null || sex == null) {
+            LOG.error("name surname isStudent sex nesmu byt prazdne: name={} surname={} sex={} isStudent={} ", name, surname, sex, isStudent);
+            throw new AppException(HttpStatus.BAD_REQUEST, "nevyplnene povinne parametre"); // zachytavat exceptiony v controllery alebo premysliet ako kde
+        }
+
+        Person p = new Person(name, surname, birthDate, mail, phone, isStudent, sex, null);
+
+        p = personRepo.saveAndFlush(p);
+
+        if (p == null) {
+            LOG.info("Chyba pri ukladani person {}", p);
+            throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "chyba pri ukladani person do db");
         }
         LOG.info("pridana osoba {}", p);
         return p;
     }
 
-    public Person findPersonByNameAndSurname(String name, String surname) {
-
+    public PersonDTO findPersonByNameAndSurname(String name, String surname) throws AppException {
         LOG.info("findPersonByNameAndSurname({},{})", name, surname);
 
+        if (name == null || surname == null) {
+            LOG.error("nevyplnene povinne parametre name={} surname={}", name, surname);
+            throw new AppException(HttpStatus.BAD_REQUEST, "nevyplnene povinne parametre");
+        }
+
         Person p = personRepo.findByNameAndSurname(name, surname);
-        return p;
+
+        if (p == null) {
+            LOG.error("nenajdeny person podla mena a priezviska");
+            throw new AppException(HttpStatus.NOT_FOUND, "nenajdena person podla mena a priezviska");
+        }
+
+        return personConverter.personEntityToDto(p);
     }
 
-    public Person findPersonByEmail(String mail) {
-
+    public PersonDTO findPersonByEmail(String mail) throws AppException {
         LOG.info("findPersonByEmail({})", mail);
-
+        if (mail == null) {
+            LOG.error("nevyplneny email");
+            throw new AppException(HttpStatus.BAD_REQUEST, "nezadany email");
+        }
         Person p = personRepo.findByMail(mail);
+        if (p == null) {
+            LOG.error("nenajdena person podla emaila");
+            throw new AppException(HttpStatus.NOT_FOUND, "nenajdena person podla emaila");
+        }
+        return personConverter.personEntityToDto(p);
+    }
+    
+    
+    public Person findPersonByEmail2(String mail) throws AppException {
+        LOG.info("findPersonByEmail({})", mail);
+        if (mail == null) {
+            LOG.error("nevyplneny email");
+            throw new AppException(HttpStatus.BAD_REQUEST, "nezadany email");
+        }
+        Person p = personRepo.findByMail(mail);
+        if (p == null) {
+            LOG.error("nenajdena person podla emaila");
+            throw new AppException(HttpStatus.NOT_FOUND, "nenajdena person podla emaila");
+        }
         return p;
     }
 
     @Transactional
-    public PersonDTO findById(Integer id) {
+    public PersonDTO findById(Integer id) throws AppException {
         LOG.info("Person findById({})", id);
         if (id == null) {
-            LOG.error("id can't be null: {}", id);
-            throw new InvalidParameterException("required parameter null");
+            LOG.error("nevyplnene id: {}", id);
+            throw new AppException(HttpStatus.BAD_REQUEST, "nevyplnene id person");
         }
 
         Person p = personRepo.findOne(id);
         if (p == null) {
             LOG.error("k danemu id neexistuje zaznam v dbs");
+            throw new AppException(HttpStatus.NOT_FOUND, "k danemu id neexistuje zaznam v dbs");
         }
-
         return personConverter.personEntityToDto(p);
     }
 
@@ -107,27 +158,31 @@ public class PersonService {
     }
 
     @Transactional
-    public void deletePerson(Integer id) {
+    public void deletePerson(Integer id) throws AppException {
         LOG.info("deleteTournament({})", id);
         Person p = personRepo.findOne(id);
 
         if (p == null) {
-            throw new InvalidParameterException("nenajdene Person");
+            LOG.error("nenajdena person na vymazanie id={}", id);
+            throw new AppException(HttpStatus.NOT_FOUND, "nenajdena osoba id=" + id);
         }
-
         personRepo.delete(p);
     }
 
     @Transactional
-    public PersonDTO update(PersonDTO updated) {
+    public PersonDTO update(PersonDTO updated) throws AppException {
         LOG.info("update()");
-        Person p = personConverter.dtoToEntity(updated);
 
+        if (updated == null) {
+            LOG.error("aktualizovany objekt je null");
+            throw new AppException(HttpStatus.BAD_REQUEST, "zadany objekt je nespravne vyplneny");
+        }
+        Person p = personConverter.dtoToEntity(updated);
         Person saved = personRepo.saveAndFlush(p);
 
         if (saved == null) {
             LOG.error("nepodarilo sa ulozit st do db");
-            throw new IllegalStateException("nepodarilo sa ulozit st do db");
+            throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "nepodarilo sa ulozit person do db");
         }
         return personConverter.personEntityToDto(saved);
     }

@@ -36,7 +36,7 @@ public class RegistrationTeam implements java.io.Serializable {
     private Boolean isCancelled;
     private String color;
     private Boolean isVerify;
-    private Set<RegistrationPlayer> registrationPlayers = new HashSet<RegistrationPlayer>(0);
+    private Set<RegistrationPlayer> registrationPlayers = new HashSet<>(0);
 
     public RegistrationTeam() {
     }

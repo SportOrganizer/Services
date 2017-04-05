@@ -80,7 +80,7 @@ public class SeasonTournamentGroup  implements java.io.Serializable {
         this.name = name;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="seasonTournamentGroup")
+@OneToMany(fetch=FetchType.LAZY, mappedBy="seasonTournamentGroup", orphanRemoval=true)
     public Set<Game> getGames() {
         return this.games;
     }
@@ -89,7 +89,7 @@ public class SeasonTournamentGroup  implements java.io.Serializable {
         this.games = games;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="seasonTournamentGroup")
+@OneToMany(fetch=FetchType.LAZY, mappedBy="seasonTournamentGroup", orphanRemoval=true)
     public Set<CompetitorTeam> getCompetitorTeams() {
         return this.competitorTeams;
     }

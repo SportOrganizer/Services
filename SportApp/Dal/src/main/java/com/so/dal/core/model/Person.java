@@ -35,7 +35,7 @@ public class Person  implements java.io.Serializable {
      private String phone;
      private boolean isStudent;
      private String sex;
-     private Set<CompetitorTeamPlayer> competitorTeamPlayers = new HashSet<CompetitorTeamPlayer>(0);
+     private Set<CompetitorTeamPlayer> competitorTeamPlayers = new HashSet<>(0);
 
     public Person() {
     }
