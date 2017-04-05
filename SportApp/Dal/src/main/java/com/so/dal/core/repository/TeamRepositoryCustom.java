@@ -13,8 +13,8 @@ import java.util.List;
  * @author peter
  */
 public interface TeamRepositoryCustom {
-    public List<PathsToLogos> getPathsToLogos();
-    public List<PathsToLogos> getPathsToLogos2();
+//    public List<PathsToLogos> getPathsToLogos();
+//    public List<PathsToLogos> getPathsToLogos2();
 
     
 }

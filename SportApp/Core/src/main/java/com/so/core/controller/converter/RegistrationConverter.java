@@ -15,7 +15,6 @@ import com.so.dal.core.repository.ResourceRepository;
 import com.so.dal.core.repository.registration.RegistrationPlayerRepository;
 import com.so.dal.core.repository.registration.RegistrationTeamRepository;
 import com.so.dal.core.repository.season.SeasonTournamentRepository;
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import org.slf4j.Logger;
@@ -55,6 +54,11 @@ public class RegistrationConverter {
         if (dto.getRegistrationTeam() != null) {
             entity.setRegistrationTeam(regTeamRepo.findOne(dto.getRegistrationTeam()));
         }
+        if (dto.getPhoto() != null) {
+            if (dto.getPhoto().getId() != null) {
+                entity.setPhoto(resourceRepo.findOne(entity.getPhoto().getId()));
+            }
+        }
 
         entity.setBirthDate(dto.getBirthDate());
         entity.setIsProfessional(dto.getIsProfessional());
@@ -67,6 +71,7 @@ public class RegistrationConverter {
         entity.setPhone(dto.getPhone());
         entity.setSex(dto.getSex());
         entity.setSurname(dto.getSurname());
+        entity.setIsCaptain(dto.getIsCaptain());
 
         return entity;
     }
@@ -125,11 +130,16 @@ public class RegistrationConverter {
         dto.setRegistrationTeam(entity.getRegistrationTeam().getId());
         dto.setSex(entity.getSex());
         dto.setSurname(entity.getSurname());
+        dto.setIsCaptain(entity.getIsCaptain());
+        
+        if (entity.getPhoto() != null) {
+            dto.setPhoto(new ResourceDto(entity.getPhoto().getId(), entity.getPhoto().getPath()));
+        }
 
         return dto;
     }
 
-    public RegistrationTeamDto regTeamEntityToDto(RegistrationTeam entity) {
+    public RegistrationTeamDto regTeamEntityToDto(RegistrationTeam entity, Boolean ifCopyPlayer) {
         RegistrationTeamDto dto = new RegistrationTeamDto();
 
         dto.setColor(entity.getColor());
@@ -141,10 +151,13 @@ public class RegistrationConverter {
         dto.setSeasonTournamentId(entity.getSeasonTournament().getId());
         dto.setShortName(entity.getShortName());
         dto.setZnak(new ResourceDto(entity.getResource().getId(), entity.getResource().getPath()));
-        dto.setRegistrationPlayers(new HashSet<RegistrationPlayerDto>());
+       
+      if(ifCopyPlayer){
+           dto.setRegistrationPlayers(new HashSet<RegistrationPlayerDto>());
         for (RegistrationPlayer player : entity.getRegistrationPlayers()) {
             dto.getRegistrationPlayers().add(regPlayerEntityToDto(player));
         }
+      }
         return dto;
     }
 }

@@ -28,7 +28,6 @@ public class Team  implements java.io.Serializable {
 
 
      private Integer id;
-     private Resource resource;
      private String name;
      private String shortName;
      private String color;
@@ -38,14 +37,12 @@ public class Team  implements java.io.Serializable {
     }
 
 	
-    public Team(Resource resource, String name, String shortName, String color) {
-        this.resource = resource;
+    public Team(String name, String shortName, String color) {
         this.name = name;
         this.shortName = shortName;
         this.color = color;
     }
-    public Team(Resource resource, String name, String shortName, String color, Set<CompetitorTeam> competitorTeams) {
-       this.resource = resource;
+    public Team(String name, String shortName, String color, Set<CompetitorTeam> competitorTeams) {
        this.name = name;
        this.shortName = shortName;
        this.color = color;
@@ -64,15 +61,6 @@ public class Team  implements java.io.Serializable {
         this.id = id;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="idLogo", nullable=false)
-    public Resource getResource() {
-        return this.resource;
-    }
-    
-    public void setResource(Resource resource) {
-        this.resource = resource;
-    }
 
     
     @Column(name="name", nullable=false, length=500)

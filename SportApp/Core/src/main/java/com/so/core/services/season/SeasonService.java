@@ -5,7 +5,7 @@
  */
 package com.so.core.services.season;
 
-import com.so.core.controller.converter.SeasonConverter;
+import com.so.core.controller.converter.season.SeasonConverter;
 import com.so.core.controller.dto.season.SeasonDTO;
 import com.so.dal.core.model.season.Season;
 import com.so.dal.core.repository.season.SeasonRepository;
@@ -110,10 +110,34 @@ public class SeasonService {
         }
 
         return true;
+        
+
     }
 
+ @Transactional
+    public void deleteSeason(Integer id) {
+        LOG.info("deleteSeason({})",id);
+        Season s = seasonRepo.findOne(id);
 
+        if (s == null) {
+            throw new InvalidParameterException("nenajdene seasonTournament");
+        }
 
+        seasonRepo.delete(s);
+    }
 
+    @Transactional
+    public SeasonDTO update(SeasonDTO updated) {
+     LOG.info("update()");
+        Season s = seasonConverter.dtoToEntity(updated);
+
+        Season saved = seasonRepo.saveAndFlush(s);
+
+        if (saved == null) {
+            LOG.error("nepodarilo sa ulozit st do db");
+            throw new IllegalStateException("nepodarilo sa ulozit st do db");
+        }
+        return seasonConverter.entityToDto(saved, false);
+    }
 
 }

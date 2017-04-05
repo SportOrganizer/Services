@@ -6,9 +6,11 @@
 package com.so.core.controller.webservices;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.so.core.controller.dto.registration.RegistrationPlayerDto;
 import com.so.core.controller.dto.registration.RegistrationTeamDto;
 import com.so.core.services.RegistrationService;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,48 @@ public class RegistrationController {
 
     @Autowired
     private RegistrationService service;
+
+    @RequestMapping(path = "/team/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String getAllRegistrationTeams() {
+        JsonObject jo = new JsonObject();
+        Gson gson = new Gson();
+        List<RegistrationTeamDto> resultList;
+
+        try {
+            resultList = service.getAllTeams();
+            jo.addProperty("length", resultList.size());
+            jo.add("teams", gson.toJsonTree(resultList));
+            return jo.toString();
+        } catch (Exception e) {
+
+        }
+
+        return null;
+    }
+
+    @RequestMapping(path = "/team/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String getTeam(@PathVariable(value = "id") Integer i) {
+        Gson gson = new Gson();
+        try {
+            RegistrationTeamDto team = service.getTeam(i);
+            return gson.toJson(team);
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
+    @RequestMapping(path = "/player/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String getPlayer(@PathVariable(value = "id") Integer i) {
+        Gson gson = new Gson();
+        try {
+            RegistrationPlayerDto p = service.getPlayer(i);
+            gson.toJson(p);
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
 
     @RequestMapping(path = "/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String createSeason(@RequestBody RegistrationTeamDto regTeam) {
@@ -63,8 +107,8 @@ public class RegistrationController {
         }
 
     }
-    
-       @RequestMapping(path = "/player/{id}", method = RequestMethod.DELETE)
+
+    @RequestMapping(path = "/player/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteRegistrationPlayer(@PathVariable(value = "id") Integer i) {
 
         try {
@@ -78,8 +122,8 @@ public class RegistrationController {
 
     }
 
-  @RequestMapping(path = "/player/update/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String editPlayer(@RequestBody RegistrationPlayerDto updatedPlayer){
+    @RequestMapping(path = "/player/update/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String editPlayer(@RequestBody RegistrationPlayerDto updatedPlayer) {
         Gson gson = new Gson();
 
         RegistrationPlayerDto response = new RegistrationPlayerDto();
@@ -92,9 +136,9 @@ public class RegistrationController {
 
         return gson.toJson(response);
     }
-    
-      @RequestMapping(path = "/team/update/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String editTeam(@RequestBody RegistrationTeamDto updatedTeam){
+
+    @RequestMapping(path = "/team/update/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String editTeam(@RequestBody RegistrationTeamDto updatedTeam) {
         Gson gson = new Gson();
 
         RegistrationTeamDto response = new RegistrationTeamDto();
