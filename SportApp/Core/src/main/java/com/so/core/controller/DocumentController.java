@@ -30,7 +30,7 @@ public class DocumentController {
     @Autowired
     DocumentService service;
 
-    @RequestMapping(path = "/{name:.+}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+    @RequestMapping(path = "/{name:.+}", method = RequestMethod.GET, produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
     public byte[] getImage(@PathVariable(value = "name") String name) throws AppException {
         ResourceDto r = service.getImage(name);
         return r.getData();

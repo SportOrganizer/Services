@@ -34,9 +34,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class DocumentService {
 
     private final static Logger LOG = LoggerFactory.getLogger(DocumentService.class);
-    //private final String PATH = "/opt/glassfish4/glassfish/domains/domain1/applications/resources/logos/";
+    private final String PATH = "/opt/glassfish4/glassfish/domains/domain1/applications/resources/logos/";
     // private final String PATH = "C:\\Users\\peter\\Documents\\foto\\";
-    private final String PATH = "C:\\Users\\Kristián Kačinetz\\fotoTimak";
+    //private final String PATH = "C:\\Users\\Kristián Kačinetz\\fotoTimak";
     @Autowired
     private ResourceRepository resourceRepo;
 
@@ -44,6 +44,9 @@ public class DocumentService {
     public Resource createFile(byte[] data, String mimeType) throws AppException {
         try {
             LOG.debug("createFile(data,mimeType:{})", mimeType);
+            if(!mimeType.equals("jpeg") && !mimeType.equals("png")){
+                mimeType = "jpeg";
+            }
             String nameOfFile = UUID.randomUUID().toString() + "." + mimeType;
             Path destinationFile = Paths.get(PATH, nameOfFile);
             Files.write(destinationFile, data);
