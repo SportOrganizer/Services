@@ -31,17 +31,17 @@ import javax.persistence.TemporalType;
 public class Game implements java.io.Serializable {
 
     private Integer id;
-    private CompetitorTeam competitorTeamByIdAwayTeam;
-    private CompetitorTeam competitorTeamByIdHomeTeam;
+    private CompetitorTeam awayTeam;
+    private CompetitorTeam homeTeam;
     private SeasonTournamentGroup seasonTournamentGroup;
     private SeasonTournamentLocation seasonTournamentLocation;
     private SeasonTournamentRound seasonTournamentRound;
     private String name;
     private Date startTime;
     private Date realStart;
-    private boolean overtime;
-    private boolean finished;
-    private boolean contumated;
+    private Boolean overtime;
+    private Boolean finished;
+    private Boolean contumated;
     private Set<SportFlorbalGameActivity> sportFlorbalGameActivities = new HashSet<>(0);
     private Set<SportFlorbalGameShots> sportFlorbalGameShotses = new HashSet<>(0);
     private Set<GamePlayer> gamePlayers = new HashSet<>(0);
@@ -49,9 +49,9 @@ public class Game implements java.io.Serializable {
     public Game() {
     }
 
-    public Game(CompetitorTeam competitorTeamByIdAwayTeam, CompetitorTeam competitorTeamByIdHomeTeam, SeasonTournamentGroup seasonTournamentGroup, SeasonTournamentLocation seasonTournamentLocation, SeasonTournamentRound seasonTournamentRound, String name, Date startTime, Date realStart, boolean overtime, boolean finished, boolean contumated) {
-        this.competitorTeamByIdAwayTeam = competitorTeamByIdAwayTeam;
-        this.competitorTeamByIdHomeTeam = competitorTeamByIdHomeTeam;
+    public Game(CompetitorTeam competitorTeamByIdAwayTeam, CompetitorTeam competitorTeamByIdHomeTeam, SeasonTournamentGroup seasonTournamentGroup, SeasonTournamentLocation seasonTournamentLocation, SeasonTournamentRound seasonTournamentRound, String name, Date startTime, Date realStart, Boolean overtime, Boolean finished, Boolean contumated) {
+        this.awayTeam = competitorTeamByIdAwayTeam;
+        this.homeTeam = competitorTeamByIdHomeTeam;
         this.seasonTournamentGroup = seasonTournamentGroup;
         this.seasonTournamentLocation = seasonTournamentLocation;
         this.seasonTournamentRound = seasonTournamentRound;
@@ -63,9 +63,9 @@ public class Game implements java.io.Serializable {
         this.contumated = contumated;
     }
 
-    public Game(CompetitorTeam competitorTeamByIdAwayTeam, CompetitorTeam competitorTeamByIdHomeTeam, SeasonTournamentGroup seasonTournamentGroup, SeasonTournamentLocation seasonTournamentLocation, SeasonTournamentRound seasonTournamentRound, String name, Date startTime, Date realStart, boolean overtime, boolean finished, boolean contumated, Set<SportFlorbalGameActivity> sportFlorbalGameActivities, Set<SportFlorbalGameShots> sportFlorbalGameShotses, Set<GamePlayer> gamePlayers) {
-        this.competitorTeamByIdAwayTeam = competitorTeamByIdAwayTeam;
-        this.competitorTeamByIdHomeTeam = competitorTeamByIdHomeTeam;
+    public Game(CompetitorTeam competitorTeamByIdAwayTeam, CompetitorTeam competitorTeamByIdHomeTeam, SeasonTournamentGroup seasonTournamentGroup, SeasonTournamentLocation seasonTournamentLocation, SeasonTournamentRound seasonTournamentRound, String name, Date startTime, Date realStart, Boolean overtime, Boolean finished, Boolean contumated, Set<SportFlorbalGameActivity> sportFlorbalGameActivities, Set<SportFlorbalGameShots> sportFlorbalGameShotses, Set<GamePlayer> gamePlayers) {
+        this.awayTeam = competitorTeamByIdAwayTeam;
+        this.homeTeam = competitorTeamByIdHomeTeam;
         this.seasonTournamentGroup = seasonTournamentGroup;
         this.seasonTournamentLocation = seasonTournamentLocation;
         this.seasonTournamentRound = seasonTournamentRound;
@@ -95,21 +95,21 @@ public class Game implements java.io.Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idAwayTeam", nullable = false)
     public CompetitorTeam getCompetitorTeamByIdAwayTeam() {
-        return this.competitorTeamByIdAwayTeam;
+        return this.awayTeam;
     }
 
     public void setCompetitorTeamByIdAwayTeam(CompetitorTeam competitorTeamByIdAwayTeam) {
-        this.competitorTeamByIdAwayTeam = competitorTeamByIdAwayTeam;
+        this.awayTeam = competitorTeamByIdAwayTeam;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idHomeTeam", nullable = false)
     public CompetitorTeam getCompetitorTeamByIdHomeTeam() {
-        return this.competitorTeamByIdHomeTeam;
+        return this.homeTeam;
     }
 
     public void setCompetitorTeamByIdHomeTeam(CompetitorTeam competitorTeamByIdHomeTeam) {
-        this.competitorTeamByIdHomeTeam = competitorTeamByIdHomeTeam;
+        this.homeTeam = competitorTeamByIdHomeTeam;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -172,29 +172,29 @@ public class Game implements java.io.Serializable {
     }
 
     @Column(name = "overtime", nullable = true)
-    public boolean isOvertime() {
+    public Boolean isOvertime() {
         return this.overtime;
     }
 
-    public void setOvertime(boolean overtime) {
+    public void setOvertime(Boolean overtime) {
         this.overtime = overtime;
     }
 
     @Column(name = "finished", nullable = false)
-    public boolean isFinished() {
+    public Boolean isFinished() {
         return this.finished;
     }
 
-    public void setFinished(boolean finished) {
+    public void setFinished(Boolean finished) {
         this.finished = finished;
     }
 
     @Column(name = "contumated", nullable = true)
-    public boolean isContumated() {
+    public Boolean isContumated() {
         return this.contumated;
     }
 
-    public void setContumated(boolean contumated) {
+    public void setContumated(Boolean contumated) {
         this.contumated = contumated;
     }
 

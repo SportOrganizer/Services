@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TeamConverter {
 
-    private final static Logger LOG = LoggerFactory.getLogger(RegistrationConverter.class);
+    private final static Logger LOG = LoggerFactory.getLogger(Team.class);
 
     @Autowired
     private CompetitorTeamRepository competitorTeamRepo;
@@ -32,6 +32,7 @@ public class TeamConverter {
     @Autowired
     private CompetitorTeamPlayerRepository competitorTeamPlayerRepo;
 
+    //TODO: TEAM NEMA DRZAT V SEBE COMPETITOR TEAM PLAYER... TO MA DRZAT COMPETITOR TEAM
     public TeamDTO teamEntityToDto(Team entity, boolean ifCopyCompetitorTeamPlayer) {
         Set<CompetitorTeamPlayer> set = new HashSet<>();
         TeamDTO dto = new TeamDTO();

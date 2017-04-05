@@ -19,7 +19,6 @@ import org.springframework.stereotype.Repository;
 public interface SeasonTournamentLocationRepository extends JpaRepository<SeasonTournamentLocation, Integer> {
     public List<SeasonTournamentLocation> findByNameContaining(String name);
     public SeasonTournamentLocation findByName(String name);
-    
-    public SeasonTournamentLocation findBySeasonTournament(SeasonTournament st);
-
+   // public SeasonTournamentLocation findBySeasonTournament(SeasonTournament st);
+    public List<SeasonTournamentLocation> findBySeasonTournament(SeasonTournament st);
 }

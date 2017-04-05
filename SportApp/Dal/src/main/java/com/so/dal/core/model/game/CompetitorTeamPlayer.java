@@ -33,7 +33,7 @@ public class CompetitorTeamPlayer  implements java.io.Serializable {
      private Resource resource;
      private int number;
      private boolean isCapitan;
-     private Set<GamePlayer> gamePlayers = new HashSet<GamePlayer>(0);
+     private Set<GamePlayer> gamePlayers = new HashSet<>(0);
 
     public CompetitorTeamPlayer() {
     }

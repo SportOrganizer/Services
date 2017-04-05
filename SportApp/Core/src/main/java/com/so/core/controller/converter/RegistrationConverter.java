@@ -65,7 +65,7 @@ public class RegistrationConverter {
         }
         if (dto.getPhoto() != null) {
             if (dto.getPhoto().getId() != null) {
-                Resource r = resourceRepo.findOne(entity.getPhoto().getId());
+                Resource r = resourceRepo.findOne(dto.getPhoto().getId());
                 if (r == null) {
                     LOG.error("neexistuje resource s id={}", dto.getId());
                     throw new AppException(HttpStatus.BAD_REQUEST, "neexistuje resource s id=" + dto.getId());
