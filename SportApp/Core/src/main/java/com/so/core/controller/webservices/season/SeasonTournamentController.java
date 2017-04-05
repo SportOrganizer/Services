@@ -122,7 +122,7 @@ public class SeasonTournamentController {
     @RequestMapping(path = "/{stId}/location/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getLocationBySt(@PathVariable(value = "stId") Integer id) throws AppException {
         Gson gson = new Gson();
-        List<SeasonTournamentLocationDTO> response = locationService.findAllBySesonTournament(id);
+        List<SeasonTournamentLocationDTO> response = locationService.findAllBySeasonTournament(id);
         return gson.toJson(response);
     }
     
@@ -150,7 +150,7 @@ public class SeasonTournamentController {
     @RequestMapping(path = "/{stId}/round/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getRoundBySt(@PathVariable(value = "stId") Integer id) throws AppException {
         Gson gson = new Gson();
-        List<SeasonTournamentRoundDTO> response = roundService.findAllBySesonTournament(id);
+        List<SeasonTournamentRoundDTO> response = roundService.findAllBySeasonTournament(id);
         return gson.toJson(response);
     }
     
@@ -178,7 +178,7 @@ public class SeasonTournamentController {
     @RequestMapping(path = "/{stId}/group/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getGroupBySt(@PathVariable(value = "stId") Integer id) throws AppException {
         Gson gson = new Gson();
-        List<SeasonTournamentGroupDTO> response = groupService.findAllBySesonTournament(id);
+        List<SeasonTournamentGroupDTO> response = groupService.findAllBySeasonTournament(id);
         return gson.toJson(response);
     }
     

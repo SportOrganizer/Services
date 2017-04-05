@@ -5,6 +5,8 @@
  */
 package com.so.core.services;
 
+import com.so.core.services.game.CompetitorTeamService;
+import com.so.core.services.game.CompetitorTeamPlayerService;
 import com.so.core.controller.converter.PersonConverter;
 import com.so.core.controller.converter.RegistrationConverter;
 import com.so.core.controller.dto.IncompatiblePlayersDTO;

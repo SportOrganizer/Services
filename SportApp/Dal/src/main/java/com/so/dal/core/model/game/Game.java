@@ -1,6 +1,7 @@
 package com.so.dal.core.model.game;
 // Generated 27.2.2017 18:41:18 by Hibernate Tools 4.3.1
 
+import com.so.dal.core.model.season.SeasonTournament;
 import com.so.dal.core.model.season.SeasonTournamentGroup;
 import com.so.dal.core.model.season.SeasonTournamentRound;
 import com.so.dal.core.model.season.SeasonTournamentLocation;
@@ -33,6 +34,7 @@ public class Game implements java.io.Serializable {
     private Integer id;
     private CompetitorTeam awayTeam;
     private CompetitorTeam homeTeam;
+    private SeasonTournament seasonTournament;
     private SeasonTournamentGroup seasonTournamentGroup;
     private SeasonTournamentLocation seasonTournamentLocation;
     private SeasonTournamentRound seasonTournamentRound;
@@ -49,9 +51,10 @@ public class Game implements java.io.Serializable {
     public Game() {
     }
 
-    public Game(CompetitorTeam competitorTeamByIdAwayTeam, CompetitorTeam competitorTeamByIdHomeTeam, SeasonTournamentGroup seasonTournamentGroup, SeasonTournamentLocation seasonTournamentLocation, SeasonTournamentRound seasonTournamentRound, String name, Date startTime, Date realStart, Boolean overtime, Boolean finished, Boolean contumated) {
+    public Game(CompetitorTeam competitorTeamByIdAwayTeam, CompetitorTeam competitorTeamByIdHomeTeam, SeasonTournament seasonTournament, SeasonTournamentGroup seasonTournamentGroup, SeasonTournamentLocation seasonTournamentLocation, SeasonTournamentRound seasonTournamentRound, String name, Date startTime, Date realStart, Boolean overtime, Boolean finished, Boolean contumated) {
         this.awayTeam = competitorTeamByIdAwayTeam;
         this.homeTeam = competitorTeamByIdHomeTeam;
+        this.seasonTournament = seasonTournament;
         this.seasonTournamentGroup = seasonTournamentGroup;
         this.seasonTournamentLocation = seasonTournamentLocation;
         this.seasonTournamentRound = seasonTournamentRound;
@@ -63,9 +66,11 @@ public class Game implements java.io.Serializable {
         this.contumated = contumated;
     }
 
-    public Game(CompetitorTeam competitorTeamByIdAwayTeam, CompetitorTeam competitorTeamByIdHomeTeam, SeasonTournamentGroup seasonTournamentGroup, SeasonTournamentLocation seasonTournamentLocation, SeasonTournamentRound seasonTournamentRound, String name, Date startTime, Date realStart, Boolean overtime, Boolean finished, Boolean contumated, Set<SportFlorbalGameActivity> sportFlorbalGameActivities, Set<SportFlorbalGameShots> sportFlorbalGameShotses, Set<GamePlayer> gamePlayers) {
-        this.awayTeam = competitorTeamByIdAwayTeam;
-        this.homeTeam = competitorTeamByIdHomeTeam;
+    public Game(Integer id, CompetitorTeam awayTeam, CompetitorTeam homeTeam, SeasonTournament seasonTournament, SeasonTournamentGroup seasonTournamentGroup, SeasonTournamentLocation seasonTournamentLocation, SeasonTournamentRound seasonTournamentRound, String name, Date startTime, Date realStart, Boolean overtime, Boolean finished, Boolean contumated) {
+        this.id = id;
+        this.awayTeam = awayTeam;
+        this.homeTeam = homeTeam;
+        this.seasonTournament = seasonTournament;
         this.seasonTournamentGroup = seasonTournamentGroup;
         this.seasonTournamentLocation = seasonTournamentLocation;
         this.seasonTournamentRound = seasonTournamentRound;
@@ -75,10 +80,9 @@ public class Game implements java.io.Serializable {
         this.overtime = overtime;
         this.finished = finished;
         this.contumated = contumated;
-        this.sportFlorbalGameActivities = sportFlorbalGameActivities;
-        this.sportFlorbalGameShotses = sportFlorbalGameShotses;
-        this.gamePlayers = gamePlayers;
     }
+
+    
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -101,7 +105,7 @@ public class Game implements java.io.Serializable {
     public void setCompetitorTeamByIdAwayTeam(CompetitorTeam competitorTeamByIdAwayTeam) {
         this.awayTeam = competitorTeamByIdAwayTeam;
     }
-
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idHomeTeam", nullable = false)
     public CompetitorTeam getCompetitorTeamByIdHomeTeam() {
@@ -111,7 +115,17 @@ public class Game implements java.io.Serializable {
     public void setCompetitorTeamByIdHomeTeam(CompetitorTeam competitorTeamByIdHomeTeam) {
         this.homeTeam = competitorTeamByIdHomeTeam;
     }
+  
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idSeasonTournament", nullable = false)
+    public SeasonTournament getSeasonTournament() {
+        return this.seasonTournament;
+    }
 
+    public void setSeasonTournament(SeasonTournament seasonTournament) {
+        this.seasonTournament = seasonTournament;
+    }
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idGroup", nullable = false)
     public SeasonTournamentGroup getSeasonTournamentGroup() {

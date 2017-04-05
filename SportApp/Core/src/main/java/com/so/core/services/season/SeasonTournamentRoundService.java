@@ -95,8 +95,8 @@ public class SeasonTournamentRoundService {
         SeasonTournament seasonTournament;
         SeasonTournamentRound seasonTournamentRound;
         
-        if (round.getName() == null || round.getId() == null) {
-            LOG.error("nevyplnene povinne Parametre: {}, {}, {}", round.getId(), round.getName());
+        if (round.getName() == null) {
+            LOG.error("nevyplnene povinne Parametre: {}",round.getName());
             throw new AppException(HttpStatus.BAD_REQUEST, "required parameter null");
         }
         //TODO: kontrolovat len pre ST nie globalne
@@ -123,7 +123,7 @@ public class SeasonTournamentRoundService {
         return stConverter.roundEntityToDto(seasonTournamentRound);
     }
     
-     public List<SeasonTournamentRoundDTO> findAllBySesonTournament(Integer stId) throws AppException{
+     public List<SeasonTournamentRoundDTO> findAllBySeasonTournament(Integer stId) throws AppException{
       LOG.info("findAllBySeasonTournament({})",stId);
       SeasonTournament st = seasonTournamentRepo.findOne(stId);
       if(st==null){

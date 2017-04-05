@@ -88,8 +88,8 @@ public class SeasonTournamentGroupService {
         SeasonTournament seasonTournament;
         SeasonTournamentGroup seasonTournamentGroup;
 
-        if (group.getName() == null || group.getId() == null) {
-            LOG.error("nevyplnene povinne Parametre: {}, {}, {}", group.getId(), group.getName());
+        if (group.getName() == null) {
+            LOG.error("nevyplnene povinne Parametre: {}", group.getName());
             throw new AppException(HttpStatus.BAD_REQUEST, "required parameter null");
         }
 
@@ -115,7 +115,7 @@ public class SeasonTournamentGroupService {
         return stConverter.groupEntityToDto(seasonTournamentGroup);
     }
     
-  public List<SeasonTournamentGroupDTO> findAllBySesonTournament(Integer stId) throws AppException{
+  public List<SeasonTournamentGroupDTO> findAllBySeasonTournament(Integer stId) throws AppException{
       LOG.info("findAllBySeasonTournament({})",stId);
       SeasonTournament st = seasonTournamentRepo.findOne(stId);
       if(st==null){

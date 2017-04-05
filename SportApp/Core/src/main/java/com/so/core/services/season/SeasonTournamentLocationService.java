@@ -99,8 +99,8 @@ public class SeasonTournamentLocationService {
         SeasonTournament seasonTournament;
         SeasonTournamentLocation seasonTournamentLocation;
 
-        if (location.getName() == null || location.getId() == null) {
-            LOG.error("nevyplnene povinne Parametre: {}, {}, {}", location.getId(), location.getName());
+        if (location.getName() == null) {
+            LOG.error("nevyplnene povinne Parametre: {}",location.getName());
             throw new AppException(HttpStatus.BAD_REQUEST, "required parameter null");
         }
         //TODO: kontrolovat len pre ST nie globalne
@@ -127,7 +127,7 @@ public class SeasonTournamentLocationService {
         return stConverter.locationEntityToDto(seasonTournamentLocation);
     }
     
-      public List<SeasonTournamentLocationDTO> findAllBySesonTournament(Integer stId) throws AppException{
+      public List<SeasonTournamentLocationDTO> findAllBySeasonTournament(Integer stId) throws AppException{
       LOG.info("findAllBySeasonTournament({})",stId);
       SeasonTournament st = seasonTournamentRepo.findOne(stId);
       if(st==null){
