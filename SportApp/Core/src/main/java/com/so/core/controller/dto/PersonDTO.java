@@ -6,7 +6,6 @@
 
 package com.so.core.controller.dto;
 
-import java.util.Date;
 
 /**
  *
@@ -17,13 +16,13 @@ public class PersonDTO {
     private Integer id;
     private String name;
     private String surname;
-    private Date birthDate;
+    private String birthDate;
     private String mail;
     private String phone;
     private Boolean isStudent;
     private String sex;
 
-    public PersonDTO(Integer id, String name, String surname, Date birthDate, String mail, String phone, Boolean isStudent, String sex) {
+    public PersonDTO(Integer id, String name, String surname, String birthDate, String mail, String phone, Boolean isStudent, String sex) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -61,11 +60,11 @@ public class PersonDTO {
         this.surname = surname;
     }
 
-    public Date getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
 

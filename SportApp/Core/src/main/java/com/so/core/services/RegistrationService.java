@@ -5,6 +5,7 @@
  */
 package com.so.core.services;
 
+import com.so.core.controller.converter.DateConverter;
 import com.so.core.controller.converter.RegistrationConverter;
 import com.so.core.controller.dto.registration.RegistrationPlayerDto;
 import com.so.core.controller.dto.registration.RegistrationTeamDto;
@@ -48,6 +49,9 @@ public class RegistrationService {
 
     @Autowired
     private RegistrationConverter converter;
+    
+    @Autowired
+    private DateConverter dateConverter;
 
     @Transactional
     public List<RegistrationTeamDto> getAllTeams() throws AppException {
@@ -108,7 +112,7 @@ public class RegistrationService {
         validateRegistration(teamDto);
         Resource znak = documentService.createFile(teamDto.getZnak().getData(), teamDto.getZnak().getMimeType());
         teamDto.getZnak().setId(znak.getId());
-        teamDto.setCreatedTime(new Date());
+        teamDto.setCreatedTime(dateConverter.dateTimeToString(new Date()));
 
         RegistrationTeam team = converter.regTeamDtoToEntity(teamDto, false);
         RegistrationTeam savedTeam = regTeamRepo.saveAndFlush(team);

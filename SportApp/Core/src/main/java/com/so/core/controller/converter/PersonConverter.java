@@ -24,10 +24,13 @@ public class PersonConverter {
     @Autowired
     PersonRepository personRepo;
     
+        @Autowired
+    private DateConverter dateConverter;
+    
         public PersonDTO personEntityToDto(Person entity) {
         PersonDTO dto = new PersonDTO();
 
-        dto.setBirthDate(entity.getBirthDate());
+        dto.setBirthDate(dateConverter.dateToString(entity.getBirthDate()));
         dto.setId(entity.getId());
         dto.setIsStudent(entity.isIsStudent());
         dto.setMail(entity.getMail());
@@ -50,7 +53,7 @@ public class PersonConverter {
         } else {
             entity = new Person();
         }
-        entity.setBirthDate(dto.getBirthDate());
+        entity.setBirthDate(dateConverter.stringToDate(dto.getBirthDate()));
         entity.setMail(dto.getMail());
         entity.setName(dto.getName());
         entity.setPhone(dto.getPhone());

@@ -6,7 +6,6 @@
 package com.so.core.controller.dto.registration;
 
 import com.so.core.controller.dto.ResourceDto;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,13 +23,13 @@ public class RegistrationTeamDto {
     private String color;
     private Boolean isCancelled;
     private Boolean isVerify;
-    private Date createdTime;
+    private String createdTime;
     private Set<RegistrationPlayerDto> registrationPlayers = new HashSet<>(0);
 
     public RegistrationTeamDto() {
     }
 
-    public RegistrationTeamDto(Integer id,Date createdTime, ResourceDto znak, Integer seasonTournamentId, String name, String shortName, String color, Boolean isCancelled, Boolean isVerify) {
+    public RegistrationTeamDto(Integer id, String createdTime, ResourceDto znak, Integer seasonTournamentId, String name, String shortName, String color, Boolean isCancelled, Boolean isVerify) {
         this.id = id;
         this.znak = znak;
         this.seasonTournamentId = seasonTournamentId;
@@ -54,15 +53,15 @@ public class RegistrationTeamDto {
         return isCancelled;
     }
 
-    public Date getCreatedTime() {
+    public String getCreatedTime() {
         return createdTime;
     }
 
-    public void setCreatedTime(Date createdTime) {
+    public void setCreatedTime(String createdTime) {
+       // SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-mm-yyyy HH:mm:ss");
+       // String date = DATE_FORMAT.format(createdTime);
         this.createdTime = createdTime;
     }
-    
-    
 
     public void setIsCancelled(Boolean isCancelled) {
         this.isCancelled = isCancelled;
