@@ -34,58 +34,58 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class GameService {
-    
+
     private final static Logger LOG = LoggerFactory.getLogger(GameService.class);
     @Autowired
     private GameConverter gameConverter;
-    
+
     @Autowired
     private GameRepository gameRepo;
-    
+
     @Autowired
     private GamePlayerRepository gamePlayerRepo;
-    
+
     @Autowired
     private SeasonTournamentRepository stRepo;
-    
+
     @Transactional
     public GameDto createGame(GameDto game) throws AppException {
         Game g = gameConverter.gameDtoToEntity(game);
         g = gameRepo.saveAndFlush(g);
-        
+
         if (g == null) {
             LOG.error("game sa nepodarilo ulozit do dbs");
             throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "game sa nepodarilo ulozit do dbs");
         }
         return gameConverter.gameEntityToDto(g);
     }
-    
+
     @Transactional
     public List<GameDto> findAllGames() {
         LOG.info("findAllGames()");
-        
+
         List<Game> lg = gameRepo.findAllByOrderByStartTimeAsc();
         List<GameDto> l = new ArrayList<>();
-        
+
         for (Game g : lg) {
             l.add(gameConverter.gameEntityToDto(g));
         }
         return l;
     }
-    
+
     @Transactional
     public GameDto findGame(Integer id) throws AppException {
         LOG.info("findGame({})", id);
-        
+
         Game g = gameRepo.findOne(id);
-        
+
         if (g == null) {
             LOG.error("nenajdena game s id:{}", id);
             throw new AppException(HttpStatus.NOT_FOUND, "nenajdena game s id:" + id);
         }
         return gameConverter.gameEntityToDto(g);
     }
-    
+
     @Transactional
     public List<GameDto> findBySeasonTournament(Integer stId) throws AppException {
         LOG.info("findBySeasonTournament({})", stId);
@@ -96,14 +96,13 @@ public class GameService {
         }
         List<Game> lg = gameRepo.findAllBySeasonTournamentOrderByStartTimeAsc(st);
         List<GameDto> l = new ArrayList<>();
-        
+
         for (Game g : lg) {
             l.add(gameConverter.gameEntityToDto(g));
         }
         return l;
     }
 
-    
     @Transactional
     public GamePlayerDto addGamePlayer(GamePlayerDto gp) throws AppException {
         LOG.info("addGamePlayer({})", gp);
@@ -120,9 +119,6 @@ public class GameService {
         return gameConverter.gamePlayerEntityToDto(g);
     }
 
-
-    
-
     public GameDto editGame(GameDto updatedGame) throws AppException {
 
         Game game = gameConverter.gameDtoToEntity(updatedGame);
@@ -135,10 +131,6 @@ public class GameService {
         }
         return gameConverter.gameEntityToDto(savedGame);
 
-    }
-    
-    public GamePlayerResponseDto createGamePlayer(GamePlayerRequestDto gp){
-        
     }
 
 }

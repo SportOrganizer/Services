@@ -6,11 +6,9 @@
 
 package com.so.core.controller.converter;
 
-import com.so.core.controller.converter.season.SeasonTournamentConverter;
 import com.so.core.controller.dto.PersonDTO;
 import com.so.core.exception.AppException;
 import com.so.dal.core.model.Person;
-import com.so.dal.core.model.Resource;
 import com.so.dal.core.repository.PersonRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,10 +28,13 @@ public class PersonConverter {
     @Autowired
     PersonRepository personRepo;
     
+    @Autowired
+    DateConverter dateConverter;
+    
         public PersonDTO personEntityToDto(Person entity) {
         PersonDTO dto = new PersonDTO();
 
-        dto.setBirthDate(entity.getBirthDate());
+        dto.setBirthDate(dateConverter.dateToString(entity.getBirthDate()));
         dto.setId(entity.getId());
         dto.setIsStudent(entity.isIsStudent());
         dto.setMail(entity.getMail());
@@ -66,7 +67,7 @@ public class PersonConverter {
         }
 
         entity.setName(dto.getName());
-        entity.setBirthDate(dto.getBirthDate());
+        entity.setBirthDate(dateConverter.stringToDate(dto.getBirthDate()));
         entity.setMail(dto.getMail());
         entity.setName(dto.getName());
         entity.setPhone(dto.getPhone());
