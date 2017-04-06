@@ -80,7 +80,7 @@ public class SeasonTournamentPeriodController {
         Boolean status = null;
 
         try {
-            status = seasonTournamentPeriodService.createSeasonTournamentPeriod(st.getSeasonTournamentId(), st.getName(), st.getLengthDate());
+            status = seasonTournamentPeriodService.createSeasonTournamentPeriod(st.getSeasonTournamentId(), st.getName(), st.getLengthDate(), st.getIsGoldPart());
         } catch (ParseException e) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
