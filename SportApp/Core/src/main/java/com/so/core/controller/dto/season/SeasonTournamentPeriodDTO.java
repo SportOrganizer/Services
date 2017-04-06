@@ -30,8 +30,6 @@ public class SeasonTournamentPeriodDTO {
         this.type = type;
     }
 
-
-
     public SeasonTournamentPeriodDTO(SeasonTournamentPeriod st) {
         this.id = st.getId();
         this.seasonTournamentId = st.getId();
