@@ -7,11 +7,8 @@ package com.so.core.services.game;
 
 import com.so.core.controller.converter.game.GameConverter;
 import com.so.core.controller.dto.game.GameDto;
-<<<<<<< HEAD
 import com.so.core.controller.dto.game.GamePlayerDto;
-=======
 import com.so.core.controller.dto.game.GamePlayerRequestDto;
->>>>>>> create Person, oprava DB
 import com.so.core.exception.AppException;
 import com.so.dal.core.model.game.Game;
 import com.so.dal.core.model.game.GamePlayer;
@@ -137,8 +134,6 @@ public class GameService {
 
     }
     
-    public GamePlayerResponseDto createGamePlayer(GamePlayerRequestDto gp){
-        
-    }
+
 
 }
