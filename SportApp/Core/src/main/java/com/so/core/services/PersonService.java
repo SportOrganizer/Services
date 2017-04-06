@@ -59,7 +59,7 @@ public class PersonService {
         LOG.info("pridana osoba {}", p);
         return personConverter.personEntityToDto(p);
     }
-    
+
     @Transactional
     public Person addPerson2(String name, String surname, Date birthDate, String mail, String phone, Boolean isStudent,
             String sex) throws AppException {
@@ -101,6 +101,22 @@ public class PersonService {
         return personConverter.personEntityToDto(p);
     }
 
+    @Transactional
+    public PersonDTO createPerson(PersonDTO ct) throws AppException {
+        LOG.info("createCompetitorTeam({})", ct.getId());
+
+        Person p = personConverter.dtoToEntity(ct);
+        Person competitorTeam = personRepo.saveAndFlush(p);
+
+        if (competitorTeam == null) {
+            LOG.error("Person sa neulozit do databazy: {}", ct.getId());
+            throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "Person s ID:" + ct.getId() + " sa neulozil do databazy");
+        }
+
+        return personConverter.personEntityToDto(p);
+
+    }
+
     public PersonDTO findPersonByEmail(String mail) throws AppException {
         LOG.info("findPersonByEmail({})", mail);
         if (mail == null) {
@@ -114,8 +130,7 @@ public class PersonService {
         }
         return personConverter.personEntityToDto(p);
     }
-    
-    
+
     public Person findPersonByEmail2(String mail) throws AppException {
         LOG.info("findPersonByEmail({})", mail);
         if (mail == null) {

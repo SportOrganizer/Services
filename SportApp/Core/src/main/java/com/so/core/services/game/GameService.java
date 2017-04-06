@@ -7,6 +7,7 @@ package com.so.core.services.game;
 
 import com.so.core.controller.converter.game.GameConverter;
 import com.so.core.controller.dto.game.GameDto;
+import com.so.core.controller.dto.game.GamePlayerRequestDto;
 import com.so.core.exception.AppException;
 import com.so.dal.core.model.game.Game;
 import com.so.dal.core.model.season.SeasonTournament;
@@ -86,5 +87,23 @@ public class GameService {
             l.add(gameConverter.gameEntityToDto(g));
         }
         return l;
+    }
+
+    public GameDto editGame(GameDto updatedGame) throws AppException {
+
+        Game game = gameConverter.gameDtoToEntity(updatedGame);
+
+        Game savedGame = gameRepo.saveAndFlush(game);
+
+        if (savedGame == null) {
+            LOG.error("nepodarilo sa ulozit updateovanu Game do db");
+            throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "Game sa nepodarilo aktualizovat");
+        }
+        return gameConverter.gameEntityToDto(savedGame);
+
+    }
+    
+    public GamePlayerResponseDto createGamePlayer(GamePlayerRequestDto gp){
+        
     }
 }

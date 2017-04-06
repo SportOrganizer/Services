@@ -43,13 +43,13 @@ public class SeasonTournamentService {
         LOG.info("findById({})", id);
         if (id == null) {
             LOG.error("Nevyplneny povinny atribut: {}", id);
-            throw new AppException(HttpStatus.BAD_REQUEST,"nevyplneny povinny atribut id=" + id);
+            throw new AppException(HttpStatus.BAD_REQUEST, "nevyplneny povinny atribut id=" + id);
         }
 
         SeasonTournament s = seasonTournamentRepo.findOne(id);
         if (s == null) {
             LOG.info("nenajdeny seasonTournament podla id=", id);
-           throw new AppException(HttpStatus.NOT_FOUND,"pre dane id neexistuje seasonTournament id=" + id);
+            throw new AppException(HttpStatus.NOT_FOUND, "pre dane id neexistuje seasonTournament id=" + id);
         }
         return seasonTournamentConverter.entityToDto(s);
     }
@@ -60,7 +60,7 @@ public class SeasonTournamentService {
 
         if (name == null) {
             LOG.error("Nevyplneny povinny atribut: {}", name);
-            throw new AppException(HttpStatus.BAD_REQUEST,"nevyplneny povinny atribut name=" + name);
+            throw new AppException(HttpStatus.BAD_REQUEST, "nevyplneny povinny atribut name=" + name);
         }
         List<SeasonTournament> ls = seasonTournamentRepo.findByNameContaining(name);
         List<SeasonTournamentDTO> l = new ArrayList<>();
@@ -77,14 +77,14 @@ public class SeasonTournamentService {
         LOG.info("findByNameContaining({})", name);
         if (name == null) {
             LOG.error("Nevyplneny povinny atribut: {}", name);
-            throw new AppException(HttpStatus.BAD_REQUEST,"nevyplneny povinny atribut name=" + name);
+            throw new AppException(HttpStatus.BAD_REQUEST, "nevyplneny povinny atribut name=" + name);
         }
 
         SeasonTournament s = seasonTournamentRepo.findByName(name);
 
         if (s == null) {
             LOG.info("nenajdeny SeasonTournament podla mena=" + name);
-            throw new AppException(HttpStatus.NOT_FOUND,"pre dany nazov neexistuje seasonTournament name=" + name);
+            throw new AppException(HttpStatus.NOT_FOUND, "pre dany nazov neexistuje seasonTournament name=" + name);
         }
 
         return seasonTournamentConverter.entityToDto(s);
@@ -150,14 +150,14 @@ public class SeasonTournamentService {
     public SeasonTournamentDTO update(SeasonTournamentDTO updated) throws AppException {
         LOG.info("update()");
         SeasonTournament s = seasonTournamentConverter.dtoToEntity(updated);
-        
-                if (updated.getLogo()!= null) {
+
+        if (updated.getLogo() != null) {
             if (updated.getLogo().getData() != null && updated.getLogo().getMimeType() != null) {
                 Resource r = documentService.createFile(updated.getLogo().getData(), updated.getLogo().getMimeType());
                 s.setResource(r);
             }
         }
-                
+
         SeasonTournament saved = seasonTournamentRepo.saveAndFlush(s);
 
         if (saved == null) {

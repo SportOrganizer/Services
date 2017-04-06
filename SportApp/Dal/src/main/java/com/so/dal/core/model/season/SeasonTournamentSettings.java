@@ -24,14 +24,16 @@ public class SeasonTournamentSettings  implements java.io.Serializable {
 
      private Integer id;
      private SeasonTournament seasonTournament;
+     private SeasonTournamentSettingsType seasonTournamentSettingsType;
      private String name;
      private String value;
 
     public SeasonTournamentSettings() {
     }
 
-    public SeasonTournamentSettings(SeasonTournament seasonTournament, String name, String value) {
+    public SeasonTournamentSettings(SeasonTournament seasonTournament, SeasonTournamentSettingsType seasonTournamentSettingsType, String name, String value) {
        this.seasonTournament = seasonTournament;
+       this.seasonTournamentSettingsType = seasonTournamentSettingsType;
        this.name = name;
        this.value = value;
     }
@@ -56,6 +58,16 @@ public class SeasonTournamentSettings  implements java.io.Serializable {
     
     public void setSeasonTournament(SeasonTournament seasonTournament) {
         this.seasonTournament = seasonTournament;
+    }
+    
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="idSeasonTournamentSettingsType", nullable=false)
+    public SeasonTournamentSettingsType getSeasonTournamentSettingsType() {
+        return this.seasonTournamentSettingsType;
+    }
+    
+    public void setSeasonTournamentSettingsType(SeasonTournamentSettingsType seasonTournamentSettingsType) {
+        this.seasonTournamentSettingsType = seasonTournamentSettingsType;
     }
 
     

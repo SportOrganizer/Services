@@ -5,6 +5,7 @@
  */
 package com.so.dal.core.model.season;
 
+import com.so.dal.core.model.game.PenaltyType;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -13,6 +14,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -26,30 +29,36 @@ import javax.persistence.Table;
 )
 public class SeasonTournamentPenaltyType implements java.io.Serializable {
     private Integer id;
-    private String displayName;
+    private SeasonTournament seasonTournament;
+    private PenaltyType penaltyType;
     private Integer penaltyDuration;
     private Integer penaltyStatsDuration;
     private Boolean isPlayerDown;
     private Set<SeasonTournamentPenaltySettings> seasonTournamentPenaltySettings = new HashSet<>(0);
 
-    public SeasonTournamentPenaltyType(String displayName, Integer penaltyDuration, Integer penaltyStatsDuration, Boolean isPlayerDown) {
-        this.displayName = displayName;
+    public SeasonTournamentPenaltyType() {
+    }
+
+    public SeasonTournamentPenaltyType(SeasonTournament seasonTournament, PenaltyType penaltyType, Integer penaltyDuration, Integer penaltyStatsDuration, Boolean isPlayerDown) {
+        this.seasonTournament = seasonTournament;
+        this.penaltyType = penaltyType;
         this.penaltyDuration = penaltyDuration;
         this.penaltyStatsDuration = penaltyStatsDuration;
         this.isPlayerDown = isPlayerDown;
     }
-    
-    public SeasonTournamentPenaltyType(String displayName, Integer penaltyDuration, Integer penaltyStatsDuration, Boolean isPlayerDown, Set<SeasonTournamentPenaltySettings> seasonTournamentPenaltySettings) {
-        this.displayName = displayName;
+
+    public SeasonTournamentPenaltyType(SeasonTournament seasonTournament, PenaltyType penaltyType, Integer penaltyDuration, Integer penaltyStatsDuration, Boolean isPlayerDown, Set<SeasonTournamentPenaltySettings> seasonTournamentPenaltySettings) {
+        this.seasonTournament = seasonTournament;
+        this.penaltyType = penaltyType;
         this.penaltyDuration = penaltyDuration;
         this.penaltyStatsDuration = penaltyStatsDuration;
         this.isPlayerDown = isPlayerDown;
         this.seasonTournamentPenaltySettings = seasonTournamentPenaltySettings;
     }
 
-    @Id @GeneratedValue(strategy=IDENTITY)
-
-    
+    @Id 
+    @GeneratedValue(strategy=IDENTITY)
+ 
     @Column(name="id", unique=true, nullable=false)
     public Integer getId() {
         return id;
@@ -59,14 +68,24 @@ public class SeasonTournamentPenaltyType implements java.io.Serializable {
         this.id = id;
     }
 
-    
-    @Column(name="DisplayName", nullable=false, length=2500)
-    public String getDisplayName() {
-        return displayName;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idSeasonTournament", nullable = false)
+    public SeasonTournament getSeasonTournament() {
+        return seasonTournament;
     }
 
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
+    public void setSeasonTournament(SeasonTournament seasonTournament) {
+        this.seasonTournament = seasonTournament;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idPenaltyType", nullable = false)
+    public PenaltyType getPenaltyType() {
+        return penaltyType;
+    }
+
+    public void setPenaltyType(PenaltyType penaltyType) {
+        this.penaltyType = penaltyType;
     }
 
     @Column(name="penaltyDuration", nullable=false)
