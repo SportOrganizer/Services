@@ -34,22 +34,26 @@ public class SeasonTournamentPeriod  implements java.io.Serializable {
      private SeasonTournament seasonTournament;
      private String name;
      private Date length;
+     private Boolean isGoldPart;
      private Set<SportFlorbalGameActivity> sportFlorbalGameActivities = new HashSet<>(0);
      private Set<SportFlorbalGameShots> sportFlorbalGameShotses = new HashSet<>(0);
 
     public SeasonTournamentPeriod() {
     }
 
-	
-    public SeasonTournamentPeriod(SeasonTournament seasonTournament, String name, Date length) {
+    public SeasonTournamentPeriod(SeasonTournament seasonTournament, String name, Date length, Boolean isGoldPart) {
         this.seasonTournament = seasonTournament;
         this.name = name;
         this.length = length;
+        this.isGoldPart = isGoldPart;
     }
-    public SeasonTournamentPeriod(SeasonTournament seasonTournament, String name, Date length, Set<SportFlorbalGameActivity> sportFlorbalGameActivities, Set<SportFlorbalGameShots> sportFlorbalGameShotses) {
+
+    
+    public SeasonTournamentPeriod(SeasonTournament seasonTournament, String name, Date length, Boolean isGoldPart, Set<SportFlorbalGameActivity> sportFlorbalGameActivities, Set<SportFlorbalGameShots> sportFlorbalGameShotses) {
        this.seasonTournament = seasonTournament;
        this.name = name;
        this.length = length;
+       this.isGoldPart = isGoldPart;
        this.sportFlorbalGameActivities = sportFlorbalGameActivities;
        this.sportFlorbalGameShotses = sportFlorbalGameShotses;
     }
@@ -95,6 +99,17 @@ public class SeasonTournamentPeriod  implements java.io.Serializable {
     public void setLength(Date length) {
         this.length = length;
     }
+
+    @Column(name="isGoldPart", nullable=false)
+    public Boolean getIsGoldPart() {
+        return isGoldPart;
+    }
+
+    public void setIsGoldPart(Boolean isGoldPart) {
+        this.isGoldPart = isGoldPart;
+    }
+    
+    
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="seasonTournamentPeriod",orphanRemoval=true)
     public Set<SportFlorbalGameActivity> getSportFlorbalGameActivities() {

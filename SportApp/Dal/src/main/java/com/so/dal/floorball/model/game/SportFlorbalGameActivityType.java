@@ -25,17 +25,20 @@ public class SportFlorbalGameActivityType  implements java.io.Serializable {
 
      private Integer id;
      private String name;
+     private String showName;
      private Set<SportFlorbalGameActivity> sportFlorbalGameActivities = new HashSet<SportFlorbalGameActivity>(0);
 
     public SportFlorbalGameActivityType() {
     }
 
-	
-    public SportFlorbalGameActivityType(String name) {
+    public SportFlorbalGameActivityType(String name, String showName) {
         this.name = name;
+        this.showName = showName;
     }
-    public SportFlorbalGameActivityType(String name, Set<SportFlorbalGameActivity> sportFlorbalGameActivities) {
+
+    public SportFlorbalGameActivityType(String name, String showName, Set<SportFlorbalGameActivity> sportFlorbalGameActivities) {
        this.name = name;
+       this.showName = showName;
        this.sportFlorbalGameActivities = sportFlorbalGameActivities;
     }
    
@@ -60,6 +63,17 @@ public class SportFlorbalGameActivityType  implements java.io.Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Column(name="showName", nullable=false, length=1000)
+    public String getShowName() {
+        return showName;
+    }
+
+    public void setShowName(String showName) {
+        this.showName = showName;
+    }
+    
+    
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="sportFlorbalGameActivityType")
     public Set<SportFlorbalGameActivity> getSportFlorbalGameActivities() {

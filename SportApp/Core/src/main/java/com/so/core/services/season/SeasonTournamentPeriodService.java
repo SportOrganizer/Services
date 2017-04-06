@@ -73,14 +73,14 @@ public class SeasonTournamentPeriodService {
     }
 
     @Transactional
-    public Boolean createSeasonTournamentPeriod(Integer seasonTournamentId,  String name, Date length) {
+    public Boolean createSeasonTournamentPeriod(Integer seasonTournamentId,  String name, Date length, Boolean isGoldPart) {
         LOG.info("createSeasonTournamentPeriod({},{},{})",seasonTournamentId,name,length);
 
         SeasonTournament seasonTournament;
         SeasonTournamentPeriod seasonTournamentPeriod ;
 
-        if(seasonTournamentId == null || name == null || length == null){
-            LOG.error("required can't be null: {}, {},{}", seasonTournamentId,name,length);
+        if(seasonTournamentId == null || name == null || length == null || isGoldPart == null){
+            LOG.error("required can't be null: {}, {},{}, {}", seasonTournamentId,name,length,isGoldPart);
             throw new InvalidParameterException("required parameter null");
         }
 
@@ -96,7 +96,7 @@ public class SeasonTournamentPeriodService {
             return false;
         }
 
-        seasonTournamentPeriod = new SeasonTournamentPeriod(seasonTournament, name, length);
+        seasonTournamentPeriod = new SeasonTournamentPeriod(seasonTournament, name, length, isGoldPart);
         seasonTournamentPeriod  = seasonTournamentPeriodRepository.saveAndFlush(seasonTournamentPeriod);
 
         if (seasonTournamentPeriod == null) {
