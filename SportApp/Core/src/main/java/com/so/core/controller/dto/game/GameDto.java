@@ -23,8 +23,8 @@ public class GameDto {
     private SeasonTournamentLocationDTO location;
     private SeasonTournamentRoundDTO round;
     private String name;
-    private Date startTime;
-    private Date realStart;
+    private String startTime;
+    private String realStart;
     private Boolean overtime;
     private Boolean finished;
     private Boolean contumated;
@@ -88,19 +88,19 @@ public class GameDto {
         this.name = name;
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Date getRealStart() {
+    public String getRealStart() {
         return realStart;
     }
 
-    public void setRealStart(Date realStart) {
+    public void setRealStart(String realStart) {
         this.realStart = realStart;
     }
 

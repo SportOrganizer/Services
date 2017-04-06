@@ -5,6 +5,7 @@
  */
 package com.so.core.services;
 
+import com.so.core.controller.converter.DateConverter;
 import com.so.core.services.game.CompetitorTeamService;
 import com.so.core.services.game.CompetitorTeamPlayerService;
 import com.so.core.controller.converter.PersonConverter;
@@ -68,15 +69,17 @@ public class MappingService {
 
     @Autowired
     PersonRepository personRepo;
-    
+
     @Autowired
     ResourceRepository resourceRepo;
-    
+
     @Autowired
     CompetitorTeamRepository competitorTeamRepo;
-    
+
     @Autowired
     RegistrationPlayerRepository registrationPlayerRepo;
+    @Autowired
+    private DateConverter dateConverter;
 
     Set<IncompatiblePlayersDTO> incompatiblePersons;
 
@@ -89,7 +92,7 @@ public class MappingService {
             if (personRepo.findByMail(rp.getMail()) == null) {
                 Person person = personService.addPerson2(rp.getName(), rp.getSurname(), rp.getBirthDate(), rp.getMail(), rp.getPhone(), rp.isIsStudent(),
                         rp.getSex());
-                
+
                 competitorTeamPlayerService.addCompetitorTeamPlayer(competitorTeam, person, rp.getPhoto(), rp.getNumber(), rp.getIsCaptain());
                 rp.setIsVerified(true);
 
@@ -102,7 +105,7 @@ public class MappingService {
 
                     incompatiblePersons.add(new IncompatiblePlayersDTO(registratioConverter.regPlayerEntityToDto(rp), personConverter.personEntityToDto(existedPerson), competitorTeam.getId()));
 
-                } else {                    
+                } else {
                     competitorTeamPlayerService.addCompetitorTeamPlayer(competitorTeam, personRepo.findByMail(rp.getMail()), rp.getPhoto(), rp.getNumber(), rp.getIsCaptain());
                     rp.setIsVerified(true);
                 }
@@ -136,18 +139,17 @@ public class MappingService {
     @Transactional
     public PersonDTO ConfirmIncompatiblePlayers(RegistrationPlayerDto ip, Integer idCT) throws AppException {
         Person p = personRepo.findByMail(ip.getMail());
-        if(p == null){
-            p = personService.addPerson2(ip.getName(), ip.getSurname(), ip.getBirthDate(), ip.getMail(), ip.getPhone(), ip.getIsStudent(),ip.getSex());
-        }
-        else{
-            p = new Person(ip.getName(), ip.getSurname(), ip.getBirthDate(), ip.getMail(), ip.getPhone(), ip.getIsStudent(), ip.getSex(), personRepo.findByMail(ip.getMail()).getCompetitorTeamPlayers());
+        if (p == null) {
+            p = personService.addPerson2(ip.getName(), ip.getSurname(), dateConverter.stringToDate(ip.getBirthDate()), ip.getMail(), ip.getPhone(), ip.getIsStudent(), ip.getSex());
+        } else {
+            p = new Person(ip.getName(), ip.getSurname(), dateConverter.stringToDate(ip.getBirthDate()), ip.getMail(), ip.getPhone(), ip.getIsStudent(), ip.getSex(), personRepo.findByMail(ip.getMail()).getCompetitorTeamPlayers());
             p.setId(personRepo.findByMail(ip.getMail()).getId());
         }
         PersonDTO pDTO = personService.update(personConverter.personEntityToDto(p));
         competitorTeamPlayerService.addCompetitorTeamPlayer(competitorTeamRepo.findOne(idCT), personConverter.dtoToEntity(pDTO), resourceRepo.findOne(ip.getPhoto().getId()), ip.getNumber(), ip.getIsCaptain());
         registrationPlayerRepo.findOne(ip.getId()).setIsVerified(true);
         return pDTO;
-        
+
     }
 
 }

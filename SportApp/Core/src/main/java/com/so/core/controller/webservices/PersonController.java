@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.so.core.controller.dto.PersonDTO;
 import com.so.core.exception.AppException;
 import com.so.core.services.PersonService;
+import java.io.IOException;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -46,6 +47,14 @@ public class PersonController {
         Gson gson = new Gson();
         result = personService.findById(id);
         return gson.toJson(result);
+    }
+    
+    @RequestMapping(path = "/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String createPerson(@RequestBody PersonDTO ct) throws IOException, AppException {
+        Gson gson = new Gson();
+
+        PersonDTO response = personService.createPerson(ct);
+        return gson.toJson(response);
     }
     
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

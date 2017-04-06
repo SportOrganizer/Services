@@ -6,7 +6,6 @@
 package com.so.core.controller.dto.registration;
 
 import com.so.core.controller.dto.ResourceDto;
-import java.util.Date;
 
 /**
  *
@@ -18,7 +17,7 @@ public class RegistrationPlayerDto {
     private Integer registrationTeam;
     private String name;
     private String surname;
-    private Date birthDate;
+    private String birthDate;
     private String mail;
     private String phone;
     private Boolean isStudent;
@@ -33,7 +32,7 @@ public class RegistrationPlayerDto {
     public RegistrationPlayerDto() {
     }
 
-    public RegistrationPlayerDto(Integer id, Integer registrationTeam, String name, String surname, Date birthDate, String mail, String phone, Boolean isStudent, Boolean isVerified, String sex, Boolean isProfessional, String note, Integer number, ResourceDto photo) {
+    public RegistrationPlayerDto(Integer id, Integer registrationTeam, String name, String surname, String birthDate, String mail, String phone, Boolean isStudent, Boolean isVerified, String sex, Boolean isProfessional, String note, Integer number, ResourceDto photo) {
         this.id = id;
         this.registrationTeam = registrationTeam;
         this.name = name;
@@ -92,11 +91,11 @@ public class RegistrationPlayerDto {
         this.surname = surname;
     }
 
-    public Date getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
 

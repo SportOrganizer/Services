@@ -7,9 +7,16 @@ package com.so.core.services.game;
 
 import com.so.core.controller.converter.game.GameConverter;
 import com.so.core.controller.dto.game.GameDto;
+
+import com.so.core.controller.dto.game.GamePlayerDto;
+
+import com.so.core.controller.dto.game.GamePlayerRequestDto;
+
 import com.so.core.exception.AppException;
 import com.so.dal.core.model.game.Game;
+import com.so.dal.core.model.game.GamePlayer;
 import com.so.dal.core.model.season.SeasonTournament;
+import com.so.dal.core.repository.game.GamePlayerRepository;
 import com.so.dal.core.repository.game.GameRepository;
 import com.so.dal.core.repository.season.SeasonTournamentRepository;
 import java.util.ArrayList;
@@ -19,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -35,8 +43,12 @@ public class GameService {
     private GameRepository gameRepo;
 
     @Autowired
+    private GamePlayerRepository gamePlayerRepo;
+
+    @Autowired
     private SeasonTournamentRepository stRepo;
 
+    @Transactional
     public GameDto createGame(GameDto game) throws AppException {
         Game g = gameConverter.gameDtoToEntity(game);
         g = gameRepo.saveAndFlush(g);
@@ -48,6 +60,7 @@ public class GameService {
         return gameConverter.gameEntityToDto(g);
     }
 
+    @Transactional
     public List<GameDto> findAllGames() {
         LOG.info("findAllGames()");
 
@@ -60,6 +73,7 @@ public class GameService {
         return l;
     }
 
+    @Transactional
     public GameDto findGame(Integer id) throws AppException {
         LOG.info("findGame({})", id);
 
@@ -72,6 +86,7 @@ public class GameService {
         return gameConverter.gameEntityToDto(g);
     }
 
+    @Transactional
     public List<GameDto> findBySeasonTournament(Integer stId) throws AppException {
         LOG.info("findBySeasonTournament({})", stId);
         SeasonTournament st = stRepo.findOne(stId);
@@ -87,4 +102,35 @@ public class GameService {
         }
         return l;
     }
+
+    @Transactional
+    public GamePlayerDto addGamePlayer(GamePlayerDto gp) throws AppException {
+        LOG.info("addGamePlayer({})", gp);
+        if (gp.getCompetitorTeamPlayerId() == null || gp.getGameId() == null) {
+            LOG.error("nevyplnene povinne parametre");
+            throw new AppException(HttpStatus.BAD_REQUEST, "nevyplnene povinne parametre");
+        }
+        GamePlayer g = gameConverter.gamePlayerDtoToEntity(gp);
+        g = gamePlayerRepo.saveAndFlush(g);
+        if (g == null) {
+            LOG.error("gamePlayer sa neulozil do databazy");
+            throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "gamePlayer sa neulozil do databazy");
+        }
+        return gameConverter.gamePlayerEntityToDto(g);
+    }
+
+    public GameDto editGame(GameDto updatedGame) throws AppException {
+
+        Game game = gameConverter.gameDtoToEntity(updatedGame);
+
+        Game savedGame = gameRepo.saveAndFlush(game);
+
+        if (savedGame == null) {
+            LOG.error("nepodarilo sa ulozit updateovanu Game do db");
+            throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "Game sa nepodarilo aktualizovat");
+        }
+        return gameConverter.gameEntityToDto(savedGame);
+
+    }
+
 }

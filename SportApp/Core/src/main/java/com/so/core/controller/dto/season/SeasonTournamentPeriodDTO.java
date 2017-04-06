@@ -16,15 +16,18 @@ public class SeasonTournamentPeriodDTO {
     private String name;
     private String length;
     private Boolean isGoldPart;
+    private String type;
+
 
     public SeasonTournamentPeriodDTO() {
     }
 
-    public SeasonTournamentPeriodDTO(Integer seasonTournamentId, String name, String length, Boolean isGoldPart) {
+    public SeasonTournamentPeriodDTO(Integer seasonTournamentId, String name, String length, Boolean isGoldPart, String type) {
         this.seasonTournamentId = seasonTournamentId;
         this.name = name;
         this.length = length;
         this.isGoldPart = isGoldPart;
+        this.type = type;
     }
 
     public SeasonTournamentPeriodDTO(SeasonTournamentPeriod st) {
@@ -32,7 +35,6 @@ public class SeasonTournamentPeriodDTO {
         this.seasonTournamentId = st.getId();
         this.name = st.getName();
         this.length = st.getLength().toString();
-        this.isGoldPart = isGoldPart;
     }
 
     public Integer getId() {
@@ -82,6 +84,14 @@ public class SeasonTournamentPeriodDTO {
 
     public void setIsGoldPart(Boolean isGoldPart) {
         this.isGoldPart = isGoldPart;
+    }
+
+    public String getType(){
+        return type;
+    }
+    
+    public void setType(String type) {
+        this.type = type;
     }
     
     

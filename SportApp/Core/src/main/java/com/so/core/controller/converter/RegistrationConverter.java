@@ -45,6 +45,9 @@ public class RegistrationConverter {
 
     @Autowired
     private ResourceRepository resourceRepo;
+    
+    @Autowired
+    private DateConverter dateConverter;
 
     public RegistrationPlayer regPlayerDtoToEntity(RegistrationPlayerDto dto) throws AppException {
         RegistrationPlayer entity;
@@ -75,7 +78,7 @@ public class RegistrationConverter {
             }
         }
 
-        entity.setBirthDate(dto.getBirthDate());
+        entity.setBirthDate(dateConverter.stringToDate(dto.getBirthDate()));
         entity.setIsProfessional(dto.getIsProfessional());
         entity.setIsStudent(dto.getIsStudent());
         entity.setIsVerified(dto.getIsVerified());
@@ -119,7 +122,7 @@ public class RegistrationConverter {
         }
 
         entity.setColor(dto.getColor());
-        entity.setCreatedTime(dto.getCreatedTime());
+        entity.setCreatedTime(dateConverter.stringToDateTime(dto.getCreatedTime()));
         entity.setIsCancelled(dto.getIsCancelled());
         entity.setIsVerify(dto.getIsVerify());
         entity.setName(dto.getName());
@@ -139,7 +142,7 @@ public class RegistrationConverter {
     public RegistrationPlayerDto regPlayerEntityToDto(RegistrationPlayer entity) {
         RegistrationPlayerDto dto = new RegistrationPlayerDto();
 
-        dto.setBirthDate(entity.getBirthDate());
+        dto.setBirthDate(dateConverter.dateToString(entity.getBirthDate()));
         dto.setId(entity.getId());
         dto.setIsProfessional(entity.isIsProfessional());
         dto.setIsVerified(entity.isIsVerified());
@@ -164,7 +167,7 @@ public class RegistrationConverter {
         RegistrationTeamDto dto = new RegistrationTeamDto();
 
         dto.setColor(entity.getColor());
-        dto.setCreatedTime(entity.getCreatedTime());
+        dto.setCreatedTime(dateConverter.dateTimeToString(entity.getCreatedTime()));
         dto.setId(entity.getId());
         dto.setIsCancelled(entity.isIsCancelled());
         dto.setIsVerify(entity.isIsVerify());

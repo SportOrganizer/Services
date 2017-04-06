@@ -10,6 +10,8 @@ import com.so.core.controller.dto.PersonDTO;
 import com.so.core.exception.AppException;
 import com.so.dal.core.model.Person;
 import com.so.dal.core.repository.PersonRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,13 +23,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class PersonConverter {
     
+    private final static Logger LOG = LoggerFactory.getLogger(PersonConverter.class);
+    
     @Autowired
     PersonRepository personRepo;
+    
+    @Autowired
+    DateConverter dateConverter;
     
         public PersonDTO personEntityToDto(Person entity) {
         PersonDTO dto = new PersonDTO();
 
-        dto.setBirthDate(entity.getBirthDate());
+        dto.setBirthDate(dateConverter.dateToString(entity.getBirthDate()));
         dto.setId(entity.getId());
         dto.setIsStudent(entity.isIsStudent());
         dto.setMail(entity.getMail());
@@ -40,17 +47,27 @@ public class PersonConverter {
     }
         
         public Person dtoToEntity(PersonDTO dto) throws AppException {
+        
+        
+         if (dto == null) {
+            LOG.error("entity je null");
+            throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "dto v konvertore Person je null");
+        }
+         
         Person entity;
 
         if (dto.getId() != null) {
             entity = personRepo.findOne(dto.getId());
-            if(entity==null){
-                throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR,"nenajdena person podla id:"+dto.getId());
+
+            if (entity == null) {
+                throw new AppException(HttpStatus.BAD_REQUEST, "neexistuje Person s id=" + dto.getId());
             }
         } else {
             entity = new Person();
         }
-        entity.setBirthDate(dto.getBirthDate());
+
+        entity.setName(dto.getName());
+        entity.setBirthDate(dateConverter.stringToDate(dto.getBirthDate()));
         entity.setMail(dto.getMail());
         entity.setName(dto.getName());
         entity.setPhone(dto.getPhone());

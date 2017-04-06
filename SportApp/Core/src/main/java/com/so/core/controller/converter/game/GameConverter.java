@@ -5,15 +5,21 @@
  */
 package com.so.core.controller.converter.game;
 
+import com.so.core.controller.converter.DateConverter;
 import com.so.core.controller.converter.season.SeasonTournamentConverter;
 import com.so.core.controller.dto.game.GameDto;
+import com.so.core.controller.dto.game.GamePlayerDto;
 import com.so.core.exception.AppException;
 import com.so.dal.core.model.game.CompetitorTeam;
+import com.so.dal.core.model.game.CompetitorTeamPlayer;
 import com.so.dal.core.model.game.Game;
+import com.so.dal.core.model.game.GamePlayer;
 import com.so.dal.core.model.season.SeasonTournamentGroup;
 import com.so.dal.core.model.season.SeasonTournamentLocation;
 import com.so.dal.core.model.season.SeasonTournamentRound;
+import com.so.dal.core.repository.game.CompetitorTeamPlayerRepository;
 import com.so.dal.core.repository.game.CompetitorTeamRepository;
+import com.so.dal.core.repository.game.GamePlayerRepository;
 import com.so.dal.core.repository.game.GameRepository;
 import com.so.dal.core.repository.season.SeasonTournamentGroupRepository;
 import com.so.dal.core.repository.season.SeasonTournamentLocationRepository;
@@ -46,6 +52,9 @@ public class GameConverter {
     private CompetitorTeamRepository competitorTeamRepo;
 
     @Autowired
+    private CompetitorTeamPlayerRepository competitorTeamPlayerRepo;
+
+    @Autowired
     private SeasonTournamentGroupRepository groupRepo;
 
     @Autowired
@@ -54,6 +63,12 @@ public class GameConverter {
     @Autowired
     private SeasonTournamentRoundRepository roundRepo;
 
+    @Autowired
+    private GamePlayerRepository gamePlayerRepo;
+
+    @Autowired
+    private DateConverter dateConverter;
+
     public GameDto gameEntityToDto(Game entity) {
         GameDto dto = new GameDto();
         dto.setId(entity.getId());
@@ -61,8 +76,8 @@ public class GameConverter {
         dto.setContumated(entity.isContumated());
         dto.setOvertime(entity.isOvertime());
         dto.setName(entity.getName());
-        dto.setRealStart(entity.getRealStart());
-        dto.setStartTime(entity.getStartTime());
+        dto.setRealStart(dateConverter.dateToString(entity.getRealStart()));
+        dto.setStartTime(dateConverter.dateToString(entity.getStartTime()));
 
         if (entity.getCompetitorTeamByIdAwayTeam() != null) {
             dto.setAwayTeam(competitorConverter.competitorTeamEntityToDto(entity.getCompetitorTeamByIdAwayTeam(), false));
@@ -100,8 +115,8 @@ public class GameConverter {
         entity.setContumated(dto.getContumated());
         entity.setFinished(dto.getFinished());
         entity.setOvertime(dto.getOvertime());
-        entity.setStartTime(dto.getStartTime());
-        entity.setRealStart(dto.getRealStart());
+        entity.setStartTime(dateConverter.stringToDate(dto.getStartTime()));
+        entity.setRealStart(dateConverter.stringToDate(dto.getRealStart()));
 
         if (dto.getAwayTeam() != null) {
             if (dto.getAwayTeam().getId() != null) {
@@ -162,6 +177,57 @@ public class GameConverter {
                 }
             }
         }
+        return entity;
+    }
+
+    public GamePlayerDto gamePlayerEntityToDto(GamePlayer entity) {
+        GamePlayerDto dto = new GamePlayerDto();
+        dto.setId(entity.getId());
+        if (entity.getCompetitorTeamPlayer() != null) {
+            dto.setCompetitorTeamPlayerId(entity.getCompetitorTeamPlayer().getId());
+        }
+        if (entity.getGame() != null) {
+            dto.setGameId(entity.getGame().getId());
+        }
+
+        return dto;
+    }
+
+    public GamePlayer gamePlayerDtoToEntity(GamePlayerDto dto) throws AppException {
+        GamePlayer entity;
+        if (dto == null) {
+            LOG.error("dto je null");
+            throw new AppException(HttpStatus.BAD_REQUEST, "game player je null");
+        }
+
+        if (dto.getId() != null) {
+            entity = gamePlayerRepo.findOne(dto.getId());
+            if (entity == null) {
+                LOG.error("neexistuje gamePlayer s id {}", dto.getId());
+                throw new AppException(HttpStatus.BAD_REQUEST, "neexistuje gamePlayer s id " + dto.getId());
+            }
+        } else {
+            entity = new GamePlayer();
+        }
+
+        if (dto.getCompetitorTeamPlayerId() != null) {
+            CompetitorTeamPlayer ctp = competitorTeamPlayerRepo.findOne(dto.getCompetitorTeamPlayerId());
+            if (ctp == null) {
+                LOG.error("neexistuje competitorTeamPlayer s id {}", dto.getCompetitorTeamPlayerId());
+                throw new AppException(HttpStatus.BAD_REQUEST, "neexistuje competitorTeamPlayer s id " + dto.getCompetitorTeamPlayerId());
+            }
+            entity.setCompetitorTeamPlayer(ctp);
+        }
+
+        if (dto.getGameId() != null) {
+            Game g = gameRepo.findOne(dto.getGameId());
+            if (g == null) {
+                LOG.error("neexistuje competitorTeamPlayer s id {}", dto.getGameId());
+                throw new AppException(HttpStatus.BAD_REQUEST, "neexistuje competitorTeamPlayer s id " + dto.getGameId());
+            }
+            entity.setGame(g);
+        }
+
         return entity;
     }
 }
