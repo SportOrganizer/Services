@@ -54,10 +54,10 @@ public class SeasonTournamentSettingsService {
         List<SeasonTournamentSettings> s = seasonTournamentSett.findBySeasonTournament(seasonTourn);
 
         if (s.isEmpty()) {
-            return new ArrayList<SeasonTournamentSettingsDTO>();
+            return new ArrayList<>();
         }
 
-        List<SeasonTournamentSettingsDTO> DTOList = new ArrayList<SeasonTournamentSettingsDTO>();
+        List<SeasonTournamentSettingsDTO> DTOList = new ArrayList<>();
         
         for(SeasonTournamentSettings st: s) {
             DTOList.add(seasonTournamentConv.entityToDto(st));
