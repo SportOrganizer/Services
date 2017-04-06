@@ -29,10 +29,10 @@ public class GamePlayer  implements java.io.Serializable {
      private Integer id;
      private CompetitorTeamPlayer competitorTeamPlayer;
      private Game game;
-     private Set<SportFlorbalGameActivity> sportFlorbalGameActivitiesForIdAssistPlayer = new HashSet<SportFlorbalGameActivity>(0);
-     private Set<SportFlorbalGameActivity> sportFlorbalGameActivitiesForIdGoalPlayer = new HashSet<SportFlorbalGameActivity>(0);
-     private Set<SportFlorbalGameActivity> sportFlorbalGameActivitiesForIdAssist2player = new HashSet<SportFlorbalGameActivity>(0);
-     private Set<SportFlorbalGameActivity> sportFlorbalGameActivitiesForIdPenaltyPlayer = new HashSet<SportFlorbalGameActivity>(0);
+     private Set<SportFlorbalGameActivity> sportFlorbalGameActivitiesForIdAssistPlayer = new HashSet<>(0);
+     private Set<SportFlorbalGameActivity> sportFlorbalGameActivitiesForIdGoalPlayer = new HashSet<>(0);
+     private Set<SportFlorbalGameActivity> sportFlorbalGameActivitiesForIdAssist2player = new HashSet<>(0);
+     private Set<SportFlorbalGameActivity> sportFlorbalGameActivitiesForIdPenaltyPlayer = new HashSet<>(0);
 
     public GamePlayer() {
     }

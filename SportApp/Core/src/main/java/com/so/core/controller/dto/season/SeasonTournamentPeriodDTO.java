@@ -15,15 +15,20 @@ public class SeasonTournamentPeriodDTO {
     private Integer seasonTournamentId;
     private String name;
     private String length;
+    private String type;
 
     public SeasonTournamentPeriodDTO() {
     }
 
-    public SeasonTournamentPeriodDTO(Integer seasonTournamentId, String name, String length) {
+    public SeasonTournamentPeriodDTO(Integer id, Integer seasonTournamentId, String name, String length, String type) {
+        this.id = id;
         this.seasonTournamentId = seasonTournamentId;
         this.name = name;
         this.length = length;
+        this.type = type;
     }
+
+
 
     public SeasonTournamentPeriodDTO(SeasonTournamentPeriod st) {
         this.id = st.getId();
@@ -72,4 +77,14 @@ public class SeasonTournamentPeriodDTO {
     public void setLength(String length) {
         this.length = length;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+    
+    
 }
