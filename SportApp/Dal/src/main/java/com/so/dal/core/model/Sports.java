@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.so.dal.core.model.game;
+package com.so.dal.core.model;
 
+import com.so.dal.core.model.game.Penalty;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -29,6 +30,9 @@ public class Sports implements java.io.Serializable {
     private Integer id;
     private String name;
     private Set<Penalty> penalties = new HashSet<>(0);
+
+    public Sports() {
+    }
 
     public Sports(String name) {
         this.name = name;

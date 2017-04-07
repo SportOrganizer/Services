@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.so.core.controller;
+package com.so.core.controller.webservices;
 
 import com.google.gson.Gson;
 import com.so.core.controller.dto.ResourceDto;

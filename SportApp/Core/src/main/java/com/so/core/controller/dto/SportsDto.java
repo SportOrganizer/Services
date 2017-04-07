@@ -3,27 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.so.core.controller.dto;
-
-import com.so.dal.core.model.game.CompetitorTeamPlayer;
-import java.util.Set;
 
 /**
  *
- * @author Kristián Kačinetz
+ * @author peter
  */
-public class TeamDTO {
-    
+public class SportsDto {
+
     private Integer id;
     private String name;
-    private String shortName;
-    private String color;
 
-    public TeamDTO() {
+    public SportsDto(Integer id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
-    
+    public SportsDto() {
+    }
+
     public Integer getId() {
         return id;
     }
@@ -40,21 +38,5 @@ public class TeamDTO {
         this.name = name;
     }
 
-    public String getShortName() {
-        return shortName;
-    }
 
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    
 }

@@ -6,7 +6,7 @@
 package com.so.dal.core.repository.season;
 
 import com.so.dal.core.model.season.SeasonTournament;
-import com.so.dal.core.model.season.SeasonTournamentPenaltySettings;
+import com.so.dal.core.model.season.SeasonTournamentPenaltyType;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
  * @author peter
  */
 @Repository
-public interface SeasonTournamentPenaltySettingsRepository extends JpaRepository<SeasonTournamentPenaltySettings, Integer> {
+public interface SeasonTournamentPenaltyTypeRepository extends JpaRepository<SeasonTournamentPenaltyType, Integer> {
 
-    public List<SeasonTournamentPenaltySettings> findBySeasonTournament(SeasonTournament st);
+    public List<SeasonTournamentPenaltyType> findBySeasonTournament(SeasonTournament st);
 }

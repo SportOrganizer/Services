@@ -41,12 +41,6 @@ public class TeamConverter {
         dto.setName(entity.getName());
         dto.setShortName(entity.getShortName());
         dto.setColor(entity.getColor());
-        if (ifCopyCompetitorTeamPlayer) {
-            for (CompetitorTeamPlayer player : competitorTeamPlayerRepo.findByCompetitorTeam(competitorTeamRepo.findOne(entity.getId()))) {
-                set.add(player);
-            }
-            dto.setCompetitorTeamPlayer(set);
-        }
         return dto;
     }
 
