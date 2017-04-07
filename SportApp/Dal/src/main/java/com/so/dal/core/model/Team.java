@@ -89,7 +89,7 @@ public class Team  implements java.io.Serializable {
         this.color = color;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="team")
+@OneToMany(fetch=FetchType.LAZY, mappedBy="team", orphanRemoval = true)
     public Set<CompetitorTeam> getCompetitorTeams() {
         return this.competitorTeams;
     }

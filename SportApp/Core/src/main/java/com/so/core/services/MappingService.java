@@ -41,7 +41,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MappingService {
 
-    private final static Logger LOG = LoggerFactory.getLogger(RegistrationService.class);
+    private final static Logger LOG = LoggerFactory.getLogger(MappingService.class);
 
     @Autowired
     TeamService teamService;
@@ -101,7 +101,7 @@ public class MappingService {
                 if (!(rp.getBirthDate().equals(existedPerson.getBirthDate())) || !(rp.getName().equals(existedPerson.getName()))
                         || !(rp.getPhone().equals(existedPerson.getPhone())) || !(rp.getSurname().equals(existedPerson.getSurname()))
                         || !(rp.getSex().equals(existedPerson.getSex())) || !(rp.isIsStudent().equals(existedPerson.isIsStudent()))) {
-                    //vrat obidve objekty? 
+                    
 
                     incompatiblePersons.add(new IncompatiblePlayersDTO(registratioConverter.regPlayerEntityToDto(rp), personConverter.personEntityToDto(existedPerson), competitorTeam.getId()));
 
@@ -129,6 +129,7 @@ public class MappingService {
                 team = teamService.addTeam2(rt.getName(), rt.getShortName(), rt.getColor());
             }
             CompetitorTeam competitorTeam = competitorTeamService.addCompetitorTeam(rt.getResource(), null, team);
+            rt.setIsVerify(true);
             MappingPlayers(rt.getRegistrationPlayers(), competitorTeam);
 
         }

@@ -10,8 +10,10 @@ import com.so.core.controller.dto.PersonDTO;
 import com.so.core.exception.AppException;
 import com.so.core.services.PersonService;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -65,8 +67,13 @@ public class PersonController {
         return gson.toJson(response);
     }
 
-    @RequestMapping(path = "/update/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String editPerson(@RequestBody PersonDTO t) throws AppException {
+    @RequestMapping(path = "/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String editPerson(@PathVariable(value = "id") Integer id, @RequestBody PersonDTO t) throws AppException {
+        
+        if (!Objects.equals(id, t.getId())) {
+            throw new AppException(HttpStatus.BAD_REQUEST, "id url sa nerovna s id v dto");
+        }
+        
         Gson gson = new Gson();
         PersonDTO edited = personService.update(t);
         return gson.toJson(edited);

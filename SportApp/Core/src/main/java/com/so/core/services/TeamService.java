@@ -27,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class TeamService {
 
-    private final static Logger LOG = LoggerFactory.getLogger(PersonService.class);
+    private final static Logger LOG = LoggerFactory.getLogger(TeamService.class);
 
     @Autowired
     private TeamRepository teamRepo;
@@ -54,9 +54,35 @@ public class TeamService {
             throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "chyba pri ukladani timu");
         }
         LOG.info("Uspesne pridany tim {}", t);
-        return teamConverter.teamEntityToDto(t, false);
+        return teamConverter.teamEntityToDto(t);
     }
-    
+
+    @Transactional
+    public TeamDTO createTeam(TeamDTO tDto) throws AppException {
+        LOG.info("createTeam({})", tDto.getId());
+        
+        if (tDto.getName() == null || tDto.getShortName() == null || tDto.getColor() == null) {
+            LOG.error("parameter name, shortName, color nemoze byt null: {}, {}, {}", tDto.getName(), tDto.getShortName(), tDto.getColor());
+            throw new AppException(HttpStatus.BAD_REQUEST, "nie je zadany povinny parameter");
+        }
+
+//        if (teamRepo.findByName(tDto.getName()) != null) {
+//            LOG.error("duplicitny name: {}", tDto.getName());
+//            throw new AppException(HttpStatus.CONFLICT, "dany name teamu sa uz pouziva; name=" + tDto.getName());
+//        }
+
+        Team t = teamConverter.teamDtoToEntity(tDto);
+        t = teamRepo.saveAndFlush(t);
+
+        if (t == null) {
+            LOG.error("Team sa neulozil do databazy: {}", tDto.getId());
+            throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "Team s ID:" + tDto.getId() + " sa neulozil do databazy");
+        }
+
+        return teamConverter.teamEntityToDto(t);
+
+    }
+
     @Transactional
     public Team addTeam2(String name, String shortName, String color) throws AppException {
 
@@ -93,7 +119,7 @@ public class TeamService {
             throw new AppException(HttpStatus.NOT_FOUND, "pre id:" + id + " neexistuje team v db");
         }
 
-        return teamConverter.teamEntityToDto(t, true);
+        return teamConverter.teamEntityToDto(t);
     }
 
     @Transactional
@@ -102,9 +128,39 @@ public class TeamService {
         List<Team> lt = teamRepo.findAll();
         Set<TeamDTO> teamList = new HashSet<>();
         for (Team t : lt) {
-            teamList.add(teamConverter.teamEntityToDto(t, true));
+            teamList.add(teamConverter.teamEntityToDto(t));
         }
         return teamList;
+    }
+    
+    @Transactional
+    public void deleteTeam(Integer id) throws AppException {
+        LOG.info("deleteTeam({})", id);
+        Team t = teamRepo.findOne(id);
+
+        if (t == null) {
+            LOG.error("nenajdeny team na vymazanie id={}", id);
+            throw new AppException(HttpStatus.NOT_FOUND, "nenajdeny team id=" + id);
+        }
+        teamRepo.delete(t);
+    }
+
+    @Transactional
+    public TeamDTO update(TeamDTO updated) throws AppException {
+        LOG.info("update()");
+
+        if (updated == null) {
+            LOG.error("aktualizovany objekt je null");
+            throw new AppException(HttpStatus.BAD_REQUEST, "zadany objekt je nespravne vyplneny");
+        }
+        Team t = teamConverter.teamDtoToEntity(updated);
+        Team saved = teamRepo.saveAndFlush(t);
+
+        if (saved == null) {
+            LOG.error("nepodarilo sa ulozit team do db");
+            throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "nepodarilo sa ulozit team do db");
+        }
+        return teamConverter.teamEntityToDto(saved);
     }
 
 }

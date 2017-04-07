@@ -6,15 +6,14 @@
 package com.so.core.controller.converter;
 
 import com.so.core.controller.dto.TeamDTO;
+import com.so.core.exception.AppException;
 import com.so.dal.core.model.Team;
 import com.so.dal.core.model.game.CompetitorTeamPlayer;
-import com.so.dal.core.repository.game.CompetitorTeamPlayerRepository;
-import com.so.dal.core.repository.game.CompetitorTeamRepository;
-import java.util.HashSet;
-import java.util.Set;
+import com.so.dal.core.repository.TeamRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 /**
@@ -27,14 +26,10 @@ public class TeamConverter {
     private final static Logger LOG = LoggerFactory.getLogger(Team.class);
 
     @Autowired
-    private CompetitorTeamRepository competitorTeamRepo;
+    private TeamRepository teamRepo;
 
-    @Autowired
-    private CompetitorTeamPlayerRepository competitorTeamPlayerRepo;
+    public TeamDTO teamEntityToDto(Team entity) {
 
-    //TODO: TEAM NEMA DRZAT V SEBE COMPETITOR TEAM PLAYER... TO MA DRZAT COMPETITOR TEAM
-    public TeamDTO teamEntityToDto(Team entity, boolean ifCopyCompetitorTeamPlayer) {
-        Set<CompetitorTeamPlayer> set = new HashSet<>();
         TeamDTO dto = new TeamDTO();
 
         dto.setId(entity.getId());
@@ -42,6 +37,25 @@ public class TeamConverter {
         dto.setShortName(entity.getShortName());
         dto.setColor(entity.getColor());
         return dto;
+    }
+    
+    public Team teamDtoToEntity(TeamDTO dto) throws AppException{
+        Team entity;
+        if (dto.getId() != null) {
+            entity = teamRepo.findOne(dto.getId());
+            if (entity == null) {
+                LOG.error("nenajdeny Team podla id: {}", dto.getId());
+                throw new AppException(HttpStatus.BAD_REQUEST, "bolo zadane nespravne id: " + dto.getId());
+            }
+        } else {
+            entity = new Team();
+        }
+        
+        entity.setColor(dto.getColor());
+        entity.setName(dto.getName());
+        entity.setShortName(dto.getShortName());
+        
+        return entity;
     }
 
 }

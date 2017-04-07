@@ -134,7 +134,7 @@ public class CompetitorEntityConverter {
         dto.setId(entity.getId());
         dto.setLogo(new ResourceDto(entity.getResource().getId(), entity.getResource().getPath()));
         dto.setSeasonTournamentGroupId(entity.getSeasonTournamentGroup().getId());
-        dto.setTeam(teamConverter.teamEntityToDto(entity.getTeam(), false));
+        dto.setTeam(teamConverter.teamEntityToDto(entity.getTeam()));
 
         if (ifCopyPlayers) {
             for (CompetitorTeamPlayer p : entity.getCompetitorTeamPlayers()) {

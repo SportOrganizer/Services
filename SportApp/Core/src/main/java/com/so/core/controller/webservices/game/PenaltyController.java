@@ -95,7 +95,7 @@ public class PenaltyController {
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String deletePenalty(@PathVariable(value = "id") Integer id) throws AppException {
         Gson gson = new Gson();
-        service.DeletePenalty(id);
+        service.deletePenalty(id);
         return gson.toJson(service.getAllPenalties());
     }
 

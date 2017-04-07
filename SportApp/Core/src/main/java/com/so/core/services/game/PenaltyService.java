@@ -168,7 +168,7 @@ public class PenaltyService {
     }
 
     @Transactional
-    public void DeletePenalty(Integer id) {
+    public void deletePenalty(Integer id) {
         LOG.info("deletePenalty({id})", id);
         penaltyRepo.delete(id);
     }
@@ -363,7 +363,7 @@ public class PenaltyService {
             LOG.error("nenajdeny st podla id");
             throw new AppException(HttpStatus.BAD_REQUEST, "nenajdeny st  id: " + stId);
         }
-
+        
         for (SeasonTournamentPenaltySettings p : stPenaltySettingsRepo.findBySeasonTournament(st)) {
             l.add(converter.stPenaltySettingsEntityToDto(p));
         }

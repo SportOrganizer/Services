@@ -102,15 +102,25 @@ public class PersonService {
     }
 
     @Transactional
-    public PersonDTO createPerson(PersonDTO ct) throws AppException {
-        LOG.info("createCompetitorTeam({})", ct.getId());
+    public PersonDTO createPerson(PersonDTO pDto) throws AppException {
+        LOG.info("createPerson({})", pDto.getId());
+        //MAIL NIE JE POVINNY? V DATABAZE TO JE TAK NASTAVENE
+        if (pDto.getName() == null || pDto.getSurname() == null || pDto.isIsStudent() == null || pDto.getSex() == null) {
+            LOG.error("parameter name, surname, isStudent, sex nemoze byt null: {}, {}, {}, {}", pDto.getName(), pDto.getSurname(), pDto.isIsStudent(), pDto.getSex());
+            throw new AppException(HttpStatus.BAD_REQUEST, "nie je zadany povinny parameter");
+        }
+        
+        if (pDto.getMail() != null && personRepo.findByMail(pDto.getMail()) != null) {
+            LOG.error("duplicitny mail: {}", pDto.getMail());
+            throw new AppException(HttpStatus.CONFLICT, "dany mail persony sa uz pouziva; mail=" + pDto.getMail());
+        }
+        
+        Person p = personConverter.dtoToEntity(pDto);
+        p = personRepo.saveAndFlush(p);
 
-        Person p = personConverter.dtoToEntity(ct);
-        Person competitorTeam = personRepo.saveAndFlush(p);
-
-        if (competitorTeam == null) {
-            LOG.error("Person sa neulozit do databazy: {}", ct.getId());
-            throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "Person s ID:" + ct.getId() + " sa neulozil do databazy");
+        if (p == null) {
+            LOG.error("Person sa neulozila do databazy: {}", pDto.getId());
+            throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "Person s ID:" + pDto.getId() + " sa neulozil do databazy");
         }
 
         return personConverter.personEntityToDto(p);
@@ -174,7 +184,7 @@ public class PersonService {
 
     @Transactional
     public void deletePerson(Integer id) throws AppException {
-        LOG.info("deleteTournament({})", id);
+        LOG.info("deletePerson({})", id);
         Person p = personRepo.findOne(id);
 
         if (p == null) {
@@ -196,7 +206,7 @@ public class PersonService {
         Person saved = personRepo.saveAndFlush(p);
 
         if (saved == null) {
-            LOG.error("nepodarilo sa ulozit st do db");
+            LOG.error("nepodarilo sa ulozit person do db");
             throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "nepodarilo sa ulozit person do db");
         }
         return personConverter.personEntityToDto(saved);

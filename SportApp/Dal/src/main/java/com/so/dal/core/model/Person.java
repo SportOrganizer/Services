@@ -33,7 +33,7 @@ public class Person  implements java.io.Serializable {
      private Date birthDate;
      private String mail;
      private String phone;
-     private boolean isStudent;
+     private Boolean isStudent;
      private String sex;
      private Set<CompetitorTeamPlayer> competitorTeamPlayers = new HashSet<>(0);
 
@@ -41,13 +41,13 @@ public class Person  implements java.io.Serializable {
     }
 
 	
-    public Person(String name, String surname, boolean isStudent, String sex) {
+    public Person(String name, String surname, Boolean isStudent, String sex) {
         this.name = name;
         this.surname = surname;
         this.isStudent = isStudent;
         this.sex = sex;
     }
-    public Person(String name, String surname, Date birthDate, String mail, String phone, boolean isStudent, String sex, Set<CompetitorTeamPlayer> competitorTeamPlayers) {
+    public Person(String name, String surname, Date birthDate, String mail, String phone, Boolean isStudent, String sex, Set<CompetitorTeamPlayer> competitorTeamPlayers) {
        this.name = name;
        this.surname = surname;
        this.birthDate = birthDate;
@@ -122,11 +122,11 @@ public class Person  implements java.io.Serializable {
 
     
     @Column(name="isStudent", nullable=false)
-    public boolean isIsStudent() {
+    public Boolean isIsStudent() {
         return this.isStudent;
     }
     
-    public void setIsStudent(boolean isStudent) {
+    public void setIsStudent(Boolean isStudent) {
         this.isStudent = isStudent;
     }
 
@@ -140,7 +140,7 @@ public class Person  implements java.io.Serializable {
         this.sex = sex;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="person")
+@OneToMany(fetch=FetchType.LAZY, mappedBy="person", orphanRemoval = true)
     public Set<CompetitorTeamPlayer> getCompetitorTeamPlayers() {
         return this.competitorTeamPlayers;
     }
