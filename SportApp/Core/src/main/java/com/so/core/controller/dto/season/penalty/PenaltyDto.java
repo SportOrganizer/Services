@@ -3,27 +3,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package com.so.core.controller.dto;
-
-import com.so.dal.core.model.game.CompetitorTeamPlayer;
-import java.util.Set;
+package com.so.core.controller.dto.season.penalty;
 
 /**
  *
- * @author Kristián Kačinetz
+ * @author peter
  */
-public class TeamDTO {
-    
+public class PenaltyDto {
+
     private Integer id;
     private String name;
     private String shortName;
-    private String color;
+    private Integer sportsId;
 
-    public TeamDTO() {
+    public PenaltyDto() {
     }
 
-    
+    public PenaltyDto(Integer id, String name, String shortName, Integer sportsId) {
+        this.id = id;
+        this.name = name;
+        this.shortName = shortName;
+        this.sportsId = sportsId;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -48,13 +50,14 @@ public class TeamDTO {
         this.shortName = shortName;
     }
 
-    public String getColor() {
-        return color;
+    public Integer getSportsId() {
+        return sportsId;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setSportsId(Integer sportsId) {
+        this.sportsId = sportsId;
     }
 
-    
+
+
 }

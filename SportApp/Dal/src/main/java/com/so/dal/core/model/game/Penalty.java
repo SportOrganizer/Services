@@ -1,6 +1,7 @@
 package com.so.dal.core.model.game;
 // Generated 27.2.2017 18:41:18 by Hibernate Tools 4.3.1
 
+import com.so.dal.core.model.Sports;
 import com.so.dal.core.model.season.SeasonTournamentPenaltySettings;
 import java.util.HashSet;
 import java.util.Set;
@@ -69,11 +70,11 @@ public class Penalty implements java.io.Serializable {
 
     @Column(name = "shortName", nullable = false, length = 1500)
     public String getShortName() {
-        return this.name;
+        return this.shortName;
     }
 
-    public void setShortName(String name) {
-        this.name = name;
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)

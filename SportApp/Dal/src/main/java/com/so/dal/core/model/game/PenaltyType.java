@@ -31,6 +31,9 @@ public class PenaltyType implements java.io.Serializable {
     private String name;
     private Set<SeasonTournamentPenaltyType> seasonTournamentPenaltyType = new HashSet<>(0);
 
+    public PenaltyType() {
+    }
+
     public PenaltyType(String name) {
         this.name = name;
     }
