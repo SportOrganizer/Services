@@ -304,7 +304,170 @@
 ##### delete
         # request: /{id} HTTP DELETE
         # response: if success same like find All operations result without deleted season tournament
-        
+
+### Person
+#### request: /person/
+##### create person
+
+        #request: / HTTP POST
+        {
+            "name": "Kiki",
+            "surname": "kiki",
+            "birthDate": "24-03-2100",
+            "mail": "emaialKIKI",
+            "phone": "aphone",
+            "isStudent": true,
+            "sex": "male"
+        }
+
+        #response:
+        {
+              "id": 545,
+              "name": "Kiki",
+              "surname": "kiki",
+              "birthDate": "24-03-2100",
+              "mail": "emaialKIKI",
+              "phone": "aphone",
+              "isStudent": true,
+              "sex": "male"
+        }
+
+##### delete person
+
+        #request: /{id} HTTP DELETE
+        #response: vrati vsetky zvysne persony
+        [
+          {
+            "id": 543,
+            "name": "Svetrik",
+            "surname": "Petko",
+            "birthDate": "11-03-2017",
+            "mail": "sveto@emal",
+            "phone": "phone",
+            "isStudent": true,
+            "sex": "male"
+          },
+          {
+            "id": 542,
+            "name": "petrik",
+            "surname": "Petko",
+            "birthDate": "09-03-1906",
+            "mail": "petrik@emal",
+            "phone": "phone",
+            "isStudent": true,
+            "sex": "male"
+          },
+          {
+            "id": 540,
+            "name": "inemeno",
+            "surname": "priaezvisko",
+            "birthDate": "24-03-2100",
+            "mail": "emaial",
+            "phone": "aphone",
+            "isStudent": true,
+            "sex": "male"
+          },
+          {
+            "id": 541,
+            "name": "Peter",
+            "surname": "Petko",
+            "birthDate": "01-01-1900",
+            "mail": "email@emal",
+            "phone": "phone",
+            "isStudent": true,
+            "sex": "male"
+          }
+        ]
+
+##### edit person
+    
+      #request: /{id} HTTP POST
+      {
+            "id": 543,
+            "name": "svetooo",
+            "surname": "Petko",
+            "birthDate": "11-03-2017",
+            "mail": "sveto@emal",
+            "phone": "phone",
+            "isStudent": true,
+            "sex": "male"
+      }
+
+      #response:
+      {
+            "id": 543,
+            "name": "svetooo",
+            "surname": "Petko",
+            "birthDate": "11-03-2017",
+            "mail": "sveto@emal",
+            "phone": "phone",
+            "isStudent": true,
+            "sex": "male"
+      }
+
+##### find one
+      #request: /{id} HTTP GET
+      #response:
+      {
+            "id": 543,
+            "name": "svetooo",
+            "surname": "Petko",
+            "birthDate": "11-03-2017",
+            "mail": "sveto@emal",
+            "phone": "phone",
+            "isStudent": true,
+            "sex": "male"
+      }
+
+##### find All
+      #request: / HTTP GET
+      #response:
+      [
+        {
+          "id": 541,
+          "name": "Peter",
+          "surname": "Petko",
+          "birthDate": "01-01-1900",
+          "mail": "email@emal",
+          "phone": "phone",
+          "isStudent": true,
+          "sex": "male"
+        },
+        {
+          "id": 543,
+          "name": "svetooo",
+          "surname": "Petko",
+          "birthDate": "11-03-2017",
+          "mail": "sveto@emal",
+          "phone": "phone",
+          "isStudent": true,
+          "sex": "male"
+        },
+        {
+          "id": 540,
+          "name": "inemeno",
+          "surname": "priaezvisko",
+          "birthDate": "24-03-2100",
+          "mail": "emaial",
+          "phone": "aphone",
+          "isStudent": true,
+          "sex": "male"
+        },
+        {
+          "id": 542,
+          "name": "petrik",
+          "surname": "Petko",
+          "birthDate": "09-03-1906",
+          "mail": "petrik@emal",
+          "phone": "phone",
+          "isStudent": true,
+          "sex": "male"
+        }
+      ]
+
+  
+### Team
+#### identicke s Person
         
 ### Registration
 
