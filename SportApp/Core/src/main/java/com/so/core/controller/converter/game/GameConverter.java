@@ -76,8 +76,8 @@ public class GameConverter {
         dto.setContumated(entity.isContumated());
         dto.setOvertime(entity.isOvertime());
         dto.setName(entity.getName());
-        dto.setRealStart(dateConverter.dateToString(entity.getRealStart()));
-        dto.setStartTime(dateConverter.dateToString(entity.getStartTime()));
+        dto.setRealStart(dateConverter.dateTimeToString(entity.getRealStart()));
+        dto.setStartTime(dateConverter.dateTimeToString(entity.getStartTime()));
 
         if (entity.getCompetitorTeamByIdAwayTeam() != null) {
             dto.setAwayTeam(competitorConverter.competitorTeamEntityToDto(entity.getCompetitorTeamByIdAwayTeam(), false));
@@ -115,8 +115,8 @@ public class GameConverter {
         entity.setContumated(dto.getContumated());
         entity.setFinished(dto.getFinished());
         entity.setOvertime(dto.getOvertime());
-        entity.setStartTime(dateConverter.stringToDate(dto.getStartTime()));
-        entity.setRealStart(dateConverter.stringToDate(dto.getRealStart()));
+        entity.setStartTime(dateConverter.stringToDateTime(dto.getStartTime()));
+        entity.setRealStart(dateConverter.stringToDateTime(dto.getRealStart()));
 
         if (dto.getAwayTeam() != null) {
             if (dto.getAwayTeam().getId() != null) {
