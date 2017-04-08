@@ -100,7 +100,7 @@ public class SeasonTournamentLocationService {
         SeasonTournamentLocation seasonTournamentLocation;
 
         if (location.getName() == null) {
-            LOG.error("nevyplnene povinne Parametre: {}",location.getName());
+            LOG.error("nevyplnene povinne Parametre: {}", location.getName());
             throw new AppException(HttpStatus.BAD_REQUEST, "required parameter null");
         }
         //TODO: kontrolovat len pre ST nie globalne
@@ -126,19 +126,33 @@ public class SeasonTournamentLocationService {
 
         return stConverter.locationEntityToDto(seasonTournamentLocation);
     }
-    
-      public List<SeasonTournamentLocationDTO> findAllBySeasonTournament(Integer stId) throws AppException{
-      LOG.info("findAllBySeasonTournament({})",stId);
-      SeasonTournament st = seasonTournamentRepo.findOne(stId);
-      if(st==null){
-      LOG.error("nenajdeny seasonTournament s id:{}",stId);
-      throw new AppException(HttpStatus.BAD_REQUEST,"nenajdeny seasonTournament s id:"+stId);
-  }
-      List<SeasonTournamentLocation> ls = seasonTournamentLocationRepo.findBySeasonTournament(st);
-      List<SeasonTournamentLocationDTO> l = new ArrayList<>();
+
+    public List<SeasonTournamentLocationDTO> findAllBySeasonTournament(Integer stId) throws AppException {
+        LOG.info("findAllBySeasonTournament({})", stId);
+        SeasonTournament st = seasonTournamentRepo.findOne(stId);
+        if (st == null) {
+            LOG.error("nenajdeny seasonTournament s id:{}", stId);
+            throw new AppException(HttpStatus.BAD_REQUEST, "nenajdeny seasonTournament s id:" + stId);
+        }
+        List<SeasonTournamentLocation> ls = seasonTournamentLocationRepo.findBySeasonTournament(st);
+        List<SeasonTournamentLocationDTO> l = new ArrayList<>();
         for (SeasonTournamentLocation g : ls) {
             l.add(stConverter.locationEntityToDto(g));
         }
-      return l;
-   }
+        return l;
+    }
+
+    @Transactional
+    public SeasonTournamentLocationDTO update(SeasonTournamentLocationDTO updated) throws AppException {
+        LOG.info("update()");
+        SeasonTournamentLocation s = stConverter.locationDtoToEntity(updated);
+
+        s = seasonTournamentLocationRepo.saveAndFlush(s);
+
+        if (s == null) {
+            LOG.error("nepodarilo sa ulozit stLocation do db");
+            throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "SeasonTournamentLocation sa nepodarilo aktualizovat");
+        }
+        return stConverter.locationEntityToDto(s);
+    }
 }

@@ -126,6 +126,16 @@ public class SeasonTournamentController {
         return gson.toJson(response);
     }
     
+    @RequestMapping(path = "/location/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String editLocation(@PathVariable(value = "id") Integer id, @RequestBody SeasonTournamentLocationDTO st) throws AppException {
+        Gson gson = new Gson();
+        if (!Objects.equals(id, st.getId())) {
+            throw new AppException(HttpStatus.BAD_REQUEST, "id url sa nerovna s id v dto");
+        }
+        SeasonTournamentLocationDTO edited = locationService.update(st);
+        return gson.toJson(edited);
+    }
+    
     @RequestMapping(path = "/round/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String addRound(@RequestBody SeasonTournamentRoundDTO request) throws AppException {
         Gson gson = new Gson();
@@ -152,6 +162,16 @@ public class SeasonTournamentController {
         Gson gson = new Gson();
         List<SeasonTournamentRoundDTO> response = roundService.findAllBySeasonTournament(id);
         return gson.toJson(response);
+    }
+    
+    @RequestMapping(path = "/round/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String editRound(@PathVariable(value = "id") Integer id, @RequestBody SeasonTournamentRoundDTO st) throws AppException {
+        Gson gson = new Gson();
+        if (!Objects.equals(id, st.getId())) {
+            throw new AppException(HttpStatus.BAD_REQUEST, "id url sa nerovna s id v dto");
+        }
+        SeasonTournamentRoundDTO edited = roundService.update(st);
+        return gson.toJson(edited);
     }
     
     @RequestMapping(path = "/group/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -182,6 +202,16 @@ public class SeasonTournamentController {
         return gson.toJson(response);
     }
     
+    @RequestMapping(path = "/group/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String editGroup(@PathVariable(value = "id") Integer id, @RequestBody SeasonTournamentGroupDTO st) throws AppException {
+        Gson gson = new Gson();
+        if (!Objects.equals(id, st.getId())) {
+            throw new AppException(HttpStatus.BAD_REQUEST, "id url sa nerovna s id v dto");
+        }
+        SeasonTournamentGroupDTO edited = groupService.update(st);
+        return gson.toJson(edited);
+    }
+    
     @RequestMapping(path = "/game/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String addGame(@RequestBody GameDto request) throws AppException {
         Gson gson = new Gson();
@@ -190,7 +220,7 @@ public class SeasonTournamentController {
     }
     
     @RequestMapping(path = "/game/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String getGme(@PathVariable(value = "id") Integer id) throws AppException {
+    public String getGame(@PathVariable(value = "id") Integer id) throws AppException {
         Gson gson = new Gson();
         GameDto response = gameService.findGame(id);
         return gson.toJson(response);
@@ -208,6 +238,23 @@ public class SeasonTournamentController {
         Gson gson = new Gson();
         List<GameDto> response = gameService.findBySeasonTournament(id);
         return gson.toJson(response);
+    }
+    
+    @RequestMapping(path = "/game/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String editGame(@PathVariable(value = "id") Integer id, @RequestBody GameDto st) throws AppException {
+        Gson gson = new Gson();
+        if (!Objects.equals(id, st.getId())) {
+            throw new AppException(HttpStatus.BAD_REQUEST, "id url sa nerovna s id v dto");
+        }
+        GameDto edited = gameService.editGame(st);
+        return gson.toJson(edited);
+    }
+    
+    @RequestMapping(path = "/game/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String deleteGame(@PathVariable(value = "id") Integer id) throws AppException {
+        Gson gson = new Gson();
+        gameService.deleteGame(id);
+        return gson.toJson(gameService.findAllGames());
     }
     
 }
