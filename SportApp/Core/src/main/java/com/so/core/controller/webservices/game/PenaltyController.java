@@ -8,8 +8,6 @@ package com.so.core.controller.webservices.game;
 import com.google.gson.Gson;
 import com.so.core.controller.dto.season.penalty.PenaltyDto;
 import com.so.core.controller.dto.season.penalty.PenaltyTypeDto;
-import com.so.core.controller.dto.season.penalty.SeasonTournamentPenaltySettingsDto;
-import com.so.core.controller.dto.season.penalty.SeasonTournamentPenaltyTypeDto;
 import com.so.core.exception.AppException;
 import com.so.core.services.game.PenaltyService;
 import java.util.List;
@@ -64,9 +62,14 @@ public class PenaltyController {
     }
 
     @RequestMapping(path = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String getAllPenalty() {
+    public String getAllPenalty(@RequestParam(value = "sport", required = false) Integer idSport) throws AppException {
         Gson gson = new Gson();
-        List<PenaltyDto> response = service.getAllPenalties();
+        List<PenaltyDto> response;
+        if (idSport == null) {
+            response = service.getAllPenalties();
+        } else {
+            response = service.getAllPenaltiesBySport(idSport);
+        }
         return gson.toJson(response);
     }
 
@@ -76,21 +79,6 @@ public class PenaltyController {
         PenaltyDto response = service.getOnePenalty(id);
         return gson.toJson(response);
     }
-
-//    @RequestMapping(path = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//    public String getAllPenaltyBySport(@PathVariable(value = "idSport") Integer id) throws AppException {
-//        Gson gson = new Gson();
-//        List<PenaltyDto> response = service.getAllPenaltiesBySport(id);
-//        return gson.toJson(response);
-//    }
-    
-    
-//        @RequestMapping(path = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//    public String getAllPenaltyBySport(@RequestParam(value = "idSport") Integer idSport,@RequestParam(value="aa") String aa) throws AppException {
-//        Gson gson = new Gson();
-//        List<PenaltyDto> response = service.getAllPenaltiesBySport(idSport);
-//        return gson.toJson(response);
-//    }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String deletePenalty(@PathVariable(value = "id") Integer id) throws AppException {
@@ -137,99 +125,5 @@ public class PenaltyController {
         Gson gson = new Gson();
         service.deletePenaltyType(id);
         return gson.toJson(service.getAllPenaltyType());
-    }
-
-    ///////////////////////////// Season Tournament PenaltyType /////////////////////////////////////
-    @RequestMapping(path = "/stpenaltytype/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String addStPenaltyType(@RequestBody SeasonTournamentPenaltyTypeDto request) throws AppException {
-        Gson gson = new Gson();
-        SeasonTournamentPenaltyTypeDto response = service.addStPenaltyType(request);
-        return gson.toJson(response);
-    }
-
-    @RequestMapping(path = "/stpenaltytype/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String updateStPenaltyType(@PathVariable(value = "id") Integer id, @RequestBody SeasonTournamentPenaltyTypeDto request) throws AppException {
-
-        if (!Objects.equals(id, request.getId())) {
-            throw new AppException(HttpStatus.BAD_REQUEST, "id v url sa nerovna id v dto");
-        }
-        Gson gson = new Gson();
-        SeasonTournamentPenaltyTypeDto response = service.editStPenaltyType(request);
-        return gson.toJson(response);
-    }
-
-    @RequestMapping(path = "/stpenaltytype/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String getAllStPenaltyType() {
-        Gson gson = new Gson();
-        List<SeasonTournamentPenaltyTypeDto> response = service.getAllStPenaltyType();
-        return gson.toJson(response);
-    }
-
-    @RequestMapping(path = "/stpenaltytype/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String getOneStPenaltyType(@PathVariable(value = "id") Integer id) throws AppException {
-        Gson gson = new Gson();
-        SeasonTournamentPenaltyTypeDto response = service.getOneSeasonTournamentPenaltyType(id);
-        return gson.toJson(response);
-    }
-
-    @RequestMapping(path = "/stpenaltytype/byst/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String getAllStPenaltyType(@PathVariable(value = "id") Integer id) throws AppException {
-        Gson gson = new Gson();
-        List<SeasonTournamentPenaltyTypeDto> response = service.getAllStPenaltyTypeBySt(id);
-        return gson.toJson(response);
-    }
-
-    @RequestMapping(path = "/stpenaltytype/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String deleteStPenaltyType(@PathVariable(value = "id") Integer id) throws AppException {
-        Gson gson = new Gson();
-        service.deleteStPenaltyType(id);
-        return gson.toJson(service.getAllStPenaltyType());
-    }
-/////////////////////// SEASON TOURNAMENT PENALTY SETTINGS ////////////////////////
-
-    @RequestMapping(path = "/stpenaltysetting/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String addStPenaltySettings(@RequestBody SeasonTournamentPenaltySettingsDto request) throws AppException {
-        Gson gson = new Gson();
-        SeasonTournamentPenaltySettingsDto response = service.addStPenaltySettings(request);
-        return gson.toJson(response);
-    }
-
-    @RequestMapping(path = "/stpenaltysetting/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String updateStPenaltySettings(@PathVariable(value = "id") Integer id, @RequestBody SeasonTournamentPenaltySettingsDto request) throws AppException {
-
-        if (!Objects.equals(id, request.getId())) {
-            throw new AppException(HttpStatus.BAD_REQUEST, "id v url sa nerovna id v dto");
-        }
-        Gson gson = new Gson();
-        SeasonTournamentPenaltySettingsDto response = service.editStPenaltySettings(request);
-        return gson.toJson(response);
-    }
-
-    @RequestMapping(path = "/stpenaltysettings/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String getAllStPenaltySettings() {
-        Gson gson = new Gson();
-        List<SeasonTournamentPenaltySettingsDto> response = service.getAllStPenaltySettings();
-        return gson.toJson(response);
-    }
-
-    @RequestMapping(path = "/stpenaltysettings/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String getOneStPenaltySettings(@PathVariable(value = "id") Integer id) throws AppException {
-        Gson gson = new Gson();
-        SeasonTournamentPenaltySettingsDto response = service.getOneSeasonTournamentPenaltySettings(id);
-        return gson.toJson(response);
-    }
-
-    @RequestMapping(path = "/stpenaltysettings/byst/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String getAllStPenaltySettings(@PathVariable(value = "id") Integer id) throws AppException {
-        Gson gson = new Gson();
-        List<SeasonTournamentPenaltySettingsDto> response = service.getAllStPenaltySettingsBySt(id);
-        return gson.toJson(response);
-    }
-
-    @RequestMapping(path = "/stpenaltysettings/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String deleteStPenaltySettings(@PathVariable(value = "id") Integer id) throws AppException {
-        Gson gson = new Gson();
-        service.deleteStPenaltySettings(id);
-        return gson.toJson(service.getAllStPenaltySettings());
     }
 }

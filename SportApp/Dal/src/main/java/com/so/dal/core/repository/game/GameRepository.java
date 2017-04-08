@@ -16,7 +16,8 @@ import org.springframework.stereotype.Repository;
  * @author peter
  */
 @Repository
-public interface GameRepository extends JpaRepository<Game, Integer> {
+public interface GameRepository extends JpaRepository<Game, Integer>,GameRepositoryCustom {
    public List<Game> findAllByOrderByStartTimeAsc();
-    public List<Game> findAllBySeasonTournamentOrderByStartTimeAsc(SeasonTournament st);
+   public List<Game> findAllBySeasonTournamentOrderByStartTimeAsc(SeasonTournament st);
+   
 }
