@@ -25,40 +25,40 @@ import org.springframework.http.HttpStatus;
 
 @Service
 public class SeasonTournamentRoundService {
-    
+
     private final static Logger LOG = LoggerFactory.getLogger(SeasonTournamentRoundService.class); /// logovanie..
 
     @Autowired
     SeasonTournamentRoundRepository seasonTournamentRoundRepository;
-    
+
     @Autowired
     SeasonTournamentRepository seasonTournamentRepo;
-    
+
     @Autowired
     private SeasonTournamentConverter stConverter;
-    
+
     @Autowired
     private SeasonTournamentRoundRepository roundRepo;
-    
+
     public SeasonTournamentRoundDTO findById(Integer id) throws AppException {
         LOG.info("findById({})", id);
         if (id == null) {
             LOG.error("id can't be null: {}", id);
             throw new AppException(HttpStatus.BAD_REQUEST, "required parameter null");
         }
-        
+
         SeasonTournamentRound s = seasonTournamentRoundRepository.findOne(id);
-        
+
         if (s == null) {
             LOG.error("nenajdena location s id: {}", id);
             throw new AppException(HttpStatus.NOT_FOUND, "nenajdena location s id: " + id);
         }
         return stConverter.roundEntityToDto(s);
     }
-    
+
     public List<SeasonTournamentRound> findByNameContaining(String name) {
         LOG.info("findByNameContaining({})", name);
-        
+
         if (name == null) {
             LOG.error("name can't be null: {}", name);
             throw new InvalidParameterException("required parameter null");
@@ -66,18 +66,18 @@ public class SeasonTournamentRoundService {
         List<SeasonTournamentRound> ls = seasonTournamentRoundRepository.findByNameContaining(name);
         return ls;
     }
-    
+
     public SeasonTournamentRound findByName(String name) {
         LOG.info("findByNameContaining({})", name);
         if (name == null) {
             LOG.error("name can't be null: {}", name);
             throw new InvalidParameterException("required parameter null");
         }
-        
+
         SeasonTournamentRound s = seasonTournamentRoundRepository.findByName(name);
         return s;
     }
-    
+
     public List<SeasonTournamentRoundDTO> findAll() {
         LOG.info("findAll()");
         List<SeasonTournamentRoundDTO> l = new ArrayList<>();
@@ -87,16 +87,16 @@ public class SeasonTournamentRoundService {
         }
         return l;
     }
-    
+
     @Transactional
     public SeasonTournamentRoundDTO createSeasonTournamentRound(SeasonTournamentRoundDTO round) throws AppException {
         LOG.info("createSeasonTournamentRound({},{})", round.getSeasonTournamentId(), round.getName());
-        
+
         SeasonTournament seasonTournament;
         SeasonTournamentRound seasonTournamentRound;
-        
+
         if (round.getName() == null) {
-            LOG.error("nevyplnene povinne Parametre: {}",round.getName());
+            LOG.error("nevyplnene povinne Parametre: {}", round.getName());
             throw new AppException(HttpStatus.BAD_REQUEST, "required parameter null");
         }
         //TODO: kontrolovat len pre ST nie globalne
@@ -106,35 +106,49 @@ public class SeasonTournamentRoundService {
 //        }
 
         seasonTournament = seasonTournamentRepo.findOne(round.getSeasonTournamentId());
-        
+
         if (seasonTournament == null) {
             LOG.error("wrong reference id: {}", round.getSeasonTournamentId());
             throw new AppException(HttpStatus.BAD_REQUEST, "neexistuje seasonTournament s ID: " + round.getSeasonTournamentId());
         }
-        
+
         seasonTournamentRound = new SeasonTournamentRound(seasonTournament, round.getName());
         seasonTournamentRound = roundRepo.saveAndFlush(seasonTournamentRound);
-        
+
         if (seasonTournamentRound == null) {
             LOG.error("save has failed: {}", round.getName());
             throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "chyba pri ukladani group: " + round.getName());
         }
-        
+
         return stConverter.roundEntityToDto(seasonTournamentRound);
     }
-    
-     public List<SeasonTournamentRoundDTO> findAllBySeasonTournament(Integer stId) throws AppException{
-      LOG.info("findAllBySeasonTournament({})",stId);
-      SeasonTournament st = seasonTournamentRepo.findOne(stId);
-      if(st==null){
-      LOG.error("nenajdeny seasonTournament s id:{}",stId);
-      throw new AppException(HttpStatus.BAD_REQUEST,"nenajdeny seasonTournament s id:"+stId);
-  }
-      List<SeasonTournamentRound> ls = seasonTournamentRoundRepository.findBySeasonTournament(st);
-      List<SeasonTournamentRoundDTO> l = new ArrayList<>();
+
+    public List<SeasonTournamentRoundDTO> findAllBySeasonTournament(Integer stId) throws AppException {
+        LOG.info("findAllBySeasonTournament({})", stId);
+        SeasonTournament st = seasonTournamentRepo.findOne(stId);
+        if (st == null) {
+            LOG.error("nenajdeny seasonTournament s id:{}", stId);
+            throw new AppException(HttpStatus.BAD_REQUEST, "nenajdeny seasonTournament s id:" + stId);
+        }
+        List<SeasonTournamentRound> ls = seasonTournamentRoundRepository.findBySeasonTournament(st);
+        List<SeasonTournamentRoundDTO> l = new ArrayList<>();
         for (SeasonTournamentRound g : ls) {
             l.add(stConverter.roundEntityToDto(g));
         }
-      return l;
-   }
+        return l;
+    }
+
+    @Transactional
+    public SeasonTournamentRoundDTO update(SeasonTournamentRoundDTO updated) throws AppException {
+        LOG.info("update()");
+        SeasonTournamentRound s = stConverter.roundDtoToEntity(updated);
+
+        s = seasonTournamentRoundRepository.saveAndFlush(s);
+
+        if (s == null) {
+            LOG.error("nepodarilo sa ulozit stRound do db");
+            throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "SeasonTournamentRound sa nepodarilo aktualizovat");
+        }
+        return stConverter.roundEntityToDto(s);
+    }
 }

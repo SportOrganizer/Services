@@ -5,6 +5,7 @@
  */
 package com.so.core.services.season;
 
+import com.so.core.controller.converter.season.SeasonTournamentConverter;
 import com.so.dal.core.model.season.SeasonTournament;
 import com.so.dal.core.model.season.SeasonTournamentPeriod;
 import com.so.dal.core.repository.season.SeasonTournamentPeriodRepository;

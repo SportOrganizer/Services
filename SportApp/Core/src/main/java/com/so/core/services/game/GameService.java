@@ -83,14 +83,15 @@ public class GameService {
     }
 
     @Transactional
-    public List<GameDto> findBySeasonTournament(Integer stId) throws AppException {
-        LOG.info("findBySeasonTournament({})", stId);
+    public List<GameDto> findBySeasonTournament(Integer stId, Integer groupId, Integer roundId, Integer locationId) throws AppException {
+        LOG.info("findBySeasonTournament({},{},{},{})", stId, roundId, groupId, locationId);
         SeasonTournament st = stRepo.findOne(stId);
         if (st == null) {
             LOG.error("nenajdeny seasonTournament s id:", stId);
             throw new AppException(HttpStatus.NOT_FOUND, "nenajdeny seasonTournament s id:" + stId);
         }
-        List<Game> lg = gameRepo.findAllBySeasonTournamentOrderByStartTimeAsc(st);
+        //  List<Game> lg = gameRepo.findAllBySeasonTournamentOrderByStartTimeAsc(st);
+        List<Game> lg = gameRepo.filterByGroupROundLocation(groupId, roundId, locationId, stId);
         List<GameDto> l = new ArrayList<>();
 
         for (Game g : lg) {
@@ -98,7 +99,7 @@ public class GameService {
         }
         return l;
     }
-    
+
     @Transactional
     public GameDto editGame(GameDto updatedGame) throws AppException {
         LOG.info("editGame({})", updatedGame);
@@ -106,7 +107,7 @@ public class GameService {
             LOG.error("aktualizovany objekt je null");
             throw new AppException(HttpStatus.BAD_REQUEST, "zadany objekt je nespravne vyplneny");
         }
-        
+
         Game game = gameConverter.gameDtoToEntity(updatedGame);
         Game savedGame = gameRepo.saveAndFlush(game);
 
@@ -117,8 +118,8 @@ public class GameService {
         return gameConverter.gameEntityToDto(savedGame);
 
     }
-    
-     @Transactional
+
+    @Transactional
     public void deleteGame(Integer id) throws AppException {
         LOG.info("deleteGame({})", id);
         Game g = gameRepo.findOne(id);
@@ -145,7 +146,7 @@ public class GameService {
         }
         return gameConverter.gamePlayerEntityToDto(g);
     }
-    
+
     @Transactional
     public GamePlayerDto findGamePlayer(Integer id) throws AppException {
         LOG.info("findGamePlayer({})", id);
@@ -166,7 +167,7 @@ public class GameService {
         }
         return l;
     }
-    
+
     @Transactional
     public List<GamePlayerDto> getAllGamePlayersByGame(Integer gId) throws AppException {
         LOG.info("getAllGamePlayersByGame({})", gId);
@@ -185,8 +186,8 @@ public class GameService {
         return lDto;
 
     }
-    
-     @Transactional
+
+    @Transactional
     public void deleteGamePlayer(Integer id) throws AppException {
         LOG.info("deleteGamePlayer({})", id);
         GamePlayer gp = gamePlayerRepo.findOne(id);
@@ -205,7 +206,7 @@ public class GameService {
             LOG.error("aktualizovany objekt je null");
             throw new AppException(HttpStatus.BAD_REQUEST, "zadany objekt je nespravne vyplneny");
         }
-        
+
         GamePlayer gamePlayer = gameConverter.gamePlayerDtoToEntity(updatedGp);
         gamePlayer = gamePlayerRepo.saveAndFlush(gamePlayer);
 
@@ -214,9 +215,6 @@ public class GameService {
             throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "GamePlayera sa nepodarilo aktualizovat");
         }
         return gameConverter.gamePlayerEntityToDto(gamePlayer);
-
     }
-    
-    
 
 }

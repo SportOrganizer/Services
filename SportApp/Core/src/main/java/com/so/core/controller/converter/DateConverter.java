@@ -19,39 +19,53 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DateConverter {
-    
-     public  Date stringToDateTime(String stringDate) throws AppException {
+
+    public Date stringToDateTime(String stringDate) throws AppException {
+        if (stringDate == null) {
+            return null;
+        }
+
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        Date date = new Date();
+        try {
+            date = format.parse(stringDate);
+        } catch (ParseException ex) {
+            throw new AppException(HttpStatus.BAD_REQUEST, "chyba parsovania datumu");
+        }
+        return date;
+    }
+
+    public String dateTimeToString(Date date) {
+        if (date == null) {
+            return null;
+        }
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        String stringDate = format.format(date);
+        return stringDate;
+    }
+
+    public Date stringToDate(String stringDate) throws AppException {
+        if (stringDate == null) {
+            return null;
+        }
+
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         Date date = new Date();
         try {
             date = format.parse(stringDate);
         } catch (ParseException ex) {
-            throw new AppException(HttpStatus.BAD_REQUEST,"chyba parsovania datumu");
+            throw new AppException(HttpStatus.BAD_REQUEST, "chyba parsovania datumu");
         }
         return date;
     }
-    
-    public  String dateTimeToString(Date date){
+
+    public String dateToString(Date date) {
+        if (date == null) {
+            return null;
+        }
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         String stringDate = format.format(date);
         return stringDate;
     }
-    
-         public Date stringToDate(String stringDate) throws AppException {
-        DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-        Date date = new Date();
-        try {
-            date = format.parse(stringDate);
-        } catch (ParseException ex) {
-            throw new AppException(HttpStatus.BAD_REQUEST,"chyba parsovania datumu");
-        }
-        return date;
-    }
-    
-    public String dateToString(Date date){
-        DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-        String stringDate = format.format(date);
-        return stringDate;
-    }
-    
+
 }

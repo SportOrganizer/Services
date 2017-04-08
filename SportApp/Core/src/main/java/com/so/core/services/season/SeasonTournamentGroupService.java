@@ -114,19 +114,33 @@ public class SeasonTournamentGroupService {
         }
         return stConverter.groupEntityToDto(seasonTournamentGroup);
     }
-    
-  public List<SeasonTournamentGroupDTO> findAllBySeasonTournament(Integer stId) throws AppException{
-      LOG.info("findAllBySeasonTournament({})",stId);
-      SeasonTournament st = seasonTournamentRepo.findOne(stId);
-      if(st==null){
-      LOG.error("nenajdeny seasonTournament s id:{}",stId);
-      throw new AppException(HttpStatus.BAD_REQUEST,"nenajdeny seasonTournament s id:"+stId);
-  }
-      List<SeasonTournamentGroup> ls = seasonTournamentGroupRepo.findBySeasonTournament(st);
-      List<SeasonTournamentGroupDTO> l = new ArrayList<>();
+
+    public List<SeasonTournamentGroupDTO> findAllBySeasonTournament(Integer stId) throws AppException {
+        LOG.info("findAllBySeasonTournament({})", stId);
+        SeasonTournament st = seasonTournamentRepo.findOne(stId);
+        if (st == null) {
+            LOG.error("nenajdeny seasonTournament s id:{}", stId);
+            throw new AppException(HttpStatus.BAD_REQUEST, "nenajdeny seasonTournament s id:" + stId);
+        }
+        List<SeasonTournamentGroup> ls = seasonTournamentGroupRepo.findBySeasonTournament(st);
+        List<SeasonTournamentGroupDTO> l = new ArrayList<>();
         for (SeasonTournamentGroup g : ls) {
             l.add(stConverter.groupEntityToDto(g));
         }
-      return l;
-   }
+        return l;
+    }
+
+    @Transactional
+    public SeasonTournamentGroupDTO update(SeasonTournamentGroupDTO updated) throws AppException {
+        LOG.info("update()");
+        SeasonTournamentGroup s = stConverter.groupDtoToEntity(updated);
+
+        s = seasonTournamentGroupRepo.saveAndFlush(s);
+
+        if (s == null) {
+            LOG.error("nepodarilo sa ulozit stGround do db");
+            throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "SeasonTournamentGround sa nepodarilo aktualizovat");
+        }
+        return stConverter.groupEntityToDto(s);
+    }
 }
