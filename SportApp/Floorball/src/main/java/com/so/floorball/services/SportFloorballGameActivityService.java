@@ -8,6 +8,7 @@ package com.so.floorball.services;
 import com.so.core.controller.dto.game.GameDto;
 import com.so.core.exception.AppException;
 import com.so.core.services.PersonService;
+import com.so.dal.core.repository.game.GameRepository;
 import com.so.dal.floorball.model.game.SportFlorbalGameActivity;
 import com.so.dal.floorball.model.game.SportFlorbalGameShots;
 import com.so.dal.floorball.repository.game.SportFlorbalGameActivityRepository;
@@ -47,6 +48,9 @@ public class SportFloorballGameActivityService {
     @Autowired
     SportFlorbalGameShotsRepository shotsRepo;
     
+    @Autowired
+    GameRepository gameRepo;
+    
     @Transactional
     public ResponseSportFloorballGameActivityDto addSportFloorballGameActivity(RequestSportFloorballGameActivityDto dto) throws AppException {
         LOG.info("addSportFloorballGameActivity()");
@@ -69,10 +73,23 @@ public class SportFloorballGameActivityService {
     }
     
     @Transactional
-    public List<ResponseSportFloorballGameActivityDto> findAllActivity() {
-        LOG.info("findAllActivity()");
+    public List<ResponseSportFloorballGameActivityDto> findAllActivities() {
+        LOG.info("findAllActivities()");
 
         List<SportFlorbalGameActivity> lg = sfgaRepo.findAll();
+        List<ResponseSportFloorballGameActivityDto> l = new ArrayList<>();
+
+        for (SportFlorbalGameActivity g : lg) {
+            l.add(converter.sportFloorballGameActivityEntityToDto(g));
+        }
+        return l;
+    }
+    
+    @Transactional
+    public List<ResponseSportFloorballGameActivityDto> findAllActivitiesByGame(Integer idGame) {
+        LOG.info("findAllActivitiesByGame()");
+
+        List<SportFlorbalGameActivity> lg = sfgaRepo.findByGame(gameRepo.findOne(idGame));
         List<ResponseSportFloorballGameActivityDto> l = new ArrayList<>();
 
         for (SportFlorbalGameActivity g : lg) {

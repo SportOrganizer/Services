@@ -6,7 +6,9 @@
 package com.so.dal.floorball.repository.game;
 
 
+import com.so.dal.core.model.game.Game;
 import com.so.dal.floorball.model.game.SportFlorbalGameActivity;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,5 +18,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface SportFlorbalGameActivityRepository extends JpaRepository<SportFlorbalGameActivity, Integer> {
+    public List<SportFlorbalGameActivity> findByGame(Game game);
     
 }
