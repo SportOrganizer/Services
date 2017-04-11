@@ -37,7 +37,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class GameConverter {
 
-    private final static Logger LOG = LoggerFactory.getLogger(Game.class);
+    private final static Logger LOG = LoggerFactory.getLogger(GameConverter.class);
 
     @Autowired
     private CompetitorEntityConverter competitorConverter;
