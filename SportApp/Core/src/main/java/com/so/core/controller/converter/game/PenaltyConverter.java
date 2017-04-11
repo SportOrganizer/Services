@@ -5,6 +5,7 @@
  */
 package com.so.core.controller.converter.game;
 
+import com.so.core.controller.dto.season.penalty.PenaltyCustomDto;
 import com.so.core.controller.dto.season.penalty.PenaltyDto;
 import com.so.core.controller.dto.season.penalty.PenaltyTypeDto;
 import com.so.core.controller.dto.season.penalty.SeasonTournamentPenaltySettingsDto;
@@ -22,6 +23,7 @@ import com.so.dal.core.repository.game.PenaltyTypeRepository;
 import com.so.dal.core.repository.season.SeasonTournamentPenaltySettingsRepository;
 import com.so.dal.core.repository.season.SeasonTournamentPenaltyTypeRepository;
 import com.so.dal.core.repository.season.SeasonTournamentRepository;
+import com.so.dal.floorball.model.game.SportFlorbalGameActivity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +56,21 @@ public class PenaltyConverter {
 
     @Autowired
     private SeasonTournamentPenaltySettingsRepository stPenaltySettingsRepo;
+    
+    public PenaltyCustomDto penaltyCustomEntityToDto(SeasonTournamentPenaltySettings entity){
+        PenaltyCustomDto dto = new PenaltyCustomDto();
+        dto.setId(entity.getId());
+        dto.setIsPlayerDown(entity.getSeasonTournamentPenaltyType().getIsPlayerDown());
+        dto.setNamePenalty(entity.getPenalty().getName());
+        dto.setNamePenaltyType(entity.getSeasonTournamentPenaltyType().getPenaltyType().getName());
+        dto.setPenaltyDuration(entity.getSeasonTournamentPenaltyType().getPenaltyDuration());
+        dto.setPenaltyStatsDuration(entity.getSeasonTournamentPenaltyType().getPenaltyStatsDuration());
+        dto.setShortNamePenalty(entity.getPenalty().getShortName());
+        
+        return dto;
+        
+    }
+    
 
     public PenaltyDto penaltyEntityToDto(Penalty entity) {
         PenaltyDto dto = new PenaltyDto();

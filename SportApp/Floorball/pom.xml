@@ -17,6 +17,8 @@
         <jstl.version>1.2</jstl.version>
         <servletapi.version>3.1.0</servletapi.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -92,6 +94,12 @@
             <artifactId>Dal</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.so</groupId>
+            <artifactId>Core</artifactId>
+            <version>1.0.0</version>
+            <classifier>classes</classifier>
         </dependency>
     </dependencies>
 
