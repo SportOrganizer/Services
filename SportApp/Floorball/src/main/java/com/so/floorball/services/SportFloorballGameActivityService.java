@@ -48,6 +48,7 @@ public class SportFloorballGameActivityService {
     @Autowired
     SportFlorbalGameShotsRepository shotsRepo;
     
+
     @Autowired
     GameRepository gameRepo;
     
