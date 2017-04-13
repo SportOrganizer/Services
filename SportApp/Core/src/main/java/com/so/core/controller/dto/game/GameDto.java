@@ -5,10 +5,10 @@
  */
 package com.so.core.controller.dto.game;
 
+import com.so.core.controller.dto.season.SeasonTournamentDTO;
 import com.so.core.controller.dto.season.SeasonTournamentGroupDTO;
 import com.so.core.controller.dto.season.SeasonTournamentLocationDTO;
 import com.so.core.controller.dto.season.SeasonTournamentRoundDTO;
-import java.util.Date;
 
 /**
  *
@@ -22,6 +22,7 @@ public class GameDto {
     private SeasonTournamentGroupDTO group;
     private SeasonTournamentLocationDTO location;
     private SeasonTournamentRoundDTO round;
+    private SeasonTournamentDTO seasonTournament;
     private String name;
     private String startTime;
     private String realStart;
@@ -127,6 +128,16 @@ public class GameDto {
     public void setContumated(Boolean contumated) {
         this.contumated = contumated;
     }
+
+    public SeasonTournamentDTO getSeasonTournament() {
+        return seasonTournament;
+    }
+
+    public void setSeasonTournament(SeasonTournamentDTO seasonTournamentId) {
+        this.seasonTournament = seasonTournamentId;
+    }
+
+
 
 
 }
