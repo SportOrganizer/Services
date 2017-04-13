@@ -48,7 +48,6 @@ public class DateConverter {
         if (stringDate == null) {
             return null;
         }
-
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         Date date = new Date();
         try {
@@ -66,6 +65,29 @@ public class DateConverter {
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         String stringDate = format.format(date);
         return stringDate;
+    }
+    
+    public String timeToString(Date time){
+         if (time == null) {
+            return null;
+        }
+        DateFormat format = new SimpleDateFormat("HH:mm:ss");
+        String stringDate = format.format(time);
+        return stringDate;
+    }
+    
+    public Date stringToTime(String timeString) throws AppException{
+           if (timeString == null) {
+            return null;
+        }
+        DateFormat format = new SimpleDateFormat("HH:mm:ss");
+        Date date = new Date();
+        try {
+            date = format.parse(timeString);
+        } catch (ParseException ex) {
+            throw new AppException(HttpStatus.BAD_REQUEST, "chyba parsovania datumu");
+        }
+        return date;
     }
 
 }

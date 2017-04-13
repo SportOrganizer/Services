@@ -364,4 +364,9 @@ public class SeasonTournamentController {
         return gson.toJson(penaltyService.getAllStPenaltySettingsBySt(stId));
     }
 
+    //find by name containing
+    //find by st
+    //create
+    //edit
+    // find by id
 }
