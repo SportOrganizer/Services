@@ -57,7 +57,7 @@ public class GameService {
     }
 
     @Transactional
-    public List<GameDto> findAllGames() {
+    public List<GameDto> findAllGames() throws AppException {
         LOG.info("findAllGames()");
 
         List<Game> lg = gameRepo.findAllByOrderByStartTimeAsc();

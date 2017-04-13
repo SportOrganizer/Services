@@ -14,6 +14,7 @@ import com.so.dal.core.model.game.CompetitorTeam;
 import com.so.dal.core.model.game.CompetitorTeamPlayer;
 import com.so.dal.core.model.game.Game;
 import com.so.dal.core.model.game.GamePlayer;
+import com.so.dal.core.model.season.SeasonTournament;
 import com.so.dal.core.model.season.SeasonTournamentGroup;
 import com.so.dal.core.model.season.SeasonTournamentLocation;
 import com.so.dal.core.model.season.SeasonTournamentRound;
@@ -23,6 +24,7 @@ import com.so.dal.core.repository.game.GamePlayerRepository;
 import com.so.dal.core.repository.game.GameRepository;
 import com.so.dal.core.repository.season.SeasonTournamentGroupRepository;
 import com.so.dal.core.repository.season.SeasonTournamentLocationRepository;
+import com.so.dal.core.repository.season.SeasonTournamentRepository;
 import com.so.dal.core.repository.season.SeasonTournamentRoundRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,7 +71,10 @@ public class GameConverter {
     @Autowired
     private DateConverter dateConverter;
 
-    public GameDto gameEntityToDto(Game entity) {
+    @Autowired
+    private SeasonTournamentRepository stRepo;
+
+    public GameDto gameEntityToDto(Game entity) throws AppException {
         GameDto dto = new GameDto();
         dto.setId(entity.getId());
         dto.setContumated(entity.isFinished());
@@ -96,6 +101,10 @@ public class GameConverter {
 
         if (entity.getSeasonTournamentRound() != null) {
             dto.setRound(seasonTournamentConverter.roundEntityToDto(entity.getSeasonTournamentRound()));
+        }
+
+        if (entity.getSeasonTournament() != null) {
+            dto.setSeasonTournament(seasonTournamentConverter.entityToDto(entity.getSeasonTournament()));
         }
 
         return dto;
@@ -174,6 +183,18 @@ public class GameConverter {
                     throw new AppException(HttpStatus.BAD_REQUEST, "neexistuje round s id: " + dto.getRound().getId());
                 } else {
                     entity.setSeasonTournamentRound(r);
+                }
+            }
+        }
+
+        if (dto.getSeasonTournament() != null) {
+            if (dto.getSeasonTournament().getId() != null) {
+                SeasonTournament st = stRepo.findOne(dto.getSeasonTournament().getId());
+                if (st == null) {
+                    LOG.error("neexistuje seasonTournament s id {}", dto.getSeasonTournament());
+                    throw new AppException(HttpStatus.BAD_REQUEST, "neexistuje seasonTournament s id: " + dto.getSeasonTournament());
+                } else {
+                    entity.setSeasonTournament(st);
                 }
             }
         }
