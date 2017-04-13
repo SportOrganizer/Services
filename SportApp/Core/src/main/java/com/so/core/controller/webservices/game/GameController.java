@@ -54,7 +54,7 @@ public class GameController {
     }
 
     @RequestMapping(path = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String getAllGames() {
+    public String getAllGames() throws AppException {
         Gson gson = new Gson();
         List<GameDto> response = gameService.findAllGames();
         return gson.toJson(response);
