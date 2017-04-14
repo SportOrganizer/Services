@@ -4,7 +4,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan(basePackages ={"com.so.floorball.main","com.so.floorball.controller","com.so.floorball.services","com.so.dal","com.so.core.configuration"})
+@ComponentScan(basePackages ={"com.so.floorball",
+    "com.so.dal", "com.so.core.exception",  "com.so.core.controller.dto",
+      "com.so.core.services","com.so.core.controller.converter"})
 public class AppConfigFloorball  {
 
 
