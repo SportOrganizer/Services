@@ -15,6 +15,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 public class AppInitializerFloorball implements WebApplicationInitializer {
 
+    @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         WebApplicationContext context = getContext();
         servletContext.addListener(new ContextLoaderListener(context));
@@ -26,6 +27,7 @@ public class AppInitializerFloorball implements WebApplicationInitializer {
     private AnnotationConfigWebApplicationContext getContext() {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
         context.setConfigLocation("com.so.floorball.configuration");
+        
         return context;
     }
 
