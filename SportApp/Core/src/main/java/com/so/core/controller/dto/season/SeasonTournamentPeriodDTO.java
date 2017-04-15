@@ -5,7 +5,9 @@ import com.so.dal.core.model.season.SeasonTournamentPeriod;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by janpolacek on 1/28/17.
@@ -16,25 +18,16 @@ public class SeasonTournamentPeriodDTO {
     private String name;
     private String length;
     private Boolean isGoldPart;
-    private String type;
-
 
     public SeasonTournamentPeriodDTO() {
     }
 
-    public SeasonTournamentPeriodDTO(Integer seasonTournamentId, String name, String length, Boolean isGoldPart, String type) {
+    public SeasonTournamentPeriodDTO(Integer id, Integer seasonTournamentId, String name, String length, Boolean isGoldPart) {
+        this.id = id;
         this.seasonTournamentId = seasonTournamentId;
         this.name = name;
         this.length = length;
         this.isGoldPart = isGoldPart;
-        this.type = type;
-    }
-
-    public SeasonTournamentPeriodDTO(SeasonTournamentPeriod st) {
-        this.id = st.getId();
-        this.seasonTournamentId = st.getId();
-        this.name = st.getName();
-        this.length = st.getLength().toString();
     }
 
     public Integer getId() {
@@ -65,15 +58,6 @@ public class SeasonTournamentPeriodDTO {
         return length;
     }
 
-    public Date getLengthDate() throws ParseException {
-        String str_date= this.getLength();
-        DateFormat formatter ;
-        Date date ;
-        formatter = new SimpleDateFormat("hh:mm:ss");
-        date = formatter.parse(str_date);
-        return date;
-    }
-
     public void setLength(String length) {
         this.length = length;
     }
@@ -86,13 +70,7 @@ public class SeasonTournamentPeriodDTO {
         this.isGoldPart = isGoldPart;
     }
 
-    public String getType(){
-        return type;
-    }
-    
-    public void setType(String type) {
-        this.type = type;
-    }
-    
+
+  
     
 }

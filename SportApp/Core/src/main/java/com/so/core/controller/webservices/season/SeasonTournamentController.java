@@ -299,7 +299,7 @@ public class SeasonTournamentController {
         return gson.toJson(response);
     }
 
-    @RequestMapping(path = "/stpenaltytype/byst/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(path = "{id}/stpenaltytype/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getAllStPenaltyType(@PathVariable(value = "id") Integer id) throws AppException {
         Gson gson = new Gson();
         List<SeasonTournamentPenaltyTypeDto> response = penaltyService.getAllStPenaltyTypeBySt(id);
@@ -364,4 +364,9 @@ public class SeasonTournamentController {
         return gson.toJson(penaltyService.getAllStPenaltySettingsBySt(stId));
     }
 
+    //find by name containing
+    //find by st
+    //create
+    //edit
+    // find by id
 }

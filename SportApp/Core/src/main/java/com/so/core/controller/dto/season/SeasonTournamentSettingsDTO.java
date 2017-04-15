@@ -10,13 +10,25 @@ package com.so.core.controller.dto.season;
  * @author Kristian
  */
 public class SeasonTournamentSettingsDTO {
-    Integer id;
-    Integer idSeasonTournament;
-    String name;
-    String value;
+
+    private Integer id;
+    private Integer idSeasonTournament;
+    private SeasonTournamentSettingsTypeDto type;
+    private String name;
+    private String value;
 
     public SeasonTournamentSettingsDTO() {
     }
+
+    public SeasonTournamentSettingsDTO(Integer id, Integer idSeasonTournament, SeasonTournamentSettingsTypeDto type, String name, String value) {
+        this.id = id;
+        this.idSeasonTournament = idSeasonTournament;
+        this.type = type;
+        this.name = name;
+        this.value = value;
+    }
+
+    
     
     public Integer getId() {
         return id;
@@ -34,6 +46,14 @@ public class SeasonTournamentSettingsDTO {
         this.idSeasonTournament = idSeasonTournament;
     }
 
+    public SeasonTournamentSettingsTypeDto getType() {
+        return type;
+    }
+
+    public void setType(SeasonTournamentSettingsTypeDto type) {
+        this.type = type;
+    }
+
     public String getName() {
         return name;
     }
@@ -49,6 +69,6 @@ public class SeasonTournamentSettingsDTO {
     public void setValue(String value) {
         this.value = value;
     }
-    
-    
+
+   
 }

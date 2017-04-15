@@ -6,6 +6,8 @@
 package com.so.core.services.season;
 
 import com.so.core.controller.converter.season.SeasonTournamentConverter;
+import com.so.core.controller.dto.season.SeasonTournamentPeriodDTO;
+import com.so.core.exception.AppException;
 import com.so.dal.core.model.season.SeasonTournament;
 import com.so.dal.core.model.season.SeasonTournamentPeriod;
 import com.so.dal.core.repository.season.SeasonTournamentPeriodRepository;
@@ -16,10 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.InvalidParameterException;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
-
+import org.springframework.http.HttpStatus;
 
 @Service
 public class SeasonTournamentPeriodService {
@@ -27,87 +28,100 @@ public class SeasonTournamentPeriodService {
     private final static Logger LOG = LoggerFactory.getLogger(SeasonTournamentPeriodService.class); /// logovanie..
 
     @Autowired
-    SeasonTournamentPeriodRepository seasonTournamentPeriodRepository;
+    private SeasonTournamentPeriodRepository seasonTournamentPeriodRepository;
 
     @Autowired
-    SeasonTournamentRepository seasonTournamentRepo;
+    private SeasonTournamentRepository seasonTournamentRepo;
 
+    @Autowired
+    private SeasonTournamentConverter stConverter;
 
-    public SeasonTournamentPeriod findById(Integer id){
+    public SeasonTournamentPeriodDTO findById(Integer id) throws AppException {
         LOG.info("findById({})", id);
-        if(id == null){
+        if (id == null) {
             LOG.error("id can't be null: {}", id);
-            throw new InvalidParameterException("required parameter null");
+            throw new AppException(HttpStatus.BAD_REQUEST, "required parameter null");
         }
-
         SeasonTournamentPeriod str = seasonTournamentPeriodRepository.findOne(id);
-        return str;
+        if (str == null) {
+            LOG.error("nenajdeny seasonPeriod s id {}", id);
+            throw new AppException(HttpStatus.NOT_FOUND, "nenajdeny seasonPeriod s id: " + id);
+        }
+        return stConverter.stPeriodEntityToDto(str);
     }
 
-    public List<SeasonTournamentPeriod> findByNameContaining(String name){
+    public List<SeasonTournamentPeriodDTO> findByNameContaining(String name) throws AppException {
         LOG.info("findByNameContaining({})", name);
-
-        if(name == null){
+        List<SeasonTournamentPeriodDTO> ls = new ArrayList<>();
+        if (name == null) {
             LOG.error("name can't be null: {}", name);
-            throw new InvalidParameterException("required parameter null");
+            throw new AppException(HttpStatus.BAD_REQUEST, "required parameter null");
         }
-        List<SeasonTournamentPeriod> ls= seasonTournamentPeriodRepository.findByNameContaining(name);
+        for (SeasonTournamentPeriod stp : seasonTournamentPeriodRepository.findByNameContaining(name)) {
+            ls.add(stConverter.stPeriodEntityToDto(stp));
+        }
         return ls;
     }
 
-    public SeasonTournamentPeriod findByName(String name){
-        LOG.info("findByNameContaining({})", name);
-        if(name == null){
-            LOG.error("name can't be null: {}", name);
-            throw new InvalidParameterException("required parameter null");
+//    public SeasonTournamentPeriod findByName(String name) {
+//        LOG.info("findByNameContaining({})", name);
+//        if (name == null) {
+//            LOG.error("name can't be null: {}", name);
+//            throw new InvalidParameterException("required parameter null");
+//        }
+//
+//        SeasonTournamentPeriod s = seasonTournamentPeriodRepository.findByName(name);
+//        return s;
+//    }
+    public List<SeasonTournamentPeriodDTO> findBySt(Integer stId) throws AppException {
+        LOG.info("findBySt({})", stId);
+        if (stId == null) {
+            throw new AppException(HttpStatus.BAD_REQUEST, "nezadany povinny atribut");
         }
-
-        SeasonTournamentPeriod  s = seasonTournamentPeriodRepository.findByName(name);
-        return  s;
-    }
-
-    public List<SeasonTournamentPeriod> findAll(){
-        LOG.info("findAll()");
-
-        List<SeasonTournamentPeriod> ls= seasonTournamentPeriodRepository.findAll();
+        SeasonTournament st = seasonTournamentRepo.findOne(stId);
+        if (st == null) {
+            throw new AppException(HttpStatus.BAD_REQUEST, "nenajdeny seasonTournament s id:" + stId);
+        }
+        List<SeasonTournamentPeriodDTO> ls = new ArrayList<>();
+        for (SeasonTournamentPeriod stp : seasonTournamentPeriodRepository.findBySeasonTournament(st)) {
+            ls.add(stConverter.stPeriodEntityToDto(stp));
+        }
         return ls;
     }
 
     @Transactional
-    public Boolean createSeasonTournamentPeriod(Integer seasonTournamentId,  String name, Date length, Boolean isGoldPart) {
-        LOG.info("createSeasonTournamentPeriod({},{},{})",seasonTournamentId,name,length);
+    public void createSeasonTournamentPeriod(SeasonTournamentPeriodDTO dto) throws AppException {
+        LOG.info("createSeasonTournamentPeriod({},{},{})", dto.getSeasonTournamentId(), dto.getName(), dto.getLength());
 
-        SeasonTournament seasonTournament;
-        SeasonTournamentPeriod seasonTournamentPeriod ;
+        SeasonTournamentPeriod seasonTournamentPeriod;
 
-        if(seasonTournamentId == null || name == null || length == null || isGoldPart == null){
-            LOG.error("required can't be null: {}, {},{}, {}", seasonTournamentId,name,length,isGoldPart);
-            throw new InvalidParameterException("required parameter null");
+        if (dto.getSeasonTournamentId() == null || dto.getName() == null
+                || dto.getLength() == null || dto.getIsGoldPart() == null) {
+            LOG.error("required can't be null");
+            throw new AppException(HttpStatus.BAD_REQUEST, "required parameter null");
         }
 
-        if(seasonTournamentPeriodRepository.findByName(name) != null){
-            LOG.error("duplicate name: {}", name);
-            return false;
-        }
-
-        seasonTournament = seasonTournamentRepo.findOne(seasonTournamentId);
-
-        if(seasonTournament == null){
-            LOG.error("wrong reference id: {}", seasonTournament);
-            return false;
-        }
-
-        seasonTournamentPeriod = new SeasonTournamentPeriod(seasonTournament, name, length, isGoldPart);
-        seasonTournamentPeriod  = seasonTournamentPeriodRepository.saveAndFlush(seasonTournamentPeriod);
+        seasonTournamentPeriod = stConverter.stPeriodDtoToEntity(dto);
+        seasonTournamentPeriod = seasonTournamentPeriodRepository.saveAndFlush(seasonTournamentPeriod);
 
         if (seasonTournamentPeriod == null) {
-            LOG.error("save has failed: {}", name);
-            return false;
+            LOG.error("save has failed: {}", dto.getName());
+            throw new AppException(HttpStatus.BAD_REQUEST, "chyba pri ukladani stPeriod");
         }
-
-        return true;
     }
 
+    @Transactional
+    public SeasonTournamentPeriodDTO editStPeriod(SeasonTournamentPeriodDTO stDto) throws AppException {
+        LOG.info("editStPeriod()");
+        SeasonTournamentPeriod stp = stConverter.stPeriodDtoToEntity(stDto);
 
+        stp = seasonTournamentPeriodRepository.save(stp);
+
+        if (stp == null) {
+            LOG.error("nepodarilo sa ulozit upraveny stPeriod do databazy");
+            throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "nepodarilo sa ulozit stPeriod do dbs");
+        }
+        return stConverter.stPeriodEntityToDto(stp);
+    }
 
 }
