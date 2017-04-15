@@ -23,7 +23,7 @@ public class CompetitorTeamDto {
      private TeamDTO team;
    //  private Set<SportFlorbalGameActivity> sportFlorbalGameActivities = new HashSet<>(0);
    //  private Set<SportFlorbalGameShots> sportFlorbalGameShotses = new HashSet<>(0);
-     private List<CompetitorTeamPlayerDto> competitorTeamPlayers = new ArrayList<>(0);
+     private List<CompetitorTeamPlayerDto> competitorTeamPlayers;
  //    private Set<Game> gamesForIdAwayTeam = new HashSet<>(0);
   //   private Set<Game> gamesForIdHomeTeam = new HashSet<>(0);
 
