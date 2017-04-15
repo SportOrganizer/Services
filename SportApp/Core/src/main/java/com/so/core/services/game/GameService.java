@@ -83,15 +83,15 @@ public class GameService {
     }
 
     @Transactional
-    public List<GameDto> findBySeasonTournament(Integer stId, Integer groupId, Integer roundId, Integer locationId) throws AppException {
-        LOG.info("findBySeasonTournament({},{},{},{})", stId, roundId, groupId, locationId);
+    public List<GameDto> findBySeasonTournament(Integer stId, Integer groupId, Integer roundId, Integer locationId, Boolean finished) throws AppException {
+        LOG.info("findBySeasonTournament({},{},{},{},{})", stId, roundId, groupId, locationId, finished);
         SeasonTournament st = stRepo.findOne(stId);
         if (st == null) {
             LOG.error("nenajdeny seasonTournament s id:", stId);
             throw new AppException(HttpStatus.NOT_FOUND, "nenajdeny seasonTournament s id:" + stId);
         }
         //  List<Game> lg = gameRepo.findAllBySeasonTournamentOrderByStartTimeAsc(st);
-        List<Game> lg = gameRepo.filterByGroupROundLocation(groupId, roundId, locationId, stId);
+        List<Game> lg = gameRepo.filterByGroupRoundLocationFinished(groupId, roundId, locationId,finished, stId);
         List<GameDto> l = new ArrayList<>();
 
         for (Game g : lg) {

@@ -13,5 +13,5 @@ import java.util.List;
  * @author peter
  */
 public interface GameRepositoryCustom {
-  public List<Game> filterByGroupROundLocation(Integer group,Integer round, Integer location, Integer stId);  
+  public List<Game> filterByGroupRoundLocationFinished(Integer group,Integer round, Integer location, Boolean finished, Integer stId);  
 }

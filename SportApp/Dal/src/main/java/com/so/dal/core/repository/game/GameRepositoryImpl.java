@@ -23,12 +23,13 @@ public class GameRepositoryImpl implements GameRepositoryCustom {
     private EntityManager em;
 
     @Override
-    public List<Game> filterByGroupROundLocation(Integer group, Integer round, Integer location, Integer stId) {
+    public List<Game> filterByGroupRoundLocationFinished(Integer group, Integer round, Integer location,Boolean finished, Integer stId) {
         QGame qGame = QGame.game;
 
         Predicate pg;
         Predicate pr;
         Predicate pl;
+        Predicate pf;
         Predicate pSt =qGame.seasonTournament.id.eq(stId);
         
        
@@ -50,9 +51,15 @@ public class GameRepositoryImpl implements GameRepositoryCustom {
         } else {
             pl = qGame.seasonTournamentLocation.id.eq(location);
         }
+        
+        if(finished==null){
+            pf = null;
+        }else{
+            pf = qGame.finished.eq(finished);
+        }
 
         return new JPAQuery(em).from(qGame)
-                .where(pg, pr, pl, pSt).orderBy(qGame.startTime.asc())
+                .where(pg, pr, pl,pf, pSt).orderBy(qGame.startTime.asc())
                 .list(qGame);
     }
 

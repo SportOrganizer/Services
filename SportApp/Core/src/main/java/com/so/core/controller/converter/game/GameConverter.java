@@ -77,7 +77,7 @@ public class GameConverter {
     public GameDto gameEntityToDto(Game entity) throws AppException {
         GameDto dto = new GameDto();
         dto.setId(entity.getId());
-        dto.setContumated(entity.isFinished());
+        dto.setFinished(entity.isFinished());
         dto.setContumated(entity.isContumated());
         dto.setOvertime(entity.isOvertime());
         dto.setName(entity.getName());

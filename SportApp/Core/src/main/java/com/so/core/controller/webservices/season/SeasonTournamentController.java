@@ -6,6 +6,7 @@ import com.so.core.controller.dto.game.GameDto;
 import com.so.core.controller.dto.season.SeasonTournamentDTO;
 import com.so.core.controller.dto.season.SeasonTournamentGroupDTO;
 import com.so.core.controller.dto.season.SeasonTournamentLocationDTO;
+import com.so.core.controller.dto.season.SeasonTournamentPeriodDTO;
 import com.so.core.controller.dto.season.SeasonTournamentRoundDTO;
 import com.so.core.controller.dto.season.penalty.SeasonTournamentPenaltySettingsDto;
 import com.so.core.controller.dto.season.penalty.SeasonTournamentPenaltyTypeDto;
@@ -14,6 +15,7 @@ import com.so.core.services.game.GameService;
 import com.so.core.services.game.PenaltyService;
 import com.so.core.services.season.SeasonTournamentGroupService;
 import com.so.core.services.season.SeasonTournamentLocationService;
+import com.so.core.services.season.SeasonTournamentPeriodService;
 import com.so.core.services.season.SeasonTournamentRoundService;
 import com.so.core.services.season.SeasonTournamentService;
 import java.io.IOException;
@@ -47,6 +49,9 @@ public class SeasonTournamentController {
 
     @Autowired
     private PenaltyService penaltyService;
+
+    @Autowired
+    private SeasonTournamentPeriodService periodService;
 
     @RequestMapping(path = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getSeasonTournaments(@RequestParam(value = "q", required = false) String query) throws AppException {
@@ -243,9 +248,10 @@ public class SeasonTournamentController {
     public String getGameBySt(@RequestParam(value = "round", required = false) Integer idRound,
             @RequestParam(value = "location", required = false) Integer idLocation,
             @RequestParam(value = "group", required = false) Integer idGroup,
+            @RequestParam(value = "finished", required = false) Boolean finished,
             @PathVariable(value = "stId") Integer id) throws AppException {
         Gson gson = new Gson();
-        List<GameDto> response = gameService.findBySeasonTournament(id,idGroup,idRound, idLocation);
+        List<GameDto> response = gameService.findBySeasonTournament(id, idGroup, idRound, idLocation,finished);
         return gson.toJson(response);
     }
 
@@ -364,9 +370,39 @@ public class SeasonTournamentController {
         return gson.toJson(penaltyService.getAllStPenaltySettingsBySt(stId));
     }
 
-    //find by name containing
-    //find by st
-    //create
-    //edit
-    // find by id
+    @RequestMapping(path = "{stId}/period/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String getPeriodBySt(@PathVariable(value = "stId") Integer stId) throws AppException {
+        Gson gson = new Gson();
+        return gson.toJson(periodService.findBySt(stId));
+    }
+
+    @RequestMapping(path = "{stId}/period/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String getOnePeriod(@PathVariable(value = "stId") Integer stId,
+            @PathVariable(value = "id") Integer id) throws AppException {
+        Gson gson = new Gson();
+        return gson.toJson(periodService.findById(id));
+    }
+
+    @RequestMapping(path = "/period/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String createPeriod(@RequestBody SeasonTournamentPeriodDTO periodDto) throws AppException {
+        Gson gson = new Gson();
+        return gson.toJson(periodService.createSeasonTournamentPeriod(periodDto));
+    }
+
+    @RequestMapping(path = "/period/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String editPeriod(@RequestBody SeasonTournamentPeriodDTO periodDto,
+            @PathVariable(value = "id") Integer id) throws AppException {
+        Gson gson = new Gson();
+        if (!Objects.equals(id, periodDto.getId())) {
+            throw new AppException(HttpStatus.BAD_REQUEST, "id v url sa nerovna id v dto");
+        }
+        return gson.toJson(periodService.editStPeriod(periodDto));
+    }
+
+    @RequestMapping(path = "{stId}/period/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String deletePeriod(@PathVariable(value = "id") Integer id, @PathVariable(value = "stId") Integer stId) throws AppException {
+        Gson gson = new Gson();
+        periodService.deleteStPeriod(id);
+        return gson.toJson(periodService.findBySt(stId));
+    }
 }

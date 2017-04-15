@@ -368,6 +368,7 @@ public class SeasonTournamentConverter {
                 LOG.info("nenajdeny seasonTournament podla ID:" + dto.getSeasonTournamentId());
                 throw new AppException(HttpStatus.BAD_REQUEST, "nenajdeny season tournament podla id: " + dto.getSeasonTournamentId());
             }
+            entity.setSeasonTournament(st);
         }
         return entity;
     }
