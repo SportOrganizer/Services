@@ -24,7 +24,6 @@ public class StSettingsService {
     private SeasonTournamentSettingsRepository stSettingsRepo;
     
     public SeasonTournamentSettingsDTO addStSetting(SeasonTournamentSettingsDTO dto){
-
         return dto;
     }
 }
