@@ -1,6 +1,8 @@
 package com.so.core.controller.dto.season;
 
+import com.so.core.controller.dto.game.GameDto;
 import com.so.dal.core.model.season.SeasonTournamentRound;
+import java.util.List;
 
 /**
  * Created by janpolacek on 1/28/17.
@@ -9,6 +11,7 @@ public class SeasonTournamentRoundDTO {
     private Integer id;
     private Integer seasonTournamentId;
     private String name;
+    private List<GameDto> games;
 
     public SeasonTournamentRoundDTO() {
     }
@@ -46,5 +49,13 @@ public class SeasonTournamentRoundDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<GameDto> getGames() {
+        return games;
+    }
+
+    public void setGames(List<GameDto> games) {
+        this.games = games;
     }
 }

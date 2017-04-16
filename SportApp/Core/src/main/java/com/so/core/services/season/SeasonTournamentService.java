@@ -12,6 +12,7 @@ import com.so.core.exception.AppException;
 import com.so.dal.core.model.season.SeasonTournament;
 import com.so.dal.core.repository.season.SeasonTournamentRepository;
 import com.so.core.services.document.DocumentService;
+import com.so.core.services.game.GameService;
 import com.so.dal.core.model.Resource;
 import java.io.IOException;
 import org.slf4j.Logger;
@@ -34,6 +35,9 @@ public class SeasonTournamentService {
 
     @Autowired
     private DocumentService documentService;
+    
+    @Autowired
+    private GameService gameService;
 
     @Autowired
     private SeasonTournamentConverter seasonTournamentConverter;
@@ -51,7 +55,9 @@ public class SeasonTournamentService {
             LOG.info("nenajdeny seasonTournament podla id=", id);
             throw new AppException(HttpStatus.NOT_FOUND, "pre dane id neexistuje seasonTournament id=" + id);
         }
-        return seasonTournamentConverter.entityToDto(s);
+        SeasonTournamentDTO dto= seasonTournamentConverter.entityToDto(s);
+        dto.setSeasonTournamentGames(gameService.findBySeasonTournament(id, null, null, null, null));
+        return dto;
     }
 
     @Transactional

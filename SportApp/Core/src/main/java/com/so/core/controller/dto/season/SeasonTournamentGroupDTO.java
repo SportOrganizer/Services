@@ -5,7 +5,9 @@
  */
 package com.so.core.controller.dto.season;
 
+import com.so.core.controller.dto.game.CompetitorTeamDto;
 import com.so.dal.core.model.season.SeasonTournamentGroup;
+import java.util.List;
 
 /**
  *
@@ -15,6 +17,7 @@ public class SeasonTournamentGroupDTO {
      private Integer id;
      private Integer seasonTournamentId;
      private String name;
+     private List<CompetitorTeamDto> competitorTeams;
      
      public SeasonTournamentGroupDTO(){
      }
@@ -58,6 +61,15 @@ public class SeasonTournamentGroupDTO {
     public void setName(String name) {
         this.name = name;
     }
+
+    public List<CompetitorTeamDto> getCompetitorTeams() {
+        return competitorTeams;
+    }
+
+    public void setCompetitorTeams(List<CompetitorTeamDto> competitorTeams) {
+        this.competitorTeams = competitorTeams;
+    }
+    
     
     
 }

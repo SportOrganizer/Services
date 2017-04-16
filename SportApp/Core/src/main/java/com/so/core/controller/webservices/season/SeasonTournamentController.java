@@ -320,7 +320,7 @@ public class SeasonTournamentController {
     }
 /////////////////////// SEASON TOURNAMENT PENALTY SETTINGS ////////////////////////
 
-    @RequestMapping(path = "/{stId}/penaltySettings/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(path = "/{stId}/stpenaltysettings/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String addStPenaltySettings(@PathVariable(value = "stId") Integer stId, @RequestBody SeasonTournamentPenaltySettingsDto request) throws AppException {
         if (!stId.equals(request.getSeasonTournamentId())) {
             throw new AppException(HttpStatus.BAD_REQUEST, "id seasonTournament v URL sa nerovna id SeasonTournament v requeste");
@@ -330,7 +330,7 @@ public class SeasonTournamentController {
         return gson.toJson(response);
     }
 
-    @RequestMapping(path = "/{stId}/stpenaltysetting/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(path = "/{stId}/stpenaltysettings/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String updateStPenaltySettings(@PathVariable(value = "id") Integer id, @PathVariable(value = "stId") Integer stId, @RequestBody SeasonTournamentPenaltySettingsDto request) throws AppException {
         if (!stId.equals(request.getSeasonTournamentId())) {
             throw new AppException(HttpStatus.BAD_REQUEST, "id seasonTournament v URL sa nerovna id SeasonTournament v requeste");

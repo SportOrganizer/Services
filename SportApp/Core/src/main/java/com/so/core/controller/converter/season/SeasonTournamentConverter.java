@@ -6,7 +6,10 @@
 package com.so.core.controller.converter.season;
 
 import com.so.core.controller.converter.DateConverter;
+import com.so.core.controller.converter.game.CompetitorEntityConverter;
+import com.so.core.controller.converter.game.GameConverter;
 import com.so.core.controller.dto.ResourceDto;
+import com.so.core.controller.dto.game.CompetitorTeamDto;
 import com.so.core.controller.dto.season.SeasonTournamentDTO;
 import com.so.core.controller.dto.season.SeasonTournamentGroupDTO;
 import com.so.core.controller.dto.season.SeasonTournamentLocationDTO;
@@ -17,6 +20,7 @@ import com.so.core.controller.dto.season.SeasonTournamentSettingsTypeDto;
 import com.so.core.exception.AppException;
 import com.so.dal.core.model.Resource;
 import com.so.dal.core.model.Tournament;
+import com.so.dal.core.model.game.CompetitorTeam;
 import com.so.dal.core.model.season.Season;
 import com.so.dal.core.model.season.SeasonTournament;
 import com.so.dal.core.model.season.SeasonTournamentGroup;
@@ -35,6 +39,8 @@ import com.so.dal.core.repository.season.SeasonTournamentRepository;
 import com.so.dal.core.repository.season.SeasonTournamentRoundRepository;
 import com.so.dal.core.repository.season.SeasonTournamentSettingsRepository;
 import com.so.dal.core.repository.season.SeasonTournamentSettingsTypeRepository;
+import java.util.ArrayList;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +53,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SeasonTournamentConverter {
-
+    
     private final static Logger LOG = LoggerFactory.getLogger(SeasonTournamentConverter.class);
-
+    
     @Autowired
     SeasonTournamentRepository seasonTournamentRepo;
     @Autowired
@@ -72,14 +78,18 @@ public class SeasonTournamentConverter {
     private SeasonTournamentSettingsTypeRepository stSettingsTypeRepo;
     @Autowired
     private SeasonTournamentSettingsRepository stSettingsRepo;
-
+    @Autowired
+    private GameConverter gameConverter;
+    @Autowired
+    private CompetitorEntityConverter competitorConverter;
+    
     public SeasonTournamentDTO entityToDto(SeasonTournament entity) throws AppException {
-
+        
         if (entity == null) {
             LOG.error("entity je null");
             throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "entity v konvertore SeasonTournament je null");
         }
-
+        
         SeasonTournamentDTO dto = new SeasonTournamentDTO();
         dto.setId(entity.getId());
         dto.setName(entity.getName());
@@ -88,29 +98,54 @@ public class SeasonTournamentConverter {
         if (entity.getResource() != null) {
             dto.setLogo(new ResourceDto(entity.getResource().getId(), entity.getResource().getPath()));
         }
+        
+        if (!entity.getSeasonTournamentGroups().isEmpty()) {
+            List<SeasonTournamentGroupDTO> stg = new ArrayList<>();
+            for (SeasonTournamentGroup g : entity.getSeasonTournamentGroups()) {
+                stg.add(groupEntityToDto(g));
+            }
+            dto.setSeasonTournamentGroups(stg);
+        }
+        
+        if (!entity.getSeasonTournamentRounds().isEmpty()) {
+            List<SeasonTournamentRoundDTO> str = new ArrayList<>();
+            for (SeasonTournamentRound r : entity.getSeasonTournamentRounds()) {
+                str.add(roundEntityToDto(r));
+            }
+            dto.setSeasonTournamentRounds(str);
+        }
+        
+        if (!entity.getSeasonTournamentPeriods().isEmpty()) {
+            List<SeasonTournamentPeriodDTO> stp = new ArrayList<>();
+            for (SeasonTournamentPeriod p : entity.getSeasonTournamentPeriods()) {
+                stp.add(stPeriodEntityToDto(p));
+            }
+            dto.setPeriods(stp);
+        }
+        
         return dto;
     }
-
+    
     public SeasonTournament dtoToEntity(SeasonTournamentDTO dto) throws AppException {
         if (dto == null) {
             LOG.error("entity je null");
             throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "dto v konvertore SeasonTournament je null");
         }
         SeasonTournament entity;
-
+        
         if (dto.getId() != null) {
             entity = seasonTournamentRepo.findOne(dto.getId());
-
+            
             if (entity == null) {
                 throw new AppException(HttpStatus.BAD_REQUEST, "neexistuje SeasonTournament s id=" + dto.getId());
             }
         } else {
             entity = new SeasonTournament();
         }
-
+        
         if (dto.getSeasonId() != null) {
             Season season = seasonRepo.findOne(dto.getSeasonId());
-
+            
             if (season != null) {
                 entity.setSeason(season);
             } else {
@@ -118,7 +153,7 @@ public class SeasonTournamentConverter {
                 throw new AppException(HttpStatus.BAD_REQUEST, "neexistuje Season s id:" + dto.getSeasonId());
             }
         }
-
+        
         if (dto.getTournamentId() != null) {
             Tournament tournament = tournamentRepo.findOne(dto.getTournamentId());
             if (tournament == null) {
@@ -127,13 +162,13 @@ public class SeasonTournamentConverter {
             } else {
                 entity.setTournament(tournament);
             }
-
+            
         }
-
+        
         if (dto.getLogo() != null) {
             if (dto.getLogo().getId() != null) {
                 Resource resource = resourceRepo.getOne(dto.getLogo().getId());
-
+                
                 if (resource == null) {
                     LOG.error("neexistuje Resource s id: {}", dto.getLogo().getId());
                     throw new AppException(HttpStatus.BAD_REQUEST, "neexistuje Resource s id:" + dto.getLogo().getId());
@@ -145,11 +180,11 @@ public class SeasonTournamentConverter {
         entity.setName(dto.getName());
         return entity;
     }
-
+    
     public SeasonTournamentLocationDTO locationEntityToDto(SeasonTournamentLocation entity) {
-
+        
         SeasonTournamentLocationDTO dto = new SeasonTournamentLocationDTO();
-
+        
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         if (entity.getSeasonTournament() != null) {
@@ -157,11 +192,11 @@ public class SeasonTournamentConverter {
         }
         return dto;
     }
-
+    
     public SeasonTournamentLocation locationDtoToEntity(SeasonTournamentLocationDTO dto) throws AppException {
-
+        
         SeasonTournamentLocation entity;
-
+        
         if (dto.getId() != null) {
             entity = stLocationRepo.findOne(dto.getId());
             if (entity == null) {
@@ -183,22 +218,39 @@ public class SeasonTournamentConverter {
         }
         return entity;
     }
-
-    public SeasonTournamentRoundDTO roundEntityToDto(SeasonTournamentRound entity) {
-
+    
+    public SeasonTournamentRoundDTO roundEntityToDto(SeasonTournamentRound entity) throws AppException {
+        
         SeasonTournamentRoundDTO dto = new SeasonTournamentRoundDTO();
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         if (entity.getSeasonTournament() != null) {
             dto.setSeasonTournamentId(entity.getSeasonTournament().getId());
         }
+//        if(ifShortGame){
+//         if (entity.getGames() != null && !entity.getGames().isEmpty()) {
+//            List<GameDto> lg = new ArrayList<>();
+//            for (Game g : entity.getGames()) {
+//                lg.add(gameConverter.gameEntityToDto2(g));
+//            }
+//            dto.setGames(lg);
+//        }   
+//        }else{
+//        if (entity.getGames() != null && !entity.getGames().isEmpty()) {
+//            List<GameDto> lg = new ArrayList<>();
+//            for (Game g : entity.getGames()) {
+//                lg.add(gameConverter.gameEntityToDto(g));
+//            }
+//            dto.setGames(lg);
+//        }
+//        }
         return dto;
     }
-
+    
     public SeasonTournamentRound roundDtoToEntity(SeasonTournamentRoundDTO dto) throws AppException {
-
+        
         SeasonTournamentRound entity;
-
+        
         if (dto.getId() != null) {
             entity = stRoundRepo.findOne(dto.getId());
             if (entity == null) {
@@ -219,27 +271,34 @@ public class SeasonTournamentConverter {
         }
         return entity;
     }
-
+    
     public SeasonTournamentGroupDTO groupEntityToDto(SeasonTournamentGroup entity) {
-
+        
         SeasonTournamentGroupDTO dto = new SeasonTournamentGroupDTO();
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         if (entity.getSeasonTournament() != null) {
             dto.setSeasonTournamentId(entity.getSeasonTournament().getId());
         }
+        if (!entity.getCompetitorTeams().isEmpty()) {
+            List<CompetitorTeamDto> ct = new ArrayList<>();
+            for (CompetitorTeam t : entity.getCompetitorTeams()) {
+                ct.add(competitorConverter.competitorTeamEntityToDto(t, true));
+            }
+            dto.setCompetitorTeams(ct);
+        }
         return dto;
     }
-
+    
     public SeasonTournamentGroup groupDtoToEntity(SeasonTournamentGroupDTO dto) throws AppException {
-
+        
         SeasonTournamentGroup entity;
         if (dto.getId() != null) {
             entity = stGroupRepo.findOne(dto.getId());
             if (entity == null) {
                 LOG.error("nenajdena stGroup s id {}", dto.getId());
                 throw new AppException(HttpStatus.BAD_REQUEST, "nenajdena stGroup s id:" + dto.getId());
-
+                
             }
         } else {
             entity = new SeasonTournamentGroup();
@@ -256,17 +315,17 @@ public class SeasonTournamentConverter {
         }
         return entity;
     }
-
+    
     public SeasonTournamentSettingsTypeDto stSettingsTypeEntityToDto(SeasonTournamentSettingsType entity) {
         SeasonTournamentSettingsTypeDto dto = new SeasonTournamentSettingsTypeDto();
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         return dto;
     }
-
+    
     public SeasonTournamentSettingsType stSettingsTypeDtoToEntity(SeasonTournamentSettingsTypeDto dto) throws AppException {
         SeasonTournamentSettingsType entity;
-
+        
         if (dto.getId() != null) {
             entity = stSettingsTypeRepo.findOne(dto.getId());
             if (entity == null) {
@@ -277,13 +336,13 @@ public class SeasonTournamentConverter {
             entity = new SeasonTournamentSettingsType();
         }
         entity.setName(dto.getName());
-
+        
         return entity;
     }
-
+    
     public SeasonTournamentSettingsDTO stSettingsEntityToDto(SeasonTournamentSettings entity) {
         SeasonTournamentSettingsDTO dto = new SeasonTournamentSettingsDTO();
-
+        
         dto.setId(entity.getId());
         if (entity.getSeasonTournament() != null) {
             dto.setIdSeasonTournament(entity.getSeasonTournament().getId());
@@ -292,13 +351,13 @@ public class SeasonTournamentConverter {
             dto.setType(stSettingsTypeEntityToDto(entity.getSeasonTournamentSettingsType()));
         }
         dto.setValue(entity.getValue());
-
+        
         return dto;
     }
-
+    
     public SeasonTournamentSettings stSettingsDtoToEntity(SeasonTournamentSettingsDTO dto) throws AppException {
         SeasonTournamentSettings entity;
-
+        
         if (dto.getId() != null) {
             entity = stSettingsRepo.findOne(dto.getId());
             if (entity == null) {
@@ -308,7 +367,7 @@ public class SeasonTournamentConverter {
         } else {
             entity = new SeasonTournamentSettings();
         }
-
+        
         if (dto.getIdSeasonTournament() != null) {
             SeasonTournament st = seasonTournamentRepo.findOne(dto.getIdSeasonTournament());
             if (st == null) {
@@ -317,7 +376,7 @@ public class SeasonTournamentConverter {
             }
             entity.setSeasonTournament(st);
         }
-
+        
         if (dto.getType() != null) {
             if (dto.getType().getId() != null) {
                 SeasonTournamentSettingsType st = stSettingsTypeRepo.findOne(dto.getType().getId());
@@ -330,13 +389,13 @@ public class SeasonTournamentConverter {
         }
         entity.setName(dto.getName());
         entity.setValue(dto.getValue());
-
+        
         return entity;
     }
-
+    
     public SeasonTournamentPeriodDTO stPeriodEntityToDto(SeasonTournamentPeriod entity) {
         SeasonTournamentPeriodDTO dto = new SeasonTournamentPeriodDTO();
-
+        
         if (entity.getSeasonTournament() != null) {
             dto.setSeasonTournamentId(entity.getSeasonTournament().getId());
         }
@@ -344,10 +403,10 @@ public class SeasonTournamentConverter {
         dto.setIsGoldPart(entity.getIsGoldPart());
         dto.setLength(dateConverter.timeToString(entity.getLength()));
         dto.setName(entity.getName());
-
+        
         return dto;
     }
-
+    
     public SeasonTournamentPeriod stPeriodDtoToEntity(SeasonTournamentPeriodDTO dto) throws AppException {
         SeasonTournamentPeriod entity;
         if (dto.getId() != null) {

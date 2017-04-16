@@ -1,14 +1,5 @@
 package com.so.core.controller.dto.season;
 
-import com.so.dal.core.model.season.SeasonTournamentPeriod;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 /**
  * Created by janpolacek on 1/28/17.
  */

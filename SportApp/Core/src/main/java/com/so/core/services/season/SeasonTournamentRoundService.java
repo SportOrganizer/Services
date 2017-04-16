@@ -78,7 +78,7 @@ public class SeasonTournamentRoundService {
         return s;
     }
 
-    public List<SeasonTournamentRoundDTO> findAll() {
+    public List<SeasonTournamentRoundDTO> findAll() throws AppException {
         LOG.info("findAll()");
         List<SeasonTournamentRoundDTO> l = new ArrayList<>();
         List<SeasonTournamentRound> ls = seasonTournamentRoundRepository.findAll();

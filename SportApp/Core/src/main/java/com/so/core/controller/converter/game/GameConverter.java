@@ -109,6 +109,42 @@ public class GameConverter {
 
         return dto;
     }
+    
+        public GameDto gameEntityToDto2(Game entity) throws AppException {
+        GameDto dto = new GameDto();
+        dto.setId(entity.getId());
+        dto.setFinished(entity.isFinished());
+        dto.setContumated(entity.isContumated());
+        dto.setOvertime(entity.isOvertime());
+        dto.setName(entity.getName());
+        dto.setRealStart(dateConverter.dateTimeToString(entity.getRealStart()));
+        dto.setStartTime(dateConverter.dateTimeToString(entity.getStartTime()));
+
+        if (entity.getCompetitorTeamByIdAwayTeam() != null) {
+            dto.setAwayTeam(competitorConverter.competitorTeamEntityToDto(entity.getCompetitorTeamByIdAwayTeam(), false));
+        }
+        if (entity.getCompetitorTeamByIdHomeTeam() != null) {
+            dto.setHomeTeam(competitorConverter.competitorTeamEntityToDto(entity.getCompetitorTeamByIdHomeTeam(), false));
+        }
+//
+//        if (entity.getSeasonTournamentGroup() != null) {
+//            dto.setGroup(seasonTournamentConverter.groupEntityToDto(entity.getSeasonTournamentGroup()));
+//        }
+//
+//        if (entity.getSeasonTournamentLocation() != null) {
+//            dto.setLocation(seasonTournamentConverter.locationEntityToDto(entity.getSeasonTournamentLocation()));
+//        }
+//
+//        if (entity.getSeasonTournamentRound() != null) {
+//            dto.setRound(seasonTournamentConverter.roundEntityToDto(entity.getSeasonTournamentRound()));
+//        }
+//
+//        if (entity.getSeasonTournament() != null) {
+//            dto.setSeasonTournament(seasonTournamentConverter.entityToDto(entity.getSeasonTournament()));
+//        }
+
+        return dto;
+    }
 
     public Game gameDtoToEntity(GameDto dto) throws AppException {
         Game entity;
