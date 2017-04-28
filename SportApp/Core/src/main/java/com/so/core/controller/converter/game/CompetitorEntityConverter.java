@@ -74,7 +74,9 @@ public class CompetitorEntityConverter {
         dto.setIsCapitan(entity.isIsCapitan());
         dto.setPersonInfo(personConverter.personEntityToDto(entity.getPerson()));
         dto.setPhoto(new ResourceDto(entity.getResource().getId(), entity.getResource().getPath()));
-
+        dto.setTeamId(entity.getCompetitorTeam().getTeam().getId());
+        dto.setTeamName(entity.getCompetitorTeam().getTeam().getName());
+        
         return dto;
     }
 
