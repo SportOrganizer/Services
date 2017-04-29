@@ -6,6 +6,7 @@
 package com.so.core.controller.webservices.game;
 
 import com.google.gson.Gson;
+import com.so.core.controller.dto.season.penalty.PenaltyCustomDto;
 import com.so.core.controller.dto.season.penalty.PenaltyDto;
 import com.so.core.controller.dto.season.penalty.PenaltyTypeDto;
 import com.so.core.exception.AppException;

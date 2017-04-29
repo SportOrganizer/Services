@@ -11,6 +11,7 @@ public class SeasonTournamentDTO {
     private Integer seasonId;
     private Integer tournamentId;
     private ResourceDto logo;
+    private List<SeasonTournamentLocationDTO> seasonTournamentLocation;
     private List<SeasonTournamentPeriodDTO> seasonTournamentPeriods;
     private List<SeasonTournamentGroupDTO> seasonTournamentGroups;
     private List<SeasonTournamentRoundDTO> seasonTournamentRounds;
@@ -80,6 +81,15 @@ public class SeasonTournamentDTO {
     public void setName(String name) {
         this.name = name;
     }
+
+    public List<SeasonTournamentLocationDTO> getSeasonTournamentLocation() {
+        return seasonTournamentLocation;
+    }
+
+    public void setSeasonTournamentLocation(List<SeasonTournamentLocationDTO> seasonTournamentLocation) {
+        this.seasonTournamentLocation = seasonTournamentLocation;
+    }
+   
 
     public List<SeasonTournamentPeriodDTO> getPeriods() {
         return seasonTournamentPeriods;
