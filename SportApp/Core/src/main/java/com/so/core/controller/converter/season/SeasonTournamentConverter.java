@@ -99,6 +99,14 @@ public class SeasonTournamentConverter {
             dto.setLogo(new ResourceDto(entity.getResource().getId(), entity.getResource().getPath()));
         }
         
+        if (!entity.getSeasonTournamentLocations().isEmpty()) {
+            List<SeasonTournamentLocationDTO> stg = new ArrayList<>();
+            for (SeasonTournamentLocation l : entity.getSeasonTournamentLocations()) {
+                stg.add(locationEntityToDto(l));
+            }
+            dto.setSeasonTournamentLocation(stg);
+        }
+        
         if (!entity.getSeasonTournamentGroups().isEmpty()) {
             List<SeasonTournamentGroupDTO> stg = new ArrayList<>();
             for (SeasonTournamentGroup g : entity.getSeasonTournamentGroups()) {

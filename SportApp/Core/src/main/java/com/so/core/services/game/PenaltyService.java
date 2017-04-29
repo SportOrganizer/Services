@@ -6,6 +6,7 @@
 package com.so.core.services.game;
 
 import com.so.core.controller.converter.game.PenaltyConverter;
+import com.so.core.controller.dto.season.penalty.PenaltyCustomDto;
 import com.so.core.controller.dto.season.penalty.PenaltyDto;
 import com.so.core.controller.dto.season.penalty.PenaltyTypeDto;
 import com.so.core.controller.dto.season.penalty.SeasonTournamentPenaltySettingsDto;
