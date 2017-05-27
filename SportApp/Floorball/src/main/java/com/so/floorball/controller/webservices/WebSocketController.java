@@ -7,6 +7,8 @@ package com.so.floorball.controller.webservices;
 
 import com.google.gson.Gson;
 import com.so.floorball.controller.floorballGame.dto.RequestSportFloorballGameActivityDto;
+import com.so.floorball.controller.helloo.Greeting;
+import com.so.floorball.controller.helloo.HelloMessage;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
@@ -27,5 +29,12 @@ public class WebSocketController {
         Gson gson = new Gson();
         return gson.toJson(request);
     }
+//        public Greeting greeting(HelloMessage message) throws Exception {
+//        Thread.sleep(1000); // simulated delay
+//        return new Greeting("Hello, " + message.getName() + "!");
+//}
+        
+//        
+
     
 }
