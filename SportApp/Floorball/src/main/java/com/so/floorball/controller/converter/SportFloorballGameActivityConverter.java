@@ -163,7 +163,7 @@ public class SportFloorballGameActivityConverter {
             }          
         }
         
-        entity.setGameTime(dateConverter.stringToDate(dto.getGameTime()));
+        entity.setGameTime(dateConverter.stringToTime(dto.getGameTime()));
         entity.setRealTime(dateConverter.stringToDate(dto.getRealTime()));
         
         if (dto.getIdActivityType() != null) {           
