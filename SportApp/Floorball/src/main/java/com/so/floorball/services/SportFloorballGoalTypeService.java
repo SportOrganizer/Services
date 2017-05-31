@@ -22,11 +22,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Kristián Kačinetz
  */
+@Service
 public class SportFloorballGoalTypeService {
     
     private final static Logger LOG = LoggerFactory.getLogger(PersonService.class);
