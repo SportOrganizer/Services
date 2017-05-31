@@ -189,7 +189,7 @@ public class SportFlorbalGameActivity  implements java.io.Serializable {
         this.sportFlorbalGoalType = sportFlorbalGoalType;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIME)
     @Column(name="gameTime", nullable=false, length=19)
     public Date getGameTime() {
         return this.gameTime;

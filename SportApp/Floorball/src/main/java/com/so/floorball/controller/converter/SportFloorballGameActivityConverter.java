@@ -84,7 +84,9 @@ public class SportFloorballGameActivityConverter {
         
         dto.setId(entity.getId());
         dto.setIdGame(entity.getGame().getId());
+        if(entity.getCompetitorTeam()!=null){
         dto.setIdCompetitorTeam(entity.getCompetitorTeam().getId());
+        }
         dto.setIdGamePeriod(entity.getSeasonTournamentPeriod().getId());
         dto.setGameTime(dateConverter.dateTimeToString(entity.getGameTime()));
         dto.setRealTime(dateConverter.dateTimeToString(entity.getRealTime()));
