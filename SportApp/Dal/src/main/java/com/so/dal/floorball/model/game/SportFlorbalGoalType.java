@@ -25,7 +25,9 @@ public class SportFlorbalGoalType  implements java.io.Serializable {
 
      private Integer id;
      private String name;
-     private Set<SportFlorbalGameActivity> sportFlorbalGameActivities = new HashSet<SportFlorbalGameActivity>(0);
+     private Set<SportFlorbalGameActivity> sportFlorbalGameActivities = new HashSet<>(0);
+     private Boolean cancelPenalty;
+     
 
     public SportFlorbalGoalType() {
     }
@@ -70,7 +72,14 @@ public class SportFlorbalGoalType  implements java.io.Serializable {
         this.sportFlorbalGameActivities = sportFlorbalGameActivities;
     }
 
+    @Column(name="cancelPenalty", nullable=false)
+    public Boolean getCancelPenalty() {
+        return cancelPenalty;
+    }
 
+    public void setCancelPenalty(Boolean cancelPenalty) {
+        this.cancelPenalty = cancelPenalty;
+    }
 
 
 }
