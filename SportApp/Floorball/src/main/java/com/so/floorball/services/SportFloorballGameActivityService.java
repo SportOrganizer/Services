@@ -54,9 +54,9 @@ public class SportFloorballGameActivityService {
     @Transactional
     public ResponseSportFloorballGameActivityDto addSportFloorballGameActivity(RequestSportFloorballGameActivityDto dto) throws AppException {
         LOG.info("addSportFloorballGameActivity()");
-        
-        if(dto.getIdGame() == null || dto.getIdCompetitorTeam() == null || dto.getIdGamePeriod() == null || dto.getGameTime() == null || dto.getRealTime() == null){
-            LOG.error("parameter idGame, idCompetitorTeam, idGamePeriod, gameTime, realTime nemoze byt null: {}, {}, {}, {}, {}", dto.getIdGame(), dto.getIdCompetitorTeam(), dto.getIdGamePeriod(), dto.getGameTime(), dto.getRealTime());
+        //Kristian S. zmenil v DB idCompetitorTeam na nepovinny
+        if(dto.getIdGame() == null || dto.getIdGamePeriod() == null || dto.getGameTime() == null || dto.getRealTime() == null){
+            LOG.error("parameter idGame, idGamePeriod, gameTime, realTime nemoze byt null: {}, {}, {}, {}", dto.getIdGame(), dto.getIdGamePeriod(), dto.getGameTime(), dto.getRealTime());
             throw new AppException(HttpStatus.BAD_REQUEST, "nie je zadany povinny parameter");
         }
         
@@ -100,7 +100,7 @@ public class SportFloorballGameActivityService {
 
     @Transactional
     public ResponseSportFloorballGameActivityDto findOneActivity(Integer id) throws AppException {
-        LOG.info("findGame({})", id);
+        LOG.info("findOneActivity({})", id);
 
         SportFlorbalGameActivity g = sfgaRepo.findOne(id);
 
@@ -124,6 +124,18 @@ public class SportFloorballGameActivityService {
     }
     
     @Transactional
+    public void deleteSportFlorbalGameActivityByGame(Integer idGame) throws AppException {
+        LOG.info("deleteSportFlorbalGameActivityByGame({})", idGame);
+         List<SportFlorbalGameActivity> lg = sfgaRepo.findByGame(gameRepo.findOne(idGame));
+
+        if (lg == null) {
+            LOG.error("nenajdena SportFlorbalGameActivityByGame na vymazanie id={}", idGame);
+            throw new AppException(HttpStatus.NOT_FOUND, "nenajdena SportFlorbalGameActivityByGame id=" + idGame);
+        }
+        sfgaRepo.delete(lg);
+    }
+    
+    @Transactional
     public ResponseSportFloorballGameActivityDto updateActivity(RequestSportFloorballGameActivityDto updated) throws AppException {
         LOG.info("update()");
 
@@ -142,8 +154,8 @@ public class SportFloorballGameActivityService {
     }
     
     @Transactional
-    public SportFloorballGameShotsDto addSportFloorballGameActivity(SportFloorballGameShotsDto dto) throws AppException {
-        LOG.info("addSportFloorballGameActivity()");
+    public SportFloorballGameShotsDto addSportFloorballGameShots(SportFloorballGameShotsDto dto) throws AppException {
+        LOG.info("addSportFloorballGameShots()");
         
         if(dto.getIdGame() == null || dto.getIdTeam() == null || dto.getIdPeriod() == null || dto.getCount() == null){
             LOG.error("parameter idGame, idCompetitorTeam, idGamePeriod, count nemoze byt null: {}, {}, {}, {}", dto.getIdGame(), dto.getIdTeam(), dto.getIdPeriod(), dto.getCount());
@@ -201,7 +213,7 @@ public class SportFloorballGameActivityService {
     }
     
     @Transactional
-    public SportFloorballGameShotsDto updateActivity(SportFloorballGameShotsDto updated) throws AppException {
+    public SportFloorballGameShotsDto updateGameShots(SportFloorballGameShotsDto updated) throws AppException {
         LOG.info("update()");
 
         if (updated == null) {

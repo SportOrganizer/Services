@@ -90,7 +90,7 @@ public class SportFlorbalGameActivity  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="idTeam", nullable=false)
+    @JoinColumn(name="idTeam", nullable=true)
     public CompetitorTeam getCompetitorTeam() {
         return this.competitorTeam;
     }
@@ -230,7 +230,7 @@ public class SportFlorbalGameActivity  implements java.io.Serializable {
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="penaltySeconds", nullable=false, length=19)
+    @Column(name="penaltySeconds", nullable=true, length=19)
     public Date getPenaltySeconds() {
         return this.penaltySeconds;
     }
