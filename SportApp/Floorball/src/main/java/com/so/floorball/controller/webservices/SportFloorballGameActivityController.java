@@ -81,8 +81,8 @@ public class SportFloorballGameActivityController {
         return gson.toJson(activityService.findAllActivities());
     }
     
-    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String deleteGameActivityByGame(@RequestParam(value = "game", required = false) Integer idGame) throws AppException {
+    @RequestMapping(path = "/game/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String deleteGameActivityByGame(@PathVariable(value = "id") Integer idGame) throws AppException {
         Gson gson = new Gson();
         activityService.deleteSportFlorbalGameActivityByGame(idGame);
         return gson.toJson(activityService.findAllActivities());
