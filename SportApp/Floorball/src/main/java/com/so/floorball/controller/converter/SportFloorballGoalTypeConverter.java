@@ -34,6 +34,7 @@ public class SportFloorballGoalTypeConverter {
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         
+        
         return dto;
     }
     
@@ -52,6 +53,7 @@ public class SportFloorballGoalTypeConverter {
         
         entity.setId(dto.getId());
         entity.setName(dto.getName());
+        
         
         return entity;
         

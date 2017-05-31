@@ -164,7 +164,7 @@ public class SportFloorballGameActivityConverter {
         }
         
         entity.setGameTime(dateConverter.stringToTime(dto.getGameTime()));
-        entity.setRealTime(dateConverter.stringToDate(dto.getRealTime()));
+        entity.setRealTime(dateConverter.stringToDateTime(dto.getRealTime()));
         
         if (dto.getIdActivityType() != null) {           
             SportFlorbalGameActivityType t = sfgatRepo.findOne(dto.getIdActivityType());

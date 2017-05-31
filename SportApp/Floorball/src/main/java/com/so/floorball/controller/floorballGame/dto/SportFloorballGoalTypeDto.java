@@ -13,14 +13,20 @@ public class SportFloorballGoalTypeDto {
 
     private Integer id;
     private String name;
+    private Boolean cancelPenalty;
 
-    public SportFloorballGoalTypeDto(String name) {
-        this.name = name;
-    }
+
     
     public SportFloorballGoalTypeDto() {
         
     }
+
+    public SportFloorballGoalTypeDto(String name, Boolean cancelPenalty) {
+        this.name = name;
+        this.cancelPenalty = cancelPenalty;
+    }
+    
+    
 
     public Integer getId() {
         return id;
@@ -37,7 +43,15 @@ public class SportFloorballGoalTypeDto {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Boolean getCancelPenalty() {
+        return cancelPenalty;
+    }
+
+    public void setCancelPenalty(Boolean cancelPenalty) {
+        this.cancelPenalty = cancelPenalty;
+    }
     
-    
+          
 
 }

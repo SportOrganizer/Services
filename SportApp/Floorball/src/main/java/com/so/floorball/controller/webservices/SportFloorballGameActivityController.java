@@ -75,9 +75,16 @@ public class SportFloorballGameActivityController {
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String deleteGame(@PathVariable(value = "id") Integer id) throws AppException {
+    public String deleteGameActivity(@PathVariable(value = "id") Integer id) throws AppException {
         Gson gson = new Gson();
-        activityService.deleteSportFlorbalGameShots(id);
+        activityService.deleteSportFlorbalGameActivity(id);
+        return gson.toJson(activityService.findAllActivities());
+    }
+    
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String deleteGameActivityByGame(@RequestParam(value = "game", required = false) Integer idGame) throws AppException {
+        Gson gson = new Gson();
+        activityService.deleteSportFlorbalGameActivityByGame(idGame);
         return gson.toJson(activityService.findAllActivities());
     }
     
