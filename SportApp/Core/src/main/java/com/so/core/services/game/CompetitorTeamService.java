@@ -13,9 +13,9 @@ import com.so.core.services.document.DocumentService;
 import com.so.dal.core.model.Resource;
 import com.so.dal.core.model.Team;
 import com.so.dal.core.model.game.CompetitorTeam;
+import com.so.dal.core.model.season.SeasonTournament;
 import com.so.dal.core.model.season.SeasonTournamentGroup;
 import com.so.dal.core.repository.game.CompetitorTeamRepository;
-import com.so.dal.core.repository.season.SeasonTournamentGroupRepository;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public class CompetitorTeamService {
     DocumentService documentService;
 
     @Transactional
-    public CompetitorTeam addCompetitorTeam(Resource resource, SeasonTournamentGroup seasonTournamentGroup, Team team) {
+    public CompetitorTeam addCompetitorTeam(Resource resource, SeasonTournamentGroup seasonTournamentGroup, Team team, SeasonTournament st) {
 
         LOG.info("addTeam({},{},{})", resource, seasonTournamentGroup, team);
 
@@ -56,7 +56,7 @@ public class CompetitorTeamService {
 
         //todo competitorTeamPlayers sa bude v buducnu doplnat vyhladavanim timu po poslani z napr. id z FE to sa odkomentuje este
         // pri tvorbe FE
-        CompetitorTeam ct = new CompetitorTeam(resource, seasonTournamentGroup, team);
+        CompetitorTeam ct = new CompetitorTeam(resource, seasonTournamentGroup, team,st);
 
         ct = competitorTeamRepo.saveAndFlush(ct);
 

@@ -16,6 +16,7 @@ import com.so.dal.core.model.Resource;
 import com.so.dal.core.model.Team;
 import com.so.dal.core.model.game.CompetitorTeam;
 import com.so.dal.core.model.game.CompetitorTeamPlayer;
+import com.so.dal.core.model.season.SeasonTournament;
 import com.so.dal.core.model.season.SeasonTournamentGroup;
 import com.so.dal.core.repository.PersonRepository;
 import com.so.dal.core.repository.ResourceRepository;
@@ -23,6 +24,7 @@ import com.so.dal.core.repository.TeamRepository;
 import com.so.dal.core.repository.game.CompetitorTeamPlayerRepository;
 import com.so.dal.core.repository.game.CompetitorTeamRepository;
 import com.so.dal.core.repository.season.SeasonTournamentGroupRepository;
+import com.so.dal.core.repository.season.SeasonTournamentRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
@@ -37,37 +39,40 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CompetitorEntityConverter {
-
+    
     private final static Logger LOG = LoggerFactory.getLogger(CompetitorEntityConverter.class);
-
+    
     @Autowired
     private CompetitorTeamRepository competitorTeamRepo;
-
+    
     @Autowired
     private CompetitorTeamPlayerRepository competitorTeamPlayerRepo;
-
+    
     @Autowired
     private PersonConverter personConverter;
-
+    
     @Autowired
     private ResourceRepository resourceRepo;
-
+    
     @Autowired
     private PersonRepository personRepo;
-
+    
     @Autowired
     private TeamConverter teamConverter;
-
+    
     @Autowired
     private SeasonTournamentGroupRepository stGroupRepo;
-
+    
+    @Autowired
+    private SeasonTournamentRepository stRepo;
+    
     @Autowired
     private TeamRepository teamRepo;
-
+    
     public CompetitorTeamPlayerDto competitorTeamPlayerEntityToDto(CompetitorTeamPlayer entity) {
-
+        
         CompetitorTeamPlayerDto dto = new CompetitorTeamPlayerDto();
-
+        
         dto.setCompetitorTeamId(entity.getCompetitorTeam().getId());
         dto.setId(entity.getId());
         dto.setNumber(entity.getNumber());
@@ -79,9 +84,9 @@ public class CompetitorEntityConverter {
         
         return dto;
     }
-
+    
     public CompetitorTeamPlayer competitorTeamPlayerDtoToEntity(CompetitorTeamPlayerDto dto) throws AppException {
-
+        
         CompetitorTeamPlayer entity;
         if (dto.getId() != null) {
             entity = competitorTeamPlayerRepo.findOne(dto.getId());
@@ -125,32 +130,33 @@ public class CompetitorEntityConverter {
         }
         entity.setIsCapitan(dto.isIsCapitan());
         entity.setNumber(dto.getNumber());
-
+        
         return entity;
     }
-
+    
     public CompetitorTeamDto competitorTeamEntityToDto(CompetitorTeam entity, boolean ifCopyPlayers) {
         CompetitorTeamDto dto = new CompetitorTeamDto();
         List<CompetitorTeamPlayerDto> players = new ArrayList<>();
-
+        
         dto.setId(entity.getId());
         dto.setLogo(new ResourceDto(entity.getResource().getId(), entity.getResource().getPath()));
         dto.setSeasonTournamentGroupId(entity.getSeasonTournamentGroup().getId());
         dto.setTeam(teamConverter.teamEntityToDto(entity.getTeam()));
-
+        dto.setStId(entity.getSeasonTournament().getId());
+        
         if (ifCopyPlayers) {
             for (CompetitorTeamPlayer p : entity.getCompetitorTeamPlayers()) {
                 players.add(competitorTeamPlayerEntityToDto(p));
             }
             dto.setCompetitorTeamPlayers(players);
         }
-
+        
         return dto;
     }
-
+    
     public CompetitorTeam competitorTeamDtoToEntity(CompetitorTeamDto dto) throws AppException {
         CompetitorTeam entity;
-
+        
         if (dto.getId() != null) {
             entity = competitorTeamRepo.findOne(dto.getId());
             if (entity == null) {
@@ -160,7 +166,7 @@ public class CompetitorEntityConverter {
         } else {
             entity = new CompetitorTeam();
         }
-
+        
         if (dto.getLogo() != null) {
             if (dto.getLogo().getId() != null) {
                 Resource r = resourceRepo.findOne(dto.getLogo().getId());
@@ -172,7 +178,7 @@ public class CompetitorEntityConverter {
                 }
             }
         }
-
+        
         if (dto.getSeasonTournamentGroupId() != null) {
             SeasonTournamentGroup g = stGroupRepo.findOne(dto.getSeasonTournamentGroupId());
             if (g == null) {
@@ -182,7 +188,7 @@ public class CompetitorEntityConverter {
                 entity.setSeasonTournamentGroup(g);
             }
         }
-
+        
         if (dto.getTeam() != null) {
             if (dto.getTeam().getId() != null) {
                 Team t = teamRepo.findOne(dto.getTeam().getId());
@@ -194,7 +200,16 @@ public class CompetitorEntityConverter {
                 }
             }
         }
+        
+        if (dto.getStId() != null) {
+            SeasonTournament st = stRepo.findOne(dto.getStId());
+            if (st == null) {
+                LOG.error("neexistuje st s id={}", dto.getStId());
+                throw new AppException(HttpStatus.BAD_REQUEST, "neexistuje st s id=" + dto.getStId());
+            }
+            entity.setSeasonTournament(st);
+        }
         return entity;
     }
-
+    
 }

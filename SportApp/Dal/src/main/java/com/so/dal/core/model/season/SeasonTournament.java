@@ -4,6 +4,7 @@ package com.so.dal.core.model.season;
 import com.so.dal.core.model.registration.RegistrationTeam;
 import com.so.dal.core.model.Resource;
 import com.so.dal.core.model.Tournament;
+import com.so.dal.core.model.game.CompetitorTeam;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -37,6 +38,7 @@ public class SeasonTournament implements java.io.Serializable {
     private Set<SeasonTournamentLocation> seasonTournamentLocations = new HashSet<>(0);
     private Set<SeasonTournamentPenaltySettings> seasonTournamentPenaltySettingses = new HashSet<>(0);
     private Set<SeasonTournamentSettings> seasonTournamentSettingses = new HashSet<>(0);
+    private Set<CompetitorTeam> competitorTeams = new HashSet<>(0);
 
     public SeasonTournament() {
     }
@@ -174,5 +176,15 @@ public class SeasonTournament implements java.io.Serializable {
     public void setSeasonTournamentSettingses(Set<SeasonTournamentSettings> seasonTournamentSettingses) {
         this.seasonTournamentSettingses = seasonTournamentSettingses;
     }
+@OneToMany(fetch = FetchType.LAZY, mappedBy = "seasonTournament", orphanRemoval = true)
+    public Set<CompetitorTeam> getCompetitorTeams() {
+        return competitorTeams;
+    }
+
+    public void setCompetitorTeams(Set<CompetitorTeam> competitorTeams) {
+        this.competitorTeams = competitorTeams;
+    }
+    
+    
 
 }

@@ -7,7 +7,6 @@ package com.so.core.controller.dto.game;
 
 import com.so.core.controller.dto.ResourceDto;
 import com.so.core.controller.dto.TeamDTO;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +20,7 @@ public class CompetitorTeamDto {
    //  private SeasonTournamentGroupDTO seasonTournamentGroup;
      private Integer seasonTournamentGroupId;
      private TeamDTO team;
+     private Integer stId;
    //  private Set<SportFlorbalGameActivity> sportFlorbalGameActivities = new HashSet<>(0);
    //  private Set<SportFlorbalGameShots> sportFlorbalGameShotses = new HashSet<>(0);
      private List<CompetitorTeamPlayerDto> competitorTeamPlayers;
@@ -69,6 +69,16 @@ public class CompetitorTeamDto {
     public void setTeam(TeamDTO team) {
         this.team = team;
     }
+
+    public Integer getStId() {
+        return stId;
+    }
+
+    public void setStId(Integer stId) {
+        this.stId = stId;
+    }
+    
+    
 
      
 }

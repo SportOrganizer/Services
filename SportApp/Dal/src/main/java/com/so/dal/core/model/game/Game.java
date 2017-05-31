@@ -51,6 +51,18 @@ public class Game implements java.io.Serializable {
     public Game() {
     }
 
+    public Game(CompetitorTeam awayTeam, CompetitorTeam homeTeam, SeasonTournament seasonTournament, SeasonTournamentGroup seasonTournamentGroup, SeasonTournamentLocation seasonTournamentLocation, SeasonTournamentRound seasonTournamentRound, String name, Date startTime) {
+        this.awayTeam = awayTeam;
+        this.homeTeam = homeTeam;
+        this.seasonTournament = seasonTournament;
+        this.seasonTournamentGroup = seasonTournamentGroup;
+        this.seasonTournamentLocation = seasonTournamentLocation;
+        this.seasonTournamentRound = seasonTournamentRound;
+        this.name = name;
+        this.startTime = startTime;
+    }
+
+    
     public Game(CompetitorTeam competitorTeamByIdAwayTeam, CompetitorTeam competitorTeamByIdHomeTeam, SeasonTournament seasonTournament, SeasonTournamentGroup seasonTournamentGroup, SeasonTournamentLocation seasonTournamentLocation, SeasonTournamentRound seasonTournamentRound, String name, Date startTime, Date realStart, Boolean overtime, Boolean finished, Boolean contumated) {
         this.awayTeam = competitorTeamByIdAwayTeam;
         this.homeTeam = competitorTeamByIdHomeTeam;
@@ -137,7 +149,7 @@ public class Game implements java.io.Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idLocation", nullable = false)
+    @JoinColumn(name = "idLocation", nullable = true)
     public SeasonTournamentLocation getSeasonTournamentLocation() {
         return this.seasonTournamentLocation;
     }

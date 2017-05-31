@@ -128,7 +128,7 @@ public class MappingService {
             if (team == null) {
                 team = teamService.addTeam2(rt.getName(), rt.getShortName(), rt.getColor());
             }
-            CompetitorTeam competitorTeam = competitorTeamService.addCompetitorTeam(rt.getResource(), null, team);
+            CompetitorTeam competitorTeam = competitorTeamService.addCompetitorTeam(rt.getResource(), null, team, seasonTournament);
             rt.setIsVerify(true);
             MappingPlayers(rt.getRegistrationPlayers(), competitorTeam);
 

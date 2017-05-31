@@ -15,6 +15,7 @@ import com.so.dal.core.repository.season.SeasonTournamentRepository;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.transaction.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,7 @@ public class SeasonTournamentGroupService {
     @Autowired
     private SeasonTournamentConverter stConverter;
 
+    @Transactional
     public List<SeasonTournamentGroupDTO> findAll() {
         LOG.info("findAll()");
         List<SeasonTournamentGroupDTO> l = new ArrayList<>();
@@ -54,7 +56,7 @@ public class SeasonTournamentGroupService {
 
         return l;
     }
-
+    @Transactional
     public SeasonTournamentGroupDTO findById(Integer id) throws AppException {
         LOG.info("findById({})", id);
 
@@ -69,7 +71,8 @@ public class SeasonTournamentGroupService {
         }
         return stConverter.groupEntityToDto(s);
     }
-
+    
+    @Transactional
     public List<SeasonTournamentGroup> findByNameContaining(String name) {
         LOG.info("findByNameContaining({})", name);
 
@@ -115,6 +118,7 @@ public class SeasonTournamentGroupService {
         return stConverter.groupEntityToDto(seasonTournamentGroup);
     }
 
+    @Transactional
     public List<SeasonTournamentGroupDTO> findAllBySeasonTournament(Integer stId) throws AppException {
         LOG.info("findAllBySeasonTournament({})", stId);
         SeasonTournament st = seasonTournamentRepo.findOne(stId);

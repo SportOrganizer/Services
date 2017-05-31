@@ -15,5 +15,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface SeasonTournamentSettingsTypeRepository extends JpaRepository<SeasonTournamentSettingsType, Integer>{
+ 
+    public SeasonTournamentSettingsType findByName(String name);
             
 }

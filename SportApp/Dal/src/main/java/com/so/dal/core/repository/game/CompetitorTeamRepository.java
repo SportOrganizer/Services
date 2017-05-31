@@ -6,6 +6,9 @@
 package com.so.dal.core.repository.game;
 
 import com.so.dal.core.model.game.CompetitorTeam;
+import com.so.dal.core.model.season.SeasonTournament;
+import com.so.dal.core.model.season.SeasonTournamentGroup;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +18,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface CompetitorTeamRepository extends JpaRepository<CompetitorTeam, Integer>{
-    
+    public List<CompetitorTeam> findBySeasonTournament(SeasonTournament st); 
+    public List<CompetitorTeam> findBySeasonTournamentGroup(SeasonTournamentGroup group);
+    public int countBySeasonTournamentGroup(SeasonTournamentGroup group); 
 }
